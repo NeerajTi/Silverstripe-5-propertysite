@@ -1,0 +1,11 @@
+btn_arrow {
+    transition: 0.5s;
+    #arrow {
+        transition: 0.5s;
+    }
+    &:hover {
+        #arrow {
+            margin-left: 30px;
+        }
+    }
+}

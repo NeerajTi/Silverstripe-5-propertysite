@@ -1,0 +1,7 @@
+SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
+  default_spam_protector: UndefinedOffset\NoCaptcha\Forms\NocaptchaProtector
+
+UndefinedOffset\NoCaptcha\Forms\NocaptchaField:
+  site_key: '%GOOGLE_SITE_KEY%'
+  secret_key: '%GOOGLE_SECRET_KEY%'
+  default_size: 'invisible'

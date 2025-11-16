@@ -1,0 +1,8 @@
+vendor
+public/
+.ddev
+ads.txt
+robots.txt
+sliverstripe-wmb-details.txt
+.env
+silverstripe.log

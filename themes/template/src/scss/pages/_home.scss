@@ -1,0 +1,117 @@
+.banner-home {
+    height:100dvh;
+
+    .container {
+        height:100dvh;
+
+        .row {
+            height:100dvh;
+
+            .global-title {
+                color:$wit;
+                font-size:55px;
+                font-weight:600;
+                text-shadow: 1px 3px 1px rgba(0,0,0,0.60);
+                margin-bottom:30px;
+                border-radius:5px;
+                position:relative;
+                padding-left:100px;
+
+                @include media-breakpoint-down(md) {
+                    font-size:32px;
+                }
+
+                &:before {
+                    content:'';
+                    background:url('../../../../public/vdk.webp'), no-repeat;
+                    background-size:cover;
+                    width:75px;
+                    height:75px;
+                    position:absolute;
+                    left:0;
+                }
+            }
+            .room-filter {
+                width:100%;
+                margin:0 auto;
+                text-align:center;
+                
+
+                #Form_ProjectenResultsForm {
+                    background: rgba(0,0,0,.5);
+                    border-radius: 5px;
+                    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                    padding:20px;
+
+                    #Form_ProjectenResultsForm_minprijs_Holder, #Form_ProjectenResultsForm_maxprijs_Holder, #Form_ProjectenResultsForm_kindLabel_Holder, #Form_ProjectenResultsForm_Oppervlakte_Holder, #Form_ProjectenResultsForm_action_FilterAction  {
+                        float: left;
+                        width: 20%;
+                        margin-right: 10px;
+
+                        @include media-breakpoint-down(md) {
+                            width:100%;
+                            margin-right:unset;
+                            margin-bottom:5px;
+                        }
+                    }
+                    fieldset {
+                        width:100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        @include media-breakpoint-down(md) {
+                            display:unset;
+                        }
+                    }
+                    #Form_ProjectenResultsForm_action_FilterAction {
+                        margin-right:0;
+                    }
+                    select[name=minprijs], select[name=maxprijs], select[name=kindLabel], select[name=Oppervlakte] {
+                        width:100%;
+                        padding: 10px 4px;
+                        border:0;
+                        border-radius:5px;
+                        -webkit-box-shadow: inset -2px 2px 5px 2px rgba(0,0,0,0.25); 
+                        box-shadow: inset -2px 2px 5px 2px rgba(0,0,0,0.25);
+                    }
+                    .btn-uitgelicht-outline.reset {
+                        display:none;
+                    }
+                    #Form_ProjectenResultsForm_action_FilterAction {
+                        padding: 10px 4px;
+                        background:#d6820b;
+                        color:$wit;
+                        font-weight:700;
+                        transition:all 0.5s ease;
+
+                        &:hover {
+                            background:#2b0210;
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+.accordion-button {
+    font-weight:bold;
+
+    @include media-breakpoint-down(md) {
+        font-size:16px;
+    }
+}
+.accordion-button:not(.collapsed) {
+    background:transparent;
+    color:$zwart;
+}
+.accordion-item {
+    margin-bottom:20px;
+}
+.accordion-button:focus {
+    box-shadow:unset;
+}
+.page-title-home {
+    margin-top:30px;
+}

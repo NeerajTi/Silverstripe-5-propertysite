@@ -1,0 +1,1433 @@
+body {
+    background: #f5f5f5;
+  }
+  ::selection {
+    background: #e54e53;
+  }
+  /* deafults */
+  .nopadding {
+    padding: 0px !important;
+  }
+  .nopadding-left {
+    padding-left: 0px !important;
+  }
+  .nopadding-right {
+    padding-right: 0px !important;
+  }
+  /* top-bar */
+  .top-bar {
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    z-index: 9999;
+    top: 0;  
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  }
+  .socials {
+    display:none;
+  }
+  @media only screen and (max-width: 992px) {
+    .socials {
+      position:fixed;
+      z-index:1002;
+      right:0px;
+      top:100px;
+      display:block;
+    }
+    .socials ul {
+      list-style-type:none;
+      position:absolute;
+      right:0px;
+    }
+    .socials ul li {
+      position:relative;
+      background:#4e6caa;
+      padding:10px 10px;
+    }
+    .socials ul li:first-child {
+      border-bottom:1px solid #FFF;
+    }
+    .socials ul li:hover {
+      background:#3b5280;
+    }
+    .socials img {
+      width:35px;
+      height:35px;
+      background-size:cover;
+    }
+  }
+  
+  .top-bar-content {
+    padding: 10px 0 10px 0;
+    color: #fff;
+    float: left;
+    width: 100%;
+    height: 70px;
+  }
+  .logo {
+    height: 100%;
+    position: relative;
+  }
+  .logo img.img-responsive {
+    position: absolute;
+    top: 100%;
+    bottom:0;
+  }
+  .heading {
+    float: left;
+    color: #e54e53;
+  }
+  .nieuws {
+    color: inherit;
+  }
+  .nieuws ul {
+    float: left;
+    list-style: none;
+  }
+  .slides > li > a {
+    color: #666;
+  }
+  .translate-icons {
+    float: right;
+  }
+  .zoeken {
+    float: right;
+    margin: 0px 20px -3px 50px;
+  }
+  .zoeken .input-zoeken {
+    line-height: 24px;
+    height: 24px;
+    padding: 1px 8px 1px 8px;
+    border: 0;
+    font-size: 13px;
+    background: #e9e9e9;
+    float: left;
+    color: #999;
+    width: 130px;
+  }
+  .zoeken-button {
+    float: right;
+    background: transparent;
+    width: 20px;
+    height: 26px;
+    margin: -33px 0px 0px 0px;
+    border: none;
+  }
+  .social-icons {
+    float: right;
+  }
+  .social-icons li {
+    list-style: none;
+    float: left;
+    margin-right: 5px;
+  }
+  .social-icons a {
+    height: 21px;
+    width: 20px;
+  }
+  .social-icons .fa {
+    font-size: 1em;
+    margin-top: -7px;
+  }
+  .act {
+    display: block;
+  }
+  .nieuws-inactive {
+    display: none;
+  }
+  #SearchForm_SearchForm_Search {
+    line-height: 24px;
+    height: 24px;
+    padding: 1px 8px 1px 8px;
+    border: 0;
+    font-size: 13px;
+    background: #e9e9e9;
+    float: left;
+    color: #999;
+    width: 130px;
+    -webkit-transition: width 1s;
+    transition: width 1s;
+  }
+  #SearchForm_SearchForm_Search:focus {
+    width: 200px;
+  }
+  #SearchForm_SearchForm_action_results {
+    float: left;
+    background: transparent;
+    width: 20px;
+    height: 26px;
+    margin: -2px 0px 0px -23px;
+    border: none;
+  }
+  /* main-head  */
+  .HomePage .main-head {
+    position: absolute;
+  }
+  .main-head {
+    margin-top: 30px;
+    width: 100%;
+  }
+  .main-head .logo {
+    float: left;
+    width: 300px;
+  }
+  .fb-logo {
+    height: 45px;
+    height: 45px;
+    margin-bottom: 10px;
+  }
+  .fb-rechts {
+    line-height: 16px;
+    color: #3b55a0;
+  }
+  .fb-rechts p {
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .fb-link {
+    color: #333;
+  }
+  .fb-link:hover {
+    color: #333;  
+    text-decoration: none;
+  }
+  .fb-frame {
+    position: relative;
+    margin-top: 6px;
+  }
+  .fb-btn-link {
+    background: #4c69ba;
+    background: linear-gradient(#4c69ba, #3b55a0);
+    color: #fff;
+    border-radius: 2px;
+    width: 87px;
+    height: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+    top: -48px;
+    border: none;
+    line-height: 0;
+  }
+  .fb-btn-link:hover {
+    background: linear-gradient(#5b7bd5, #4864b1);
+    border-color: #5874c3 #4961a8 #41599f;
+  }
+  .fb-btn-icon {
+    font-size: 1em;
+  }
+  .bekijken {
+    height: 100%;
+    font-family: helvetica, arial, sans-serif;
+    position: relative;
+    bottom: 3px;
+    left: -1px;
+  }
+  .pluginButtonIconSVG {
+    width: 14px;
+    height: 14px;
+    margin-top: 0px;
+    position: relative;
+    left: -8px;
+  }
+  input#Form_ProjectenResultsForm_action_FilterAction {
+    background: #93d400;
+    color: #fff;
+    border-radius: 3px;
+  }
+  a.btn.btn-uitgelicht-outline.reset {
+    width: 100%;
+    background: #f5f5f5;
+    margin-top: 10px;
+    color: #555;
+  }
+  /* nav */
+  .navbar-default {
+    border-radius: 0;
+    background-color: #fff;
+    border: 0px;
+  }
+  .kamer-verhuren-titel {
+    color: #000;
+    padding: 17px 0px 0px 81px;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+  }
+  .kamer-verhuren a {
+    float: right;
+  }
+  .kamer-verhuren-titel:hover {
+    color: #fff;
+  }
+  .navbar-default {
+    background: #19232d;
+  }
+  .navbar-collapse {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .navbar {
+    margin-bottom: 0;
+  }
+  .navbar-default .navbar-nav > li > a {
+    color: #efefef;
+  }
+  .navbar-default .navbar-nav > li > a:hover {
+    color: #efefef;
+  }
+  .navbar-default .navbar-nav > li > a:visited {
+    color: #efefef;
+    background-color: #1e2935;
+  }
+  .navbar-default .navbar-nav .link:hover, .navbar-default .navbar-nav .current {
+    color: #efefef;
+    border-bottom: 4px solid #e54e53;
+    background-color: #1e2935;
+  }
+  .nav > li {
+    position: inherit;
+    display: block;
+  }
+  .breadcrumbs {
+    background: #f2f2f2;
+    padding: 14px 0px;
+    font-size: 12px;
+    color: #8d97a1;
+    line-height: 1;
+    margin-top: 70px;
+  }
+  .breadcrumbs a {
+    color: #8d97a1;
+  }
+  .menu {
+    float: left;
+    width: 75%;
+  }
+  .menu .button {
+    display: inline-block;
+    color: #555;
+    text-decoration: none;
+    margin-right: 5px;
+    padding: 15px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 3px;
+  }
+  .menu .button:hover {
+    background: #f9f9f9;
+    color: #e44f52;
+  }
+  .button.verhuren {
+    color: #333;
+    font-weight: bold;
+    float: right;
+    margin-right: 30px;
+    background: #f7e50e;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+  }
+  .content {
+    margin-top: 15px;
+  }
+  body.HomePage h1 {
+    margin-top: 34px;
+  }
+  .kamer-detail a {
+    display: none;
+  }
+  a.meerinfo {
+    display: inline-block;
+    padding: 7px 14px;
+  }
+  a.buttonHigh {
+    border-radius: 3px;
+    font-size: 24px;
+    color: #989898;
+    background: #fff;
+    /*border: solid 1px #333;*/
+    font-weight: normal;
+    padding: 5px 15px;
+    margin-top: 33px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .translation-icons a {
+    margin-top: 14px;
+    display: inline-block;
+  }
+  .button-holder a.button {
+    background: #e54e54;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #fff;
+    margin-right: 10px;
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+  }
+  .button-holder a.button:hover {
+    color: #e54e54;
+    background: #fff; 
+    box-shadow: 0 0 30px rgba(0,0,0,0.25);  
+  }
+  .banner-buttons {
+    background: #fff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .highlight a.button:first-child {
+    margin-left: 0px;
+  }
+  .highlight a.button:last-child {
+    margin-right: 0px;
+  }
+  .highlight {
+    height: 100%;
+  }
+  .highlight .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .facebook-widget {
+    width: 100%;
+    float: left;
+    text-align: center;
+    margin-top: 15px;
+  }
+  /*dropdown*/
+  .nav > li.dropdown.open {
+    position: static;
+  }
+  .nav > li.dropdown.open .dropdown-menu {
+    width: 100%;
+    text-align: center;
+    left: 0;
+    right: 0;
+    display: table;
+  }
+  .dropdown-menu > li {
+    display: table-cell;
+    float: left;
+  }
+  .content-blok-titelnav {
+    font: bold 14px/35px "Open-Sans", Arial, sans-serif;
+    color: #efefef;
+    border-bottom: 1px solid #253443;
+  }
+  /* kamer zoeken */
+  .kamer-zoeken {
+    height: 35vh;
+    overflow: hidden;
+    background-position: center center !important;
+    width: 100%;
+    background-size: cover !important;
+    position: relative;
+    z-index: 999;
+  }
+  .background-img {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .home-filter {
+    padding: 35px 0px 35px 0px;
+    display: block;
+    max-width: 690px;
+    margin: auto;
+    color: #fff;
+  }
+  .filter-titel {
+    color: #fff !important;
+    padding-bottom: 10px;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 2em;
+    text-align: center;
+    text-shadow: 0px 0px 10px black;
+  }
+  .tabcontainer {
+    text-align: center;
+  }
+  .filter-btn {
+    display: inline-block;
+    font-weight: 900;
+    color: grey;
+    font-size: 1em;
+    line-height: 2em;
+    margin: 7px;
+    padding: 0.4em 0.5em;
+    text-shadow: none;
+    white-space: nowrap;
+    border-radius: 5px;
+  }
+  .home-actief {
+    display: inline-block;
+    font-weight: 900;
+    color: grey;
+    font-size: 1em;
+    line-height: 2em;
+    margin: 7px;
+    padding: 0.4em 0.5em;
+    text-shadow: none;
+    white-space: nowrap;
+    border-radius: 5px;
+    background: white !important;
+    color: black !important;
+  }
+  .home-actief:hover {
+    text-decoration: none;
+  }
+  .zoek-bar-content {
+    display: block;
+  }
+  .prijsfilter {
+    background: rgba(256, 256, 256, 0.8);
+    border: none;
+    width: 100%;
+    border-radius: 4px;
+  }
+  .td-max {
+    width: 33%;
+    padding: 0px;
+  }
+  .td-btn {
+    width: 33%;
+    padding: 4px;
+  }
+  .filter-select {
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    padding: 8px;
+    width: 100%;
+    color: #19232d;
+    text-align: center;
+    font: 9.33333px "Open Sans", Arial, sans-serif;
+  }
+  .filter-zoeken {
+    padding: 8px 0px;
+    width: 100%;
+    border: none;
+    color: #fff;
+    text-shadow: 0 1px 1px #304500;
+    white-space: nowrap;
+    word-break: keep-all;
+    background: -webkit-linear-gradient(top, #93d400, #77ab00);
+    background-color: #77ab00;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    font-weight: normal;
+    font-size: 14px;
+  }
+  .filter {
+    background: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+  }
+  form.zoek-form {
+    margin-top: 15px;
+  }
+  .filter b:first-child {
+    text-align: center;
+  }
+  .filter b {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  .filter label {
+    display: block;
+    font-weight: normal;
+  }
+  .filter input[type="checkbox"] {
+    margin-right: 10px;
+    float: left;
+  }
+  /* zoek resultaten */
+  .nieuwsimg {
+    margin-top: 20px;
+  }
+  /* kamer aanbod */
+  .beschrijving {
+    margin-left: 55px;
+    float: left;
+    margin-bottom: 0px;
+  }
+  .type {
+    float: left;
+  }
+  .aanbod-prijs, .oppervlakte { 
+    margin-right: 15px;
+  }
+  .aanbod-prijs, .oppervlakte {
+    font-size: 14px;
+    float: right;
+  }
+  .info {
+    border-top: solid 1px #e2e2e2;
+    border-bottom: solid 1px #e2e2e2;
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .main-content {
+    margin-top: 15px;
+  }
+  .kamer-straat a {
+    text-decoration: none !important;
+    color: #337ab7;
+  }
+  a.bekijkkamer {
+    text-decoration: none !important;
+  }
+  .bekijkkamer {
+    margin-top:10px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #fff;
+    background: #d6820b;
+    background-color: #d6820b;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    border: 1px solid #93d400;
+    color: #fff !important;
+    float: right;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+  .bekijkkamer:hover {
+    background: #2b0210;
+  }
+
+  .kamer-img {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+  }
+  .kamer-info {
+    position: relative;
+    margin-top: -12px;
+    background: #f2f2f2;
+    line-height: 25px;
+    font-size: 11px;
+    color: #a6a6a6;
+    padding-left: 14px;
+    overflow: hidden;
+  }
+  .artikel .kamer-straat {
+    margin-left: 0px;
+    font-weight: bold;
+  }
+  .kamer-straat {
+    font-weight: 600;
+    margin-bottom: 13px;
+    margin-left: 9px;
+    font-family: inherit;
+    line-height: 1.5;
+    font-size: 18px;
+    display: inline-block;
+  }
+  .sidebarhome {
+    border-left: 1px solid transparent;
+    list-style-type: none;
+  }
+  .laatstenieuws-bar {
+    background: #19232d;
+    color: #efefef;
+    padding: 0 14px;
+  }
+  .laatstenieuws-titel {
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 34px;
+  }
+  .laatstenieuws-berichten {
+    list-style-type: none;
+    margin-left: -38px;
+  }
+  .laatstenieuws-berichten > li > a {
+    color: #19232d;
+    text-decoration: none;
+  }
+  .laatstenieuws-berichten > li > a:hover {
+    text-decoration: underline;
+  }
+  .borderright {
+    border-right: 1px solid #d9d9d9;
+  }
+  .bericht {
+    border-bottom: 1px solid #d9d9d9;
+    padding: 7px 0px;
+  }
+  .huurwoning {
+    margin-bottom: 21px;
+    margin-top: 20px;
+  }
+  .huurwoning-titel {
+    text-decoration: none;
+    font-weight: bold;
+    color: #19232d;
+  }
+  .huurwoning-tekst {
+    color: #19232d;
+  }
+  /* footer */
+  .main-footer {
+    background: #19232d;
+    margin-top: 50px;
+  }
+  .footer-content {
+    min-height: 1px;
+    box-sizing: border-box;
+    list-style-type: none;
+    line-height: 1.9;
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+  }
+  .content-blok {
+    color: #d7dade;
+    font-size: 13px;
+    line-height: 1.9;
+    float: left;
+    min-height: 1px;
+    box-sizing: border-box;
+  }
+  .content-blok-titel {
+    font: bold 14px/35px "Open-Sans", Arial, sans-serif;
+    color: #c5c7cb;
+    border-bottom: 1px solid #253443;
+    margin-bottom: 28px;
+  }
+  .content-blok-tekst a {
+    color: #e0e3e9;
+  }
+  .lower-foot {
+    background: #121a21;
+    color: #8d8e92;
+    font-size: 13px;
+    line-height: 1.9;
+    font-size: 14px;
+  }
+  .lower-foot .container {
+    padding: 15px;
+    overflow: hidden;
+  }
+  .lower-content {
+    float: left;
+  }
+  .lower-foot a {
+    color: #b6b7b9;
+  }
+  .scrolltotop {
+    background-color: #1e2935;
+  }
+  /* Kamer details*/
+  .kamer-detail {
+    line-height: 1.857;
+    font-size: 13px;
+    position: relative;
+  }
+  .meerinfo {
+    padding: 11px 14px;
+    font-size: 13px;
+    color: #fff;
+    background: -webkit-linear-gradient(top, #93d400, #77ab00);
+    background-color: #77ab00 !important;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    border: 1px solid #77ab00;
+    color: #fff !important;
+    text-shadow: 0 1px 1px #304500;
+  }
+  .meerinfo:hover {
+    text-decoration: none;
+  }
+  .vorige-pagina {
+    background: #f9f9f9;
+    border: 1px solid #d9d9d9;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: 19232d;
+    cursor: pointer;
+  }
+  .tab {
+    background-color: #d9d9d9;
+    cursor: pointer;
+  }
+  .tab.active {
+    background-color: #f2f2f2;
+  }
+  .post-meta {
+    padding: 0;
+    font-size: 11px;
+    padding: 10px 0;
+    border: 1px solid #d9d9d9;
+    border-left: 0;
+    border-right: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .post-share {
+    border-top: 1px solid #d9d9d9;
+    padding: 28px 0;
+    margin-top: 28px;
+    overflow: hidden;
+  }
+  .share-links a {
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    margin-right: 2px;
+    background: #19232d;
+  }
+  .post-share .text {
+    font-size: 13px;
+    display: inline-block;
+    margin-right: 30px;
+    color: #19232d;
+  }
+  .share-links {
+    float: right;
+  }
+  .share-links a {
+    text-decoration: none;
+  }
+  .share-links .fa-twitter {
+    background: #2aa9e0;
+  }
+  .share-links .fa-facebook {
+    background: #204385;
+  }
+  .share-links .fa-google-plus {
+    background: #d3492c;
+  }
+  .share-links .fa-pinterest {
+    background: #ca2128;
+  }
+  .kamer {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+  }
+  .kamer-thumbnail {
+    height: 200px;
+    width: 317px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .kamer-meta {
+    font-size: 13px;
+    background-color: #19343d;
+    color: #efefef;
+    line-height: 34px;
+    padding-right: 14px;
+    text-align: center;
+  }
+  .reageer {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #d9d9d9;
+    background: white;
+  }
+  .reageer-btn {
+    margin: auto;
+    width: 100%;
+    max-width: 202px;
+    padding: 15px 0px;
+    font-size: 14px;
+    border: 1px solid #77ab00;
+    color: white !important;
+    text-shadow: 0 1px 1px #304500;
+    white-space: nowrap;
+    background: -webkit-linear-gradient(top, #93d400, #77ab00);
+    background-color: #77ab00 !important;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+  }
+  .reageer a:hover {
+    text-decoration: none;
+  }
+  .kamer-table {
+    width: 100%;
+    background-color: #f2f2f2;
+    color: #8d97a1;
+    font-size: 13px;
+  }
+  .kamer-table td {
+    padding: 7px 7px;
+  }
+  .kamer-tab {
+    width: 50%;
+  }
+  .kamer-tab a {
+    color: #000;
+  }
+  
+  .img-holder {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    width: 100%;
+    float:left;
+  }
+  .logo .img-holder img {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .checkboxset ul {
+    list-style-type: none;
+    padding-left: 0px;
+  }
+  .checkboxset label.left {
+    font-weight: bold;
+    margin-top: 15px;
+    float: left;
+    width: 100%;
+  }
+  .dropdown label.left {
+    display: none;
+  }
+  form#Form_ProjectenResultsForm {
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+  }
+  select.dropdown {
+    float: left;
+  }
+  select[name="minprijs"] {
+    padding: 10px 2px;
+    border: solid 1px #dcdcdc;
+  }
+  select[name="maxprijs"] {
+    padding: 10px 2px;
+    border: solid 1px #dcdcdc;
+  }
+  a.next, a.prev {
+    background: #e54e54;
+    box-shadow: 0 0 30px rgba(0,0,0,0.25);
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    float: left;
+    margin-top:1px;
+  }
+  a.next:hover, a.prev:hover {
+    background: #fff;
+    color: #e54e54;
+  }
+  p.numeration {
+    padding: 10px;
+    background: #e54e54;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+    float: left;
+    margin-right: 10px;
+    width: 40px;
+    text-align: center;  
+    margin-top: 10px;  
+    margin-bottom: 0px;  
+  }
+  a.numeration {
+    padding: 10px;
+    background: #fff;
+    color: #e54e54;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    float: left;
+    margin-right: 10px;
+    width: 40px;
+    text-align: center;  
+    margin-top: 10px;  
+  }
+  a.numeration:hover {
+    background: #e54e54;
+    color: #fff;
+  }
+  .highlight p {
+    color: #fff;
+    font-size: 34px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    word-spacing: 10px;
+    text-shadow: 0px 0px 15px rgba(0, 0, 0);
+  }
+  .content-blok-tekst a.button {
+    float: left;
+    width: 50%;
+    text-decoration: none;
+  }
+  .foto {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+  }
+  .foto img.img-responsive {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+  div.artikel {
+    color: #333;
+    background: #fff;
+    float: left;
+    width: 100%;
+    padding: 10px;
+    height: 110px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  div.artikel .kamer-straat {
+      margin-top: 0px;
+      margin-bottom: 0px;
+  }
+  .bekijkartikel {
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #fff;
+    background: #93d400;
+    background-color: #93d400;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    border: 1px solid #93d400;
+    color: #fff !important;
+    float: right;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    bottom: 15px;
+    right: 15px; 
+    text-decoration: none; 
+  }
+  .bekijkartikel:hover {
+    background: #77ab00;
+  }
+  input#Form_FormContact_action_submit {
+    margin-left: 5px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #fff;
+    background: #93d400;
+    background-color: #93d400;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    border: 1px solid #93d400;
+    color: #fff !important;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+  input#Form_FormContact_action_submit:hover {
+    background: #77ab00;
+  }
+  form#Form_FormContact input[type="text"], form#Form_FormContact input[type="email"], form#Form_FormContact textarea {
+    width: 50%;
+    margin-bottom: 15px;
+    padding: 5px;
+  }
+  form#Form_FormContact label {
+    font-weight: normal;
+  }
+  p.message.success {
+    background: #8dc78a;
+    color: #ffffff;
+    padding: 15px;
+    border: solid 1px #217d1f;
+    width: 50%;
+  }
+  .kamer-bestaat-niet img {
+    width: 100%;
+    height: auto;
+  }
+  h3.subtitel {
+    margin-top: 30px;
+    float: left;
+  }
+  .children {
+    display: inline-block;
+  }
+  .children .dropdown {
+    display: none;
+  }
+  span.visuallyhidden {
+    display: none;
+  }
+  div#Nocaptcha-Form_FormContact_Captcha {
+    visibility: hidden;
+  }
+  @media only screen and (min-width: 992px) {
+    .mobilemenu, .mobilemenu-filter, .mobilemenu-menu {
+      display: none;
+    }
+    .kamercontent .afbeelding {
+      float: right;
+    }  
+    .kamercontent .tekst {
+      float: left;
+    }
+    .children {
+      display: inline-block;
+      position: relative;
+    }
+    .children:hover p.button {
+      background: #f9f9f9;
+      color: #e44f52;
+    }
+    .children:hover .dropdown {
+      position: absolute;
+      top: 49px;
+      width: 900px;
+      display: block;
+      left: 0;
+      background: #f9f9f9;
+      box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+    }
+    .children .dropdown a {
+      width: 30%;
+      float: left;
+      margin-right: 0px;
+    }  
+  }
+  @media only screen and (max-width: 992px) {
+    #cookie-bar.fixed.bottom {
+      bottom: 55px !important;
+    }  
+    .mobilemenu-menu .children {
+      display: inline-block;
+      position: relative;
+      width: 100%;
+    }
+    .mobilemenu-menu p.button {
+      font-weight: bold;
+      float: left;
+      width: 100%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: solid 1px #eaeaea;
+      color: #555;
+      text-decoration: none;
+      font-size: 16px;    
+    }
+    .mobilemenu-menu .children .dropdown {
+      position: absolute;
+      top: 52px;
+      width: 100%;
+      display: block;
+      left: 0;
+      background: #f9f9f9;
+      margin-bottom: 15px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+    }
+    .mobilemenu-menu .children .dropdown a {
+      width: 50%;
+      float: left;
+      margin-right: 0px;
+      padding-left: 10px;
+      padding-right: 10px;    
+    }  
+    .kamercontent .afbeelding {
+      float: left;
+    }  
+    .kamercontent .tekst {
+      float: right;
+    }  
+    .top-bar {
+      position: relative;
+    }
+    .kamer-zoeken {
+      margin-top: 0;
+    }
+    .translation-icons a {
+      margin-left: 7.5px;
+      margin-top: 17.5px;
+    }  
+    .translation-icons a:first-child {
+      margin-left: 0px;
+    }
+    .mobilemenu {
+      position: fixed;
+      z-index: 9999;
+      bottom: 0;
+      background: #e64e54;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+      width: 100%;
+    }  
+    .mobilemenu span {
+      color: #fff;
+      font-size: 16px;
+      padding-bottom: 15px;
+      padding-top: 15px;  
+      display: block;
+      cursor: pointer  
+    }
+    .mobilemenu span i {
+      font-size: 22px;
+      margin-right: 10px;
+    }
+    .mobilemenu-menu {
+      transform: translateY(-115%);
+      position: relative;
+      top: 0px;
+      width: 100%;
+      height: 0vh;
+      overflow-y: scroll;    
+      background: #fff;
+      z-index: 9998;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+      transition: 0.3s ease-in-out;
+    }  
+    .mobilemenu-menu.active {
+      transform: translateY(0);
+      height: 60vh;
+    }
+    .mobilemenu-filter {
+      transform: translateY(100%);
+      position: fixed;
+      bottom: 55px;
+      width: 100%;
+      height: 60vh;
+      overflow-y: scroll;    
+      background: #fff;
+      z-index: 9999;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+      transition: 0.3s ease-in-out;
+    }  
+    .mobilemenu-filter.active {
+      transform: translateY(0);
+    }  
+    .mobilemenu-filter .filter {  
+      width: 100%;
+    }
+    .mobilemenu-filter .dropdown select {
+      float: left;
+      width: 100%;
+    }
+    .mobilemenu-filter ul.optionset.checkboxset li {
+      float: left;
+      width: 100%;
+    }  
+    .mobilemenu-filter ul.optionset.checkboxset li label {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .filter b {
+      font-size: 20px;
+      float: left;
+      font-weight: normal;
+    }
+    .mobilemenu-filter ul.optionset.checkboxset li input{
+      width: 18px;
+      height: 18px;
+    }    
+    .mobilemenu-menu a {
+      float: left;
+      width: 100%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: solid 1px #eaeaea;
+      color: #555;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    .mobilemenu-menu a:last-child {
+      border-bottom: none;
+    }
+    .aanbod-prijs, .oppervlakte, .type {
+      float: left;
+      width: 33.3%;
+      margin-right: 0;
+    }
+    .kamer {
+      border-radius: 7.5px;
+      overflow: hidden;
+      padding: 0;
+      margin-bottom: 30px;
+      -webkit-box-shadow: 0px -5px 27px 0px rgba(0,0,0,0.1);
+      -moz-box-shadow: 0px -5px 27px 0px rgba(0,0,0,0.1);
+      box-shadow: 0px -5px 27px 0px rgba(0,0,0,0.1);
+      border: solid 1px #eaeaea;
+    }
+    .kamer .row.no-gutters {
+      margin-right: 0;
+      margin-left: 0;
+    }
+    .kamer .row.no-gutters > [class^="col-"],
+    .kamer .row.no-gutters > [class*=" col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }  
+    .kamer-straat {
+      font-size: 16px;
+      margin-top: 12px;    
+    }  
+    p.beschrijving {
+      display: none;
+    }
+    .info {
+      margin-bottom: 0px;
+    }
+    .info {
+      border-bottom: none;
+    }
+    .img-holder {
+      height: 300px;
+    }
+    .kamer-zoeken {
+      display: none;
+    }
+    .breadcrumbs {
+      margin-top: 0px;
+    }
+    .aanbod-heading {
+      line-height: auto;
+    }
+    body {
+      float: left;
+      width: 100%;
+      margin-bottom: 55px;
+    }
+    .kamer-straat a {
+      font-weight: 600;
+    }
+    .sidebarhome {
+      border-left: 1px solid transparent;
+      list-style-type: none;
+      float: left;
+      width: 100%;
+    }  
+    form#Form_FormContact input[type="text"], form#Form_FormContact input[type="email"], form#Form_FormContact textarea {
+      width: 100%;
+    }  
+    div.artikel {
+      height: auto;
+      padding-bottom: 50px;
+    }  
+  }
+  @media only screen and (max-width: 640px) {
+    .aanbod-prijs, .oppervlakte, .type {
+      width: 100%;
+    }
+    .oppervlakte, .aanbod-prijs  {
+      border-top: solid 1px #e2e2e2;    
+    }
+    .content-blok-tekst a.button {
+      width: 100%;
+    }
+    #cookie-bar a {
+      width: 100%;
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+  
+  #cookie-bar {background:#fbfbfb; height:auto; line-height:24px; color:#363636; text-align:center; padding-top: 1rem; padding-bottom: 1rem; 	-webkit-box-shadow: 0px 0px 5px 0px rgba(54,54,54,0.15);
+      -moz-box-shadow: 0px 0px 5px 0px rgba(54,54,54,0.15);
+      box-shadow: 0px 0px 5px 0px rgba(54,54,54,0.15);}
+  #cookie-bar.fixed {position:fixed; top:0; left:0; width:100%;}
+  #cookie-bar.fixed.bottom {bottom:0; top:auto; z-index: 9999;}
+  #cookie-bar p {margin:0; padding:0;}
+  #cookie-bar a {color:#fff; display:inline-block; border-radius:4px; text-decoration:none; padding: 7.5px 15px; margin-left:8px; -webkit-transition: 0.3s all; transition: 0.3s all;}
+  #cookie-bar .cb-enable {background:#007700;}
+  #cookie-bar .cb-enable:hover {background:#009900;}
+  #cookie-bar .cb-disable {background:#990000;}
+  #cookie-bar .cb-disable:hover {background:#bb0000;}
+  #cookie-bar .cb-policy {background:#0033bb;}
+  #cookie-bar .cb-policy:hover {background:#0055dd;}
+  
+  
+  .menu-list-footer {
+    list-style-type:none;
+    margin:0px;
+    padding:0px;
+  }
+  .menu-list-footer li {
+    margin:0px;
+  }
+  .menu-list-footer li a {
+    color:#FFF;
+  }
+  
+  .menu-list-footer li a:hover {
+    text-decoration:none;
+  }
+  
+  
+  .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 50px;
+    border-radius: 4px;
+  }
+  .country-dropdown {
+    float:left;
+    margin-top:5px;
+  }
+  
+  .country-dropdown .dropdown-toggle {
+    background:#fff;
+    border:1px solid #000;
+  }
+  .country-dropdown .dropdown-toggle .caret {
+    color:#000;
+  }
+  .country-dropdown .dropdown-menu {
+    width:auto;
+    min-width:unset;
+    background:#fff;
+    border:1px solid #000;
+    box-shadow:2px 2px 8px 4px rgba(0,0,0,0.2);
+    position:absolute;
+  }
+  .country-dropdown .dropdown-menu li {
+    display:block;
+    float:unset;
+  }
+  .country-dropdown .dropdown-menu>li>a {
+    margin:0;
+  }
+  .menu-button-nav {
+    display:none;
+    position:relative;
+    float:right;
+    margin-top:12px;
+  }
+  .menu-button-nav .menu-button {
+    color:#000;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media screen and (max-width:992px) {
+    .country-dropdown {
+      margin-top:10px;
+      float:left;
+      position:relative;
+      margin-right:10px;
+    }
+    .menu-button-nav {
+      display:block;
+    }
+  }
+  

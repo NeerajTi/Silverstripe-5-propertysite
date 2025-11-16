@@ -1,0 +1,212 @@
+#header {
+    background:$wit;
+    .container {
+        max-width:1440px;
+    }
+    .navbar-collapse  {
+
+        .navbar-nav {
+            .nav-item {
+                .nav-link {
+                    color:$zwart;
+                    transition:all 0.5s ease;
+                    padding-left:25px;
+                }
+            }
+        }
+    }
+    .dropdown-menu {
+        @include media-breakpoint-down(md) {
+            padding:5px 10px;
+        }
+    }
+    .dropdown-menu>li {
+        @include media-breakpoint-down(md) {
+            display: unset;
+            float: unset
+        }
+    }
+}
+.main-header {
+    position:fixed;
+    width:100%;
+    transition:all 0.5s ease;
+    z-index:1004;
+    top:0;
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                color:$zwart;
+                transition:all 0.5s ease;
+                padding-left:25px;
+            }
+        }
+    }
+    .navbar-toggler {
+        color:$zwart;
+        transition:all 0.5s ease;
+        outline:0;
+        box-shadow:unset!important;
+        border:0;
+    }
+
+}
+.main-header.scroll {
+    background:$wit;
+    transition:all 0.5s ease;
+
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                color:$zwart!important;
+            }
+        }
+    }
+    .navbar-toggler {
+        color:$zwart!important;
+        outline:0;
+        box-shadow:unset!important;
+        border:0;
+    }
+}
+
+.HomePage {
+    #header {
+        background:unset;
+    }
+.main-header {
+    position:fixed;
+    width:100%;
+    transition:all 0.5s ease;
+    z-index:1004;
+    top:0;
+
+    .navbar-collapse {
+        @include media-breakpoint-up(md) {
+            background:unset;
+        }
+        @include media-breakpoint-down(md) {
+            background:$wit;
+        }
+    }
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                color:$wit!important;
+                transition:all 0.5s ease;
+                padding-left:25px;
+
+                @include media-breakpoint-down(md) {
+                    color:$zwart!important;
+                }
+            }
+        }
+    }
+    .navbar-toggler {
+        color:$wit;
+        transition:all 0.5s ease;
+        outline:0;
+        box-shadow:unset!important;
+        border:0;
+    }
+
+}
+.main-header.scroll {
+    background:$wit!important;
+    transition:all 0.5s ease;
+
+    .navbar-collapse  {
+
+        .navbar-nav {
+            .nav-item {
+                .nav-link {
+                    color:$zwart!important;
+                    transition:all 0.5s ease;
+                    padding-left:25px;
+                }
+            }
+        }
+    }
+    .navbar-toggler {
+        color:$zwart!important;
+        outline:0;
+        box-shadow:unset!important;
+        border:0;
+    }
+    .dropdown-menu {
+        @include media-breakpoint-down(md) {
+            padding:5px 10px;
+        }
+    }
+    .dropdown-menu>li {
+        @include media-breakpoint-down(md) {
+            display: unset;
+            float: unset
+        }
+    }
+    .socials-head {    
+        a {
+            color:#d6820b;
+            margin-left:10px;
+            text-decoration:none;
+            
+            svg {
+                font-size:20px;
+            }
+    
+            &:hover {
+                color:#2b0210;
+            }
+        }
+    }
+}
+}
+.socials-head {
+    display:none;
+
+    a {
+        color:#d6820b;
+        margin-left:10px;
+        text-decoration:none;
+        
+        svg {
+            font-size:20px;
+        }
+
+        &:hover {
+            color:#2b0210;
+        }
+    }
+}
+.HomePage {
+    .socials-head {
+        a {
+            color:$wit;
+            margin-left:10px;
+            text-decoration:none;
+            
+            svg {
+                font-size:20px;
+            }
+
+            &:hover {
+                color:#d6820b;
+            }
+        }
+    }
+}
+@media screen and (max-width:992px) {
+    .dropdown-item {
+        font-size:14px;
+    }
+    .show {
+        display:block!important;
+    }
+    .navbar-collapse {
+        max-height:560px;
+        overflow-y: auto;
+    }
+    .socials-head {
+        display:block;
+    }
+}

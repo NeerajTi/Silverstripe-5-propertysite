@@ -1,0 +1,17 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+Page:
+  extensions:
+    - ViteHelper\Vite\ViteDataExtension
+
+ViteHelper\Vite\ViteHelper:
+  forceProductionMode: false
+  devHostNeedle: $_SERVER['HTTP_HOST']
+  devPort: 3000
+  jsSrcDirectory: '/public/_resources/themes/template/src/js/'
+  mainJS: 'main.js'
+  manifestDir: '/public/manifest.json'

@@ -1,0 +1,28 @@
+---
+Name: registrationroutes
+After: '#routes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'registration//$Action/$ID/$OtherID': 'App\Controller\RegistrationPageController'
+    'login//$Action/$ID/$OtherID': 'App\Controller\UserAuthController'
+    'dashboard//$Action/$ID/$OtherID': 'App\Controller\DashboardController'
+    'forgot-password//$Action/$ID/$OtherID': 'App\Controller\UserForgotPasswordController'
+    'testpage': 'App\Controller\TestPagesController'
+    'account-removed': 'App\Controller\RegistrationPageController'
+    'apartment//$Action/$ID/$OtherID': 'App\Controller\ApartmentController'
+    'stadtteile-berlins//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    'front-apartment//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    'stadtteile-berlins': 'App\Controller\FrontApartmentController'
+    'wohnungsuche': 'App\Controller\FrontApartmentController'
+    'renter-dashboard//$Action/$ID/$OtherID': 'App\Controller\RenterDashboardController'
+    'owner-dashboard//$Action/$ID/$OtherID': 'App\Controller\OwnerDashboardController'
+    'renter-dashboard': 'App\Controller\RenterDashboardController'
+    'wishlist//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    'save-search-action//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    'payment//$Action/$ID/$OtherID': 'App\Controller\PaymentController'
+    'view-on-map//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    #'registration/checkemail/$Hash': 'App\Controller\RegistrationPageController'
+    #'registration/validateuser/$Hash': 'App\Controller\RegistrationPageController'
+    #'registration/resendemail/$Hash': 'App\Controller\RegistrationPageController'
+   

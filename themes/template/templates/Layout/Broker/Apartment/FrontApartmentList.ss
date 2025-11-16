@@ -1,0 +1,429 @@
+<% include MainHeader %>
+
+	<% include Header %>
+	<style>
+	.ajax-overlay[hidden] { display: none !important; }
+
+.ajax-overlay {
+  position: fixed;
+  inset: 0;                   /* top/right/bottom/left: 0 */
+  background: rgba(0,0,0,.35);
+  z-index: 2000;              /* above headers/modals — adjust if needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;        /* block clicks */
+  cursor: wait;
+}
+
+.ajax-overlay__inner {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  background: rgba(255,255,255,.95);
+  padding: 1rem 1.25rem;
+  border-radius: .5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.ajax-overlay__text {
+  font-weight: 600;
+}
+
+/* Optional: prevent scroll while overlay visible */
+html.is-busy, body.is-busy { overflow: hidden; }
+</style>
+<style>
+/* force hide */
+.filter-section .filter-group.hidden {
+    display: none !important;
+}
+
+/* keep .extra-filters visible (if accidentally hidden in some cases) */
+
+
+/* pointer for clickable row */
+.filter-group.extra-filters { cursor: pointer; user-select: none; }
+
+
+</style>
+
+	<div id="globalAjaxOverlay" class="ajax-overlay" aria-live="polite" aria-busy="false" hidden>
+  <div class="ajax-overlay__inner">
+    <!-- Bootstrap 4/5 spinner -->
+    <div class="spinner-border" role="status" aria-label="Bitte warten…"></div>
+    <div class="ajax-overlay__text">Bitte warten…</div>
+  </div>
+</div>
+	<input type="hidden" id="SecurityID" value="$SecurityID">
+<div class="container">
+	<article>
+		<!--<div class="content"><p>Willkommen auf der Website wohnungmietenberlin.de. Die Website, auf der Sie schnell eine passende Unterkunft in Berlin finden werden. Gehen Sie am besten zum Filter und wählen Sie dann die Höhe der Höchstmiete. Wenn Sie ein passendes Objekt gefunden haben, klicken Sie es an und dann auf "Weitere Informationen". Dort finden Sie alle Informationen darüber, wie Sie die Immobilie mieten können und wie Sie den Vermieter kontaktieren können.</p></div>-->
+	</article>
+	
+</div>
+		<div class="project_list_view white_bg">
+			<div class="container">
+      <div class="title-header">
+        <h1 class="global-title">$Title</h1>
+      </div>
+      <div class="total_result_view hide-on-mobile">$totalApartments Mietwohnungen in Berlin $isLoggedIn</div>
+		<div class="row">
+		<div class="col-xl-3 col-sm-12 col-md-4">
+		<div class="filter-widget">
+		<!-- Map Section -->
+					<div class="map-preview">
+						<iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=,+$&amp;key=AIzaSyCfb-eiIrgMep_e9DbwR0z8SFuDA4YulbM"></iframe>
+						<a class="map-button">Auf die karte anzeigen</a>
+					</div>
+		</div>
+		<!-- Filter Panel -->
+					<div class="filter-section">
+						<h2>Filtern</h2>
+
+						<!-- Price Filter -->
+						<div class="filter-group">
+							<div class="select_row">
+								<label class="filter-label">Preis</label>
+								<select class="filter-select">
+									<option>Kaltmiete</option>
+									<option>Warmmiete</option>
+								</select>
+							</div>
+							<div class="range-wrapper" data-name="price" data-min="0" data-max="$MaxPrice"  data-default="$MaxPrice" data-prefix="€ " data-suffix="">
+								<div class="custom-range-track" id="customTrack" >
+									<div class="custom-range-fill" id="customFill"></div>
+									<div class="custom-range-thumb" id="customThumb"></div>
+								</div>
+								<div class="range-labels">
+									<span>€ 0</span>
+									<span class="valueDisplay">€ $MaxPrice</span>
+								</div>
+							</div>
+						
+						</div>
+
+						<!-- Space Filter -->
+						<div class="filter-group">
+							<label class="filter-label">Wohnungfläche</label>
+							<div class="range-wrapper" data-name="space" data-min="0" data-max="$MaxRoomspace" data-default="$MaxRoomspace" data-prefix="" data-suffix=" m²">
+								<div class="custom-range-track" id="customTrack">
+									<div class="custom-range-fill" id="customFill" style="width: 332px;"></div>
+									<div class="custom-range-thumb" id="customThumb" style="left: 332px;"></div>
+								</div>
+								<div class="range-labels">
+									<span>0 m²</span>
+									<span class="valueDisplay">$MaxRoomspace m²</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Zimmer Filter -->
+						<div class="filter-group">
+							<label class="filter-label">Zimmer</label>
+							<ul class="checkbox-list">
+							<li><label><input type="checkbox" data-name="Rooms" data-role="any" value="" class="checkboxfilter" checked=""> Egal <span>$TotalRooms</span></label></li>
+							<% if $RoomCounts %>
+								<%loop $RoomCounts %>
+								<li><label><input type="checkbox" data-name="Rooms" value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
+								<% end_loop %>
+								<% end_if %>
+							</ul>
+						</div>
+
+						<div class="filter-group">
+							<label class="filter-label">Stadtteil</label>
+							<ul class="checkbox-list">
+								<li><label><input type="checkbox" data-name='Location' data-role="any" value="" class="checkboxfilter" checked=""> Alle <span>$TotalCityParts</span></label></li>
+								<% if $CityPartCounts %>
+								<%loop $CityPartCounts %>
+								<li><label><input type="checkbox" data-name='Location' value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
+								<% end_loop %>
+								<% end_if %>
+								
+							</ul>
+						</div>
+
+				
+
+							<div class="filter-group">
+								<label class="filter-label">Ausstattung</label>
+								<ul class="checkbox-list">
+								<% if $OptionCounts %>
+									<%loop $OptionCounts %>
+									<li><label><input data-name='equipment' value="$Key" class="checkboxfilter" type="checkbox"> $Key <span>$Value</span></label></li>
+									<% end_loop %>
+									<% end_if %>
+
+								</ul>
+							</div>
+
+						<!-- Extra Filters -->
+						<div class="filter-group extra-filters">
+							<label class="filter-label">Extra filters <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></label>
+						</div>
+
+						<!-- Save Button -->
+						<div class="save-button-wrap">
+         
+            <% if $isLoggedIn %>
+            
+							<a class="save-search-button user-save-search" ><i class="fa fa-search"></i> Suche speichern</a>
+            <% else %>
+            <a class="save-search-button" data-bs-toggle="popover" data-bs-placement="bottom"  data-bs-html="true" data-bs-content="Please <a href='/login'>login</a> to save search" ><i class="fa fa-search"></i> Suche speichern</a>
+            <% end_if %>
+						</div>
+					</div>
+		</div>
+		<div class="col-xl-9 col-sm-12 col-md-8" id="PropertyListTarget">
+	
+<% include PropertyList %>
+		</div>
+		</div>
+
+
+			</div>
+		</div>
+<script>
+function showAjaxOverlay() {
+  const ov = document.getElementById('globalAjaxOverlay');
+  if (!ov) return;
+  ov.hidden = false;
+  ov.setAttribute('aria-busy', 'true');
+  document.documentElement.classList.add('is-busy');
+  document.body.classList.add('is-busy');
+}
+
+function hideAjaxOverlay() {
+  const ov = document.getElementById('globalAjaxOverlay');
+  if (!ov) return;
+  ov.hidden = true;
+  ov.setAttribute('aria-busy', 'false');
+  document.documentElement.classList.remove('is-busy');
+  document.body.classList.remove('is-busy');
+}
+
+/* If multiple AJAX calls can overlap, use a ref counter */
+let __ajaxCounter = 0;
+function ajaxOverlayOn() { if (++__ajaxCounter === 1) showAjaxOverlay(); }
+function ajaxOverlayOff() { if (__ajaxCounter > 0 && --__ajaxCounter === 0) hideAjaxOverlay(); }
+// small debounce helper
+const target = document.getElementById('PropertyListTarget');
+const debounce = (fn, wait = 250) => {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+};
+
+  const endpoint ='/stadtteile-berlins/ajaxview';
+  const securityID = document.querySelector('input[name=SecurityID]')?.value || '';
+ 
+
+  // Collect current values from all sliders
+  function collectFilters() {
+    const data = {};
+    document.querySelectorAll('.range-wrapper').forEach(w => {
+      const name = w.dataset.name || w.id || 'slider';
+      const min = parseInt(w.dataset.min);
+      const max = parseInt(w.dataset.max);
+      const val = parseInt(w.dataset.value || w.dataset.default);
+      data[name] = isNaN(val) ? '' : val;
+      // You can also send min/max if your filter logic needs them
+      // data[`${name}_min`] = min; data[`${name}_max`] = max;
+    });
+    return data;
+  }
+
+
+  async function fetchList() {
+    if (!target) return;
+
+    const payload = buildPayload();
+   for (const [key, value] of payload.entries()) {
+  console.log(`${key}: ${value}`);
+}
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: payload
+      });
+      const html = await res.text();
+      target.innerHTML = html;
+    } catch (e) {
+      console.error('AJAX load failed', e);
+    } finally {
+    ajaxOverlayOff();
+  }
+  }
+
+  const fetchListDebounced = debounce(fetchList, 250);
+  document.querySelectorAll('.range-wrapper').forEach(wrapper => {
+    const track = wrapper.querySelector('.custom-range-track');
+    const thumb = wrapper.querySelector('.custom-range-thumb');
+    const fill = wrapper.querySelector('.custom-range-fill');
+    const display = wrapper.querySelector('.valueDisplay');
+
+    const min = parseInt(wrapper.dataset.min);
+    const max = parseInt(wrapper.dataset.max);
+    const prefix = wrapper.dataset.prefix || '';
+    const suffix = wrapper.dataset.suffix || '';
+    let value = parseInt(wrapper.dataset.default);
+
+    function updateUI(val) {
+		wrapper.dataset.value = String(val);
+      const percent = (val - min) / (max - min);
+      const trackWidth = track.offsetWidth;
+      const pos = percent * trackWidth;
+      thumb.style.left = `${pos}px`;
+      fill.style.width = `${pos}px`;
+      display.textContent = `${prefix}${val}${suffix}`;
+    }
+
+    function getValueFromPosition(x) {
+      const rect = track.getBoundingClientRect();
+      let pos = x - rect.left;
+      pos = Math.max(0, Math.min(pos, rect.width));
+      const percent = pos / rect.width;
+      return Math.round(min + percent * (max - min));
+    }
+
+    function handleMove(e) {
+      value = getValueFromPosition(e.clientX);
+      updateUI(value);
+	  fetchListDebounced();
+    }
+
+    track.addEventListener('click', handleMove);
+
+    thumb.addEventListener('mousedown', () => {
+      const onMouseMove = e => handleMove(e);
+      const onMouseUp = () => {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+		fetchListDebounced();
+      };
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+
+    updateUI(value);
+  });
+
+  // --- Checkbox group behavior (Any vs specific) + trigger AJAX ---
+document.addEventListener('change', (e) => {
+  const cb = e.target.closest('.checkboxfilter');
+  if (!cb) return;
+
+  const group = cb.dataset.name;
+  const boxes = Array.from(document.querySelectorAll(`.checkboxfilter[data-name="${group}"]`));
+  const anyBox = boxes.find(b => b.dataset.role === 'any');
+
+  if (cb.dataset.role === 'any') {
+    // If "Egal" is toggled on, uncheck all specifics
+    if (cb.checked) {
+      boxes.forEach(b => { if (b !== cb) b.checked = false; });
+    } else {
+      // keep at least one checked; if user unchecks "any" and none others checked, re-check it
+      if (!boxes.some(b => b !== cb && b.checked)) cb.checked = true;
+    }
+  } else {
+    // If a specific is checked, uncheck "Egal"
+    if (cb.checked && anyBox) anyBox.checked = false;
+
+    // If all specifics are off, ensure "Egal" goes back on
+    const anySpecificOn = boxes.some(b => b.dataset.role !== 'any' && b.checked);
+    if (!anySpecificOn && anyBox) anyBox.checked = true;
+  }
+
+  // Debounced reload
+  fetchListDebounced();
+});
+function buildPayload() {
+  const fd = new FormData();
+
+  // Sliders (persisted as dataset.value by your slider code)
+  const filters = collectFilters(); // { price: "...", space: "..." }
+  Object.entries(filters).forEach(([k, v]) => fd.append(k, v));
+  fd.append('SecurityID', securityID);
+
+  // Checkbox groups (collect checked non-empty values, send as name[]=v)
+  const groups = {};
+  document.querySelectorAll('.checkboxfilter').forEach(cb => {
+    const name = cb.dataset.name || 'misc';
+    if (!groups[name]) groups[name] = [];
+    if (cb.checked && cb.value !== '') groups[name].push(cb.value);
+  });
+
+  Object.entries(groups).forEach(([name, values]) => {
+    if (values.length) {
+      values.forEach(v => fd.append(`${name}[]`, v)); // e.g. Rooms[]=2&Rooms[]=3
+    }
+    // If none selected (or only "any" selected), omit => means "no restriction"
+  });
+
+  return fd;
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // find the extra-filters toggle element
+    const toggle = document.querySelector('.filter-group.extra-filters');
+    if (!toggle) return;
+
+    // find all filter-group elements within the section
+    const section = toggle.closest('.filter-section');
+    if (!section) return;
+
+    const allGroups = Array.from(section.querySelectorAll('.filter-group'));
+    // make a list of groups to hide/show (all except the toggle itself)
+    const groupsToToggle = allGroups.filter(g => !g.classList.contains('extra-filters'));
+
+    const icon = toggle.querySelector('.toggle-icon i');
+
+    // function to set state
+    function setCollapsed(collapsed) {
+        groupsToToggle.forEach(g => {
+            if (collapsed) g.classList.add('hidden');
+            else g.classList.remove('hidden');
+        });
+
+        // icon toggle
+        if (icon) {
+            icon.classList.toggle('fa-chevron-down', !collapsed);
+            icon.classList.toggle('fa-chevron-up', collapsed);
+        }
+
+        // ARIA for accessibility
+        toggle.setAttribute('aria-pressed', collapsed ? 'true' : 'false');
+
+        // optional class on section
+        section.classList.toggle('collapsed', collapsed);
+    }
+
+    // initialize state (not collapsed)
+    let collapsed = false;
+    setCollapsed(collapsed);
+
+    // click handler
+    toggle.addEventListener('click', function (e) {
+        collapsed = !collapsed;
+        setCollapsed(collapsed);
+    });
+
+    // keyboard support (Enter / Space to toggle)
+    toggle.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            collapsed = !collapsed;
+            setCollapsed(collapsed);
+        }
+    });
+});
+</script>
+	<% include Footer %>
+
+<% include MainFooter %>

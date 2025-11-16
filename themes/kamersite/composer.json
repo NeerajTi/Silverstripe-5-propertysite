@@ -1,0 +1,10 @@
+{
+	"extra": {
+        "expose": [
+            "css",
+            "images",
+            "javascript",
+            "fonts"
+        ]
+	}
+}

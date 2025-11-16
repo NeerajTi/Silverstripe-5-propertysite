@@ -1,0 +1,168 @@
+<% include MainHeader %>
+
+<% include Header %>
+
+<% include DashboardHeader %>
+<input type="hidden" name="SecurityID" value="$SecurityID">
+<h1>$Title</h1>
+
+				<div class="progress_form">
+					<div class="progress-container">
+						<div class="progress_bar" style="width:76.9%;"></div>
+					</div>
+						<h2 class="mb-3">Beschreibungen:</h2>
+					<form $Form.AttributesHTML>
+					<input type="hidden" id="ObjectIDModal" value="$apartment.ID">
+                    $BilderID
+                    $DocumentID
+                    $VideoID
+                    $GrundID
+						<div class="upload-section progress_form">
+					<h2 class="mb-3">Fotos und Dokumenten zufügen:</h2>
+					
+					<div class="row align-items-start">
+						<div class="upload-options d-flex flex-wrap gap-3">
+							<div class="upload-card col align-items-center uploadtrigger" data-table='Apartment' data-action='/apartment/uploadFile' data-delete-action='/apartment/deleteFile' data-field='Bilder' data-target="BilderIDInput">
+								<i class="fa-regular fa-image"></i>
+								<div class="title">Bilder</div>
+                                
+								<small>GIF, JPEG, PNG</small>
+							</div>
+
+							<div class="upload-card col uploadtrigger" data-table='Apartment' data-action='/apartment/uploadFile' data-field='Video' data-target="VideoIDInput">
+								<i class="fa-solid fa-video"></i>
+								<div class="title">Video, Max 1 GB</div>
+                               
+								<small>MPG, AVI, MOV, MKV, MP4</small>
+							</div>
+							<div class="upload-card col uploadtrigger" data-table='Apartment' data-action='/apartment/uploadFile' data-field='Document' data-target="DocumentIDInput">
+								<i class="fa-solid fa-file"></i>
+								<div class="title">Dokumenten</div>
+                                
+								<small>PDF</small>
+							</div>
+							<div class="upload-card col uploadtrigger" data-table='Apartment' data-action='/apartment/uploadFile' data-field='Grund' data-target="GrundIDInput">
+								<i class="fa-solid fa-map"></i>
+								<div class="title">Grundrisse</div>
+                               
+								<small>GIF, JPEG, PNG, PDF</small>
+							</div>
+						</div>						
+					</div>
+
+					<div class="row align-items-start ssdasd">
+						<div class="col">
+                     
+							<div class="uploaded-images d-flex gap-3 mt-5">
+								<div class="file-slot">
+                              
+									<div class="upload-ui" data-for="BilderIDInput">
+  <div class="progress" style="height:10px;">
+    <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+  </div>
+ <% if $apartment.Bilder.exists %>
+   <div class="apartment-gallery gap-3 d-flex flex-wrap" data-deleteaction='/apartment/deleteFile' data-objectid="$apartment.ID">
+  <% loop $apartment.Bilder %>
+    <div class="apartment-image image-box">
+      <img src="$Fill(400,300).URL" class="upload-preview" alt="$Title.ATT">
+      <button class="delete-btn-multiple"
+              type="button"
+              data-field="Bilder"
+              data-fileid="$ID"
+              data-action="/apartment/deleteFile">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  <% end_loop %>
+</div>
+<% else %>
+    <img src="" class="upload-preview" style="display:none" alt="">
+<% end_if %>
+
+</div>
+								</div>
+								<div class="file-slot">
+<div class="upload-ui" data-for="VideoIDInput">
+  <div class="progress" style="height:10px;">
+    <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+  </div>
+   <% if $apartment.Video %>
+   <div class="image-box">
+                            <a href="$apartment.Video.URL" class="upload-preview" target="_blank">Video</a>
+                              <button class="delete-btn" data-field="VideoID" data-objectid="$apartment.ID" data-table='Apartment' data-action='/apartment/deleteFile'><i class="fa-solid fa-trash"></i></button>
+                                <% else %>
+                               <a href="#;" class="upload-preview" style='display:none' target="_blank">Video</a>
+                                <% end_if %>
+								</div>
+
+</div>
+                               
+									
+								</div>
+								<div class="file-slot">
+								<div class="upload-ui" data-for="DocumentIDInput">
+  <div class="progress" style="height:10px;">
+    <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+  </div>
+   <% if $apartment.Document %>
+   <div class="image-box">
+                            <a href="$apartment.Document.URL" class="upload-preview" target="_blank">Pdf</a>
+                              <button class="delete-btn" data-field="DocumentID" data-objectid="$apartment.ID" data-table='Apartment' data-action='/apartment/deleteFile'><i class="fa-solid fa-trash"></i></button>
+                                <% else %>
+                               <a href="#;" class="upload-preview" style='display:none' target="_blank">Pdf</a>
+                                <% end_if %>
+								</div>
+
+</div>
+                              
+                                   
+									
+								</div>
+                                <div class="file-slot">
+															<div class="upload-ui" data-for="GrundIDInput">
+  <div class="progress" style="height:10px;">
+    <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+  </div>
+
+  <% if $apartment.Grund %>
+  <div class="image-box">
+                              <% if $apartment.Grund.extension == 'pdf' %>
+                              <a href="$apartment.Grund.URL" class="upload-preview" target="_blank">Grund</a>
+                              <% else %>
+                              <img src="$apartment.Grund.URL" class="upload-preview" alt="">
+                              <button class="delete-btn" data-field="GrundID" data-objectid="$apartment.ID" data-table='Apartment' data-action='/apartment/deleteFile'><i class="fa-solid fa-trash"></i></button>
+                              <% end_if %>
+                              <% else %>
+                             <a href="#;" class="upload-preview" style='display:none' target="_blank">Grund</a>
+                              <% end_if %>
+							  </div>
+
+</div>
+                           
+                                   
+									
+								</div>
+							</div>
+							<p class="mt-4 small_text">
+								In die dokumenten dürfen keine personenbezogenen daten enthalten.<br>
+								Namen, Adressen, Bankdaten von dritten enthalten.
+							</p>
+						</div>
+						<div class="col-auto mt-3">
+							<div class="tipp" style="max-width:260px;">
+								<h3><i class="fa-regular fa-lightbulb"></i> Tipp:</h3>
+								<div class="small_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</div>
+							</div>
+						</div>
+					</div>
+						
+							<div class="default_btn text-right mt-5"> $Form.Actions</div>
+						</form>
+					</div>
+             
+
+<% include DashboardFooter %>
+
+<% include Footer %>
+
+<% include MainFooter %>

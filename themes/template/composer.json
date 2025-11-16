@@ -1,0 +1,14 @@
+{
+  "name": "template",
+  "description": "",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "MIT License",
+  "type": "silverstripe-theme",
+  "extra": {
+    "expose": [
+        "webfonts",
+        "javascript"
+    ]
+  }
+}

@@ -46,7 +46,7 @@ class ApartmentController extends ContentController
 {
     private static $allowed_actions = [
         'index','step1','step1Form','uploadFile','doStep1','step2','step2Form','doStep2','step3','step3Form','doStep3','step4','step4Form','doStep4','step5','step5Form','doStep5','step6','step6Form','doStep6','step7','step7Form','doStep7','step8','step8Form','doStep8','step9','step9Form','doStep9','deleteFile','step10','step10Form','doStep10','step11','step11Form','doStep11','step12','step12Form','doStep12','step13','step13Form','doStep13','notfound',
-        'preview','payment','doPayment','paymentmethod','listingcreated','getDistrictbyCityAjax'
+        'preview','payment','doPayment','paymentmethod','listingcreated','getDistrictbyCityAjax','subscription'
     ];
 
     private static $url_segment = 'apartment';
@@ -952,6 +952,18 @@ public function payment(HTTPRequest $request){
         'Plans'=>$plans,
         'MemberBasicData'=>$memberBasicData,
     ])->renderWith(['Layout/Broker/Subscription', 'Page']);
+}
+public function subscription(HTTPRequest $request){
+    $member = GlobalHelper::getLoggedInUser();
+    $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();
+    
+    $plans=GlobalHelper::getSubscriptionPlans('owner',0);
+    return $this->customise([
+        'Title' => 'Mietenprofi',
+        'Name' => $member->FirstName.' '.$member->LastName,
+        'MemberBasicData' => $memberBasicData,
+        'plans'=>$plans
+    ])->renderWith(['Layout/Apartment/Subscription', 'Page']);
 }
 public function ssArray($roomCounts) {
     $output = ArrayList::create();

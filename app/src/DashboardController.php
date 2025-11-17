@@ -44,7 +44,7 @@ use SilverStripe\ORM\DB;
 class DashboardController extends ContentController
 {
     private static $allowed_actions = [
-        'index', 'info','deleteFileImg','guide','uploadFile','subscription','payment_discount','payment_method', 'updateinfo', 'brokercontacts', 'UpdateCompanyForm', 'doUpdateCompany', 'Addworker', 'AddWorkerForm', 'doAddWorker', 'Addworkerimage', 'AddWorkerImageForm', 'doAddWorkerImage', 'Editworker', 'doSaveWorker', 'Brokerdata', 'Brokerapartments', 'Tips','applications','application_detail','doUpdateOwner','remove_apartment','change_apartment_status','anhalten','delete_account'
+        'index', 'info','deleteFileImg','guide','uploadFile','subscription','payment_discount','payment_method', 'updateinfo', 'brokercontacts', 'UpdateCompanyForm', 'doUpdateCompany', 'Addworker', 'AddWorkerForm', 'doAddWorker', 'Addworkerimage', 'AddWorkerImageForm', 'doAddWorkerImage', 'Editworker', 'doSaveWorker', 'Brokerdata', 'Brokerapartments', 'Tips','applications','application_detail','doUpdateOwner','remove_apartment','change_apartment_status','anhalten','delete_account','start_subscription','stop_subscription'
     ];
 
     private static $url_segment = 'dashboard';
@@ -987,6 +987,28 @@ public function application_detail(HTTPRequest $request)
         'CompanyData'=>$companyData,
         'apartmentContact'=>$apartmentContact
     ])->renderWith(['Layout/Broker/ApplicationDetail', 'Page']);
+}
+public function stop_subscription(HTTPRequest $request){
+    $member = GlobalHelper::getLoggedInUser();
+    $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();
+    $memberBasicData->AutoSubscription = 1;
+    $memberBasicData->write();
+    return RestApiHelper::jsonOk([
+        'ok' => true,
+        'message' => 'Subscription stopped successfully',
+        'action'=>'stop'
+        ]);
+}
+public function start_subscription(HTTPRequest $request){
+    $member = GlobalHelper::getLoggedInUser();
+    $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();
+    $memberBasicData->AutoSubscription = 0;
+    $memberBasicData->write();
+    return RestApiHelper::jsonOk([
+        'ok' => true,
+        'message' => 'Subscription started successfully',
+        'action'=>'start'
+        ]);
 }
 public function subscription(HTTPRequest $request){
     $member = GlobalHelper::getLoggedInUser();

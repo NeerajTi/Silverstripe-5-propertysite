@@ -99,13 +99,7 @@
 							Die <a href="#">AGB</a> und <a href="#">Widerrufsbelehrung</a> wurden zur Kenntnis genommen und durch Klick auf „Jetzt Kaufen“ akzeptiert. Alle Preise inkl. MwSt.
 						</div>
 						<div class="action">
-								<% if $MemberBasicData.AutoSubscription == 1 %>
-							<div class="default_outline_btn"><a href="javascript:void(0)" class="btn-outline start-subscription" data-action-url="/dashboard/start-subscription">Starte</a>
-							</div>
-						<% else %>
-							<div class="default_outline_btn"><a href="javascript:void(0)" class="btn-outline stop-subscription" data-action-url="/dashboard/stop-subscription">Anhalten</a>
-							</div>
-						<% end_if %>
+							<div class="default_outline_btn"><a href="/dashboard/anhalten" class="btn-outline">Anhalten</a></div>
 							<div class="default_btn">
                            <% if $SubscriptionStatus == 'Active' && $MemberBasicData.PlanId == 'Top Platzierung' %>
                             <% else %>

@@ -265,7 +265,7 @@
   <% if $IsSubscriptionActive=='Active' %>
     <a href="/apartment/listingcreated/?apartmentID=$Apartment.ID" style='padding-top:0px;padding-bottom:0px;' class="action">Weiter</a>
   <% else %>
-    <a href="/dashboard/subscription/" class="action">Weiter</a>
+    <a href="/apartment/subscription/" class="action">Weiter</a>
   <% end_if %>
   </div>
 

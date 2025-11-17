@@ -197,7 +197,14 @@ class UserForgotPasswordController extends ContentController {
             try {
                 // This will run the built-in validator
                 $member->changePassword($data['NewPassword']);
-    
+         $email = new Email();
+            $email->setTo($session->get('OTPEmail'));
+            $email->setSubject('Ihr Passwort wurde erfolgreich aktualisiert');
+            
+            $email->setBody("Dies ist eine Bestätigung, dass Ihr Passwort am " . date('Y-m-d H:i:s') . " geändert wurde<br>Wenn Sie diese Änderung vorgenommen haben, sind keine weiteren Maßnahmen erforderlich.<br>
+            
+Falls Sie dieses Update nicht autorisiert haben, setzen Sie bitte umgehend Ihr Passwort zurück und kontaktieren Sie unser Support-Team unter <a href='mailto:support@wmb.de'>support@wmb.de</a>");
+            $email->send();
                 // Clear OTP session
                 $session->clear('OTP');
                 $session->clear('OTPEmail');

@@ -13,34 +13,32 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ensure a per-input gallery exists
-  function ensureGallery(inputId, triggerEl) {
-    let gallery = document.querySelector(`.js-gallery-multiple`);
-    if (!gallery) {
-      // create right next to the trigger (or at the end of its parent)
-      gallery = document.createElement('div');
-      gallery.className = 'apartment-gallery';
-      gallery.setAttribute('data-for', inputId);
+ function ensureGallery(inputId, triggerEl) {
+  let gallery = document.querySelector(`.apartment-gallery[data-for="${inputId}"]`);
+  if (!gallery) {
+    gallery = document.createElement('div');
+    gallery.className = 'apartment-gallery';
+    gallery.setAttribute('data-for', inputId);
 
-      // inherit useful data-* from trigger if present
-      const copy = (attr, as) => {
-        const v = triggerEl?.getAttribute(attr);
-        if (v) gallery.setAttribute(as || attr, v);
-      };
-      copy('data-action');
-      copy('data-delete-action', 'data-action'); // allow either
-      copy('data-field');
-      copy('data-table');
-      copy('data-objectid');
+    const copy = (attr, as) => {
+      const v = triggerEl?.getAttribute(attr);
+      if (v) gallery.setAttribute(as || attr, v);
+    };
 
-      // insert near trigger
-      if (triggerEl?.parentElement) {
-        triggerEl.parentElement.appendChild(gallery);
-      } else {
-        document.body.appendChild(gallery);
-      }
-    }
-    return gallery;
+    copy('data-action');
+    copy('data-delete-action', 'data-action');
+    copy('data-field');
+    copy('data-table');
+    copy('data-objectid');
+
+    triggerEl?.parentElement
+      ? triggerEl.parentElement.appendChild(gallery)
+      : document.body.appendChild(gallery);
   }
+
+  return gallery;
+}
+
 
   // build one gallery item
   function createGalleryItem({ gallery, filename }) {
@@ -77,6 +75,101 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return { wrap, bar, img, delBtn };
   }
+function uploadOneMultiple({
+  file,
+  endpoint,
+  fieldName,
+  securityID,
+  table,
+  objectID,
+  bar = null,
+  preview = null
+}) {
+  return new Promise((resolve) => {
+    const formData = new FormData();
+    formData.append(fieldName, file);
+    formData.append("field", fieldName);
+
+    if (securityID) formData.append("SecurityID", securityID);
+    if (table) formData.append("table", table);
+    if (objectID) formData.append("objectID", objectID);
+
+    // Preview local image instantly
+    if (file.type.startsWith("image/") && preview && preview.tagName === "IMG") {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        preview.src = ev.target.result;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+    // Upload progress
+    xhr.upload.onprogress = function (ev) {
+      if (ev.lengthComputable && bar) {
+        const pct = Math.round((ev.loaded / ev.total) * 100);
+        bar.style.width = pct + "%";
+        bar.textContent = pct + "%";
+      }
+    };
+
+    xhr.onload = function () {
+      let payload = {};
+      let ok = false;
+
+      try {
+        payload = JSON.parse(xhr.responseText || "{}");
+        ok = xhr.status >= 200 && xhr.status < 300 && payload.ok;
+      } catch (e) {}
+
+      if (ok) {
+        // Replace preview with server image URL
+        if (preview && payload.url) {
+          preview.src = payload.url;
+          preview.style.display = "block";
+        }
+
+        resolve({ ok: true, payload });
+      } else {
+        // Reset on failure
+        if (preview && preview.tagName === "IMG") {
+          preview.src = "";
+          preview.style.display = "none";
+        }
+        if (bar) {
+          bar.style.width = "0%";
+          bar.textContent = "";
+        }
+
+        Swal.fire({
+          title: "Error",
+          text: payload.error || payload.message || "Upload failed",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+
+        resolve({ ok: false, payload });
+      }
+    };
+
+    xhr.onerror = function () {
+      Swal.fire({
+        title: "Error",
+        text: "Network error during upload",
+        icon: "error",
+        confirmButtonText: "OK"
+      });
+
+      resolve({ ok: false, payload: {} });
+    };
+
+    xhr.send(formData);
+  });
+}
 
   // upload one file
   function uploadOne({ file, endpoint, fieldName, securityID, table, objectID, bar, preview,uiWrap,inputId,label,labelValue }) {
@@ -175,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".inputFileHidden").forEach(input => {
     input.addEventListener("change", async function () {
       const files = Array.from(this.files || []);
+     
       if (!files.length) return;
 
       const securityID = document.querySelector('input[name="SecurityID"]')?.value || '';
@@ -201,6 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const isMulti = this.hasAttribute('multiple');
 
       if (isMulti) {
+        
         // Always use a gallery for multi
         const gallery = ensureGallery(inputId, trigger);
         // inherit action/field/table/objectid if gallery created
@@ -212,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // sequential uploads
         for (const f of files) {
           const { wrap, bar, img, delBtn } = createGalleryItem({ gallery, filename: f.name });
-          const result = await uploadOne({
+          const result = await uploadOneMultiple({
             file: f,
             endpoint,
             fieldName: galleryField,
@@ -381,6 +476,3 @@ jQuery(document).ready(function($) {
     
 
 });
-
-
-

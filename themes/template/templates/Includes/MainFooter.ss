@@ -6,7 +6,7 @@
 <script src="themes/template/js/owl.carousel.min.js"></script>
 <script src="themes/template/js/easy-responsive-tabs.js"></script>
 <script src="themes/template/js/global.js?ver=1.011"></script>
-<script src="themes/template/js/fileupload.js?ver=0.1.11"></script>
+<script src="themes/template/js/fileupload.js?ver=0.1.12583"></script>
 <script>
 $(document).ready(function() {
    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))

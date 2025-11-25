@@ -963,7 +963,7 @@ public function subscription(HTTPRequest $request){
         'Name' => $member->FirstName.' '.$member->LastName,
         'MemberBasicData' => $memberBasicData,
         'plans'=>$plans
-    ])->renderWith(['Layout/Apartment/Subscription', 'Page']);
+    ])->renderWith(['Layout/Broker/Apartment/Subscription', 'Page']);
 }
 public function ssArray($roomCounts) {
     $output = ArrayList::create();

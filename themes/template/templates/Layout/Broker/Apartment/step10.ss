@@ -7,6 +7,17 @@
 .image-preview{
     display: none;
 }
+.filesfilled
+{
+  color:white !important;
+  background-color:#D98209 !important;
+  border-color:#D98209 !important;
+}
+.nav-tabs .nav-link{
+  margin-right:5px;
+  background-color:#000;
+  color:white;
+}
 </style>
 <input type="hidden" name="SecurityID" value="$SecurityID">
 <h1>$Title</h1>
@@ -30,10 +41,10 @@
  <div class="col-12 col-sm-10">
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <button class="nav-link active" id="nav-bilder-tab" data-bs-toggle="tab" data-bs-target="#nav-bilder" type="button" role="tab" aria-controls="nav-bilder" aria-selected="true">Bilder</button>
-    <button class="nav-link" id="nav-video-tab" data-bs-toggle="tab" data-bs-target="#nav-video" type="button" role="tab" aria-controls="nav-video" aria-selected="false">Video</button>
-    <button class="nav-link" id="nav-document-tab" data-bs-toggle="tab" data-bs-target="#nav-document" type="button" role="tab" aria-controls="nav-document" aria-selected="false">Document</button>
-    <button class="nav-link" id="nav-grund-tab" data-bs-toggle="tab" data-bs-target="#nav-grund" type="button" role="tab" aria-controls="nav-grund" aria-selected="false">Contact</button>
+    <button class="nav-link active <% if $apartment.Bilder.exists %>filesfilled<% end_if %>" id="nav-bilder-tab" data-bs-toggle="tab" data-bs-target="#nav-bilder" type="button" role="tab" aria-controls="nav-bilder" aria-selected="true">Bilder</button>
+    <button class="nav-link <% if $apartment.Video %>filesfilled<% end_if %>" id="nav-video-tab" data-bs-toggle="tab" data-bs-target="#nav-video" type="button" role="tab" aria-controls="nav-video" aria-selected="false">Video</button>
+    <button class="nav-link <% if $apartment.Document %>filesfilled<% end_if %>" id="nav-document-tab" data-bs-toggle="tab" data-bs-target="#nav-document" type="button" role="tab" aria-controls="nav-document" aria-selected="false">Document</button>
+    <button class="nav-link <% if $apartment.Grund %>filesfilled<% end_if %>" id="nav-grund-tab" data-bs-toggle="tab" data-bs-target="#nav-grund" type="button" role="tab" aria-controls="nav-grund" aria-selected="false">Grund</button>
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">

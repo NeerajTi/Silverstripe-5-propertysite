@@ -132,7 +132,7 @@ function uploadOneMultiple({
           preview.src = payload.url;
           preview.style.display = "block";
         }
-
+          $("#nav-bilder-tab").addClass("filesfilled");
         resolve({ ok: true, payload });
       } else {
         // Reset on failure
@@ -228,7 +228,12 @@ function uploadOneMultiple({
           }
           const idHolder = document.getElementById('AjaxFileUploadId');
           if (idHolder && payload.id) idHolder.value = payload.id;
-
+            if(inputId=='VideoIDInput')
+              $("#nav-video-tab").addClass("filesfilled");
+            else if(inputId=='DocumentIDInput')
+              $("#nav-document-tab").addClass("filesfilled");
+            else
+              $("#nav-grund-tab").addClass("filesfilled");
           resolve({ ok: true, payload });
         } else {
           $("#" + inputId).val('');
@@ -353,7 +358,7 @@ jQuery(document).ready(function($) {
         e.preventDefault();
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You won't be able to delete this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -389,6 +394,12 @@ jQuery(document).ready(function($) {
                     icon: 'success',
                     confirmButtonText: 'OK'
                   });
+                  if(field=='GrundID')
+                    $("#nav-grund-tab").removeClass("filesfilled");
+                  else if(field=='DocumentID')
+                    $("#nav-document-tab").removeClass("filesfilled");
+                  else
+                    $("#nav-video-tab").removeClass("filesfilled");
                     // update UI: remove preview, disable button
                     fileslot.find('.upload-preview').hide(); 
                     fileslot.find('.delete-btn').hide();
@@ -423,7 +434,7 @@ jQuery(document).ready(function($) {
       e.preventDefault();
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "You won't be able to delete this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -451,6 +462,8 @@ jQuery(document).ready(function($) {
                 if ($gallery.find('.apartment-image').length === 0) {
                   $gallery.replaceWith('<img src="" class="upload-preview" style="display:none" alt="">');
                 }
+                if($(".delete-btn-multiple").length==0)
+                $("#nav-bilder-tab").removeClass("filesfilled");
               } else {
                 Swal.fire({
                   title: '',
@@ -476,3 +489,6 @@ jQuery(document).ready(function($) {
     
 
 });
+
+
+

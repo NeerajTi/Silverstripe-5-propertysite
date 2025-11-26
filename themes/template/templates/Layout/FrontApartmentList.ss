@@ -5,6 +5,12 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
       
 	<style>
+.managed-list .city-part-item:nth-child(n+11),
+.managed-list .equipment-item:nth-child(n+11) {
+    display: none;
+}
+
+
 	.ajax-overlay[hidden] { display: none !important; }
 
 .ajax-overlay {
@@ -133,7 +139,14 @@ html.is-busy, body.is-busy { overflow: hidden; }
 							<li><label><input type="checkbox" data-name="Rooms" data-role="any" value="" class="checkboxfilter" checked=""> Egal <span>$TotalRooms</span></label></li>
 							<% if $RoomCounts %>
 								<%loop $RoomCounts %>
-								<li><label><input type="checkbox" data-name="Rooms" value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
+								<li><label><input type="checkbox" data-name="Rooms" value="$Key" class="checkboxfilter"> 
+                <% if $Key==5 %>
+                5 und mehr 
+                <% else %>
+                $Key
+                <% end_if %>
+                
+                <span>$Value</span></label></li>
 								<% end_loop %>
 								<% end_if %>
 							</ul>
@@ -141,34 +154,38 @@ html.is-busy, body.is-busy { overflow: hidden; }
 
 						<div class="filter-group filter-group-hidden hidden">
 							<label class="filter-label">Stadtteil</label>
-							<ul class="checkbox-list">
-								<li><label><input type="checkbox" data-name='Location' data-role="any" value="" class="checkboxfilter" checked=""> Alle <span>$TotalCityParts</span></label></li>
+							<ul class="checkbox-list managed-list city-part-list" data-target="city-part-list">
+								<li class="city-part-item all-option"><label><input type="checkbox" data-name='Location' data-role="any" value="" class="checkboxfilter" checked=""> Alle <span>$TotalCityParts</span></label></li>
 								<% if $CityPartCounts %>
 								<%loop $CityPartCounts %>
-								<li><label><input type="checkbox" data-name='Location' <% if $Up.state==$Key %>checked="checked"<% end_if %> value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
+								<li class="city-part-item"><label><input type="checkbox" data-name='Location' <% if $Up.state==$Key %>checked="checked"<% end_if %> value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
 								<% end_loop %>
 								<% end_if %>
 								
 							</ul>
+               <button class="view-more-btn btn" data-target="city-part-list" >View More</button>
+               <button class="view-less-btn btn" data-target="city-part-list" style="display: none;">View Less</button>
 						</div>
 
 				
 
 							<div class="filter-group filter-group-hidden hidden">
 								<label class="filter-label">Ausstattung</label>
-								<ul class="checkbox-list">
+								<ul class="checkbox-list managed-list equipment-list" data-target="equipment-list">
 								<% if $OptionCounts %>
 									<%loop $OptionCounts %>
-									<li><label><input data-name='equipment' value="$Key" class="checkboxfilter" type="checkbox"> $Key <span>$Value</span></label></li>
+									<li class="equipment-item"><label><input data-name='equipment' value="$Key" class="checkboxfilter" type="checkbox"> $Key <span>$Value</span></label></li>
 									<% end_loop %>
 									<% end_if %>
 
 								</ul>
+                 <button class="view-more-btn btn" data-target="equipment-list" >View More</button>
+               <button class="view-less-btn btn" data-target="equipment-list" style="display: none;">View Less</button>
 							</div>
 
 						<!-- Extra Filters -->
 						<div class="filter-group extra-filters">
-							<label class="filter-label">Extra filters <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></label>
+							<label class="filter-label">Alle Filter <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></label>
 						</div>
 
 						<!-- Save Button -->
@@ -620,6 +637,57 @@ function resetLazyLoad() {
   // Re-observe the trigger if it was unobserved
   observer.observe(observerTarget);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const maxVisible = 10;  // Number of items to show initially
+
+    // Function to handle "View More" and "View Less" toggling for any managed list
+    function setupViewMoreLess(buttonsContainer, targetClass) {
+        const items = buttonsContainer.querySelectorAll(`.${targetClass} .city-part-item, .${targetClass} .equipment-item`);
+        const viewMoreBtn = buttonsContainer.querySelector(`.view-more-btn[data-target="${targetClass}"]`);
+        const viewLessBtn = buttonsContainer.querySelector(`.view-less-btn[data-target="${targetClass}"]`);
+
+        // Show View More button only if there are more items than the maxVisible
+        if (items.length > maxVisible) {
+            viewMoreBtn.style.display = "block";
+        } else {
+            viewMoreBtn.style.display = "none"; // Hide View More if less than 10 items
+        }
+
+        // Handle "View More" button click
+        viewMoreBtn.addEventListener("click", function() {
+            items.forEach(function(item, index) {
+                if (index >= maxVisible) {
+                    item.style.display = "block"; // Show items after the 10th one
+                }
+            });
+            viewMoreBtn.style.display = "none";  // Hide View More button
+            viewLessBtn.style.display = "block";  // Show View Less button
+        });
+
+        // Handle "View Less" button click
+        viewLessBtn.addEventListener("click", function() {
+            items.forEach(function(item, index) {
+                if (index >= maxVisible) {
+                    item.style.display = "none";  // Hide items after the 10th one
+                }
+            });
+            viewLessBtn.style.display = "none";  // Hide View Less button
+            viewMoreBtn.style.display = "block";  // Show View More button
+        });
+    }
+
+    // Apply to all managed lists
+    const managedLists = document.querySelectorAll(".filter-group .managed-list");
+    managedLists.forEach(function(list) {
+        const targetClass = list.getAttribute("data-target");
+        const buttonsContainer = list.closest(".filter-group");  // Get the filter group container
+        setupViewMoreLess(buttonsContainer, targetClass);
+    });
+});
+
+
+
 </script>
 
    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>

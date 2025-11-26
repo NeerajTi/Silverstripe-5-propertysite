@@ -185,7 +185,7 @@ class ApartmentController extends ContentController
     ->setAttribute('oninput', "this.value = this.value.replace(/[^0-9]/g, '')"),
            
             DropdownField::create('Stadt', 'Stadt*',GlobalHelper::getCities())->setTitle('Stadt*')->setEmptyString('Stadt auswählen*')->setAttribute('onchange', "getDistrictAjax(this.value,'Form_step2Form_Stadtteil')"),
-            DropdownField::create('Stadtteil', 'Stadtteil*',GlobalHelper::getDistrict())->setTitle('Stadtteil*')->setEmptyString('Stadtteil auswählen*')->setAttribute('onchange', 'this.form.submit()'),
+            DropdownField::create('Stadtteil', 'Stadtteil*',GlobalHelper::formatArrayKeyValueSame(GlobalHelper::getDistrictbycity($apartment->Address->Stadt?: '')))->setTitle('Stadtteil*')->setEmptyString('Stadtteil auswählen*')->setValue($apartment->Address->Stadtteil ?: ''),
             OptionsetField::create('StrasseundHausnummer', 'Strasse und Hausnummer anzeigen', [
                 'Ja' => 'Ja',
                 'Nein' => 'Nein',
@@ -213,7 +213,8 @@ class ApartmentController extends ContentController
             }
 
         }
-        $latlong=GlobalHelper::getLatLng($data['Street'], $data['Stadt'], $data['Plz'], 'Germany', 'DE');
+        $latlong=GlobalHelper::getLatLng($data['Street'], $data['Stadt'], $data['Plz'], 'Germany', 'DE',$data['Nr']);
+       
         if($latlong['success']){
             $apartmentAddress->Lat = $latlong['latitude'];
             $apartmentAddress->Lng = $latlong['longitude'];

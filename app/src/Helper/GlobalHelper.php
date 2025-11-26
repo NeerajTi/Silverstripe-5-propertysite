@@ -34,6 +34,18 @@ class GlobalHelper
     // Combine all parts
     return $part1 . $letters . $part2;
   }
+
+   public static function setSubscriptionExpired()
+   {
+    if (Security::getCurrentUser()) {
+      $loginUser = MemberBasicData::get()->filter(['MemberID' => GlobalHelper::getLoggedInUser()->ID,'ValidUntil:LessThan'=>date('Y-m-d H:i:s'),'SubscriptionStatus'=>'COMPLETED'])->first(); 
+      if($loginUser){
+        $loginUser->SubscriptionStatus = 'EXPIRED';
+        $loginUser->write();
+        
+      }
+   }
+}
     public static function getSubscriptionStatus()
     {
 
@@ -65,7 +77,7 @@ class GlobalHelper
                 $validSubscription = 'Inactive';
             }
         } else {
-            if ($SubscrptionStatus == 'COMPLETED' && $loginUser->PlanId == 'Top Platzierung') {
+            if ($SubscrptionStatus == 'COMPLETED' && $loginUser->PlanId == 'Top Platzierung'  && $validUntil >= $now) {
                 $validSubscription = 'Active';
             } else {
                 $validSubscription = 'Inactive';
@@ -1029,6 +1041,14 @@ class GlobalHelper
     ];
     return $district[$city] ?? self::getDistrict();    
     }
+    public static function formatArrayKeyValueSame($data=[])
+    {
+        $formattedData = [];
+        foreach ($data as $key => $value) {
+            $formattedData[$value] = $value;
+        }
+        return $formattedData;
+    }
     public static function getDistrict()
     {
         $berlinDistricts = [
@@ -1050,7 +1070,7 @@ class GlobalHelper
         return $berlinDistricts;
     }
 
-    public static function getLatLng($street = '', $city = '', $postcode = '', $country = '', $countryCode = '')
+    public static function getLatLng($street = '', $city = '', $postcode = '', $country = '', $countryCode = '',$nr='')
     {
         $baseUrl = "https://nominatim.openstreetmap.org/search";
 
@@ -1060,11 +1080,16 @@ class GlobalHelper
             'limit' => 1,
             'addressdetails' => 1
         ];
+     $nr = $nr ?: '';  // Set $nr to an empty string if it's falsy
 
+// Check if $nr is not empty and add a space
+if (!empty($nr)) {
+    $nr .= ' ';  // Append a space to $nr
+}
         // Build the query string from address components
         $queryParts = [];
         if (!empty($street)) {
-            $queryParts[] = $street;
+            $queryParts[] = $street.$nr;
         }
         if (!empty($city)) {
             $queryParts[] = $city;

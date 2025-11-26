@@ -407,6 +407,9 @@ $userType = Member::get()->byID($this->getMemberIDByField('TempIDHash', $hash))-
     public function step2() {
 
         $sessionData = $this->getRequest()->getSession()->get('MBData');
+        $hash = $this->getRequest()->getSession()->get('HashValue');
+        $memberID = $this->getMemberIDByField('TempIDHash', $hash);
+        $emailField=$this->getMemberFieldValue($memberID,'Email');
         if($sessionData['InseriereAls'] == 'broker'){
             $form = $this->BrokerStep2Form();
 
@@ -417,7 +420,7 @@ $userType = Member::get()->byID($this->getMemberIDByField('TempIDHash', $hash))-
                 'HRBHRA' => $form->Fields()->dataFieldByName('HRBHRA'),
                 'CountryCode' => $form->Fields()->dataFieldByName('CountryCode'),
                 'Telefon' => $form->Fields()->dataFieldByName('Telefon'),
-                'Email' => $form->Fields()->dataFieldByName('Email')
+                'Email' => $form->Fields()->dataFieldByName('Email')->setValue($emailField)
             ])->renderWith(['Layout/RegistrationBrokerStep2', 'Page']);
         }else{
             $form=$this->Step4Form();
@@ -435,7 +438,7 @@ $userType = Member::get()->byID($this->getMemberIDByField('TempIDHash', $hash))-
                     'Land' => $form->Fields()->dataFieldByName('Land')->setValue($this->getSessionData('PersonalInfo','Land')),
                     'CountryCode' => $form->Fields()->dataFieldByName('CountryCode')->setValue($this->getSessionData('PersonalInfo','CountryCode')),
                     'Telefon' => $form->Fields()->dataFieldByName('Telefon')->setValue($this->getSessionData('PersonalInfo','Telefon')),
-                    'Email' => $form->Fields()->dataFieldByName('Email')->setValue($this->getSessionData('PersonalInfo','Email')),
+                    'Email' => $form->Fields()->dataFieldByName('Email')->setValue($emailField),
                     'Fax' => $form->Fields()->dataFieldByName('Fax')->setValue($this->getSessionData('PersonalInfo','Fax'))
                 ])->renderWith(['Layout/RegistrationStep4', 'Page']);
         }

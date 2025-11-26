@@ -360,11 +360,15 @@ $apartmentsPaginated = PaginatedList::create(
 public function list(HTTPRequest $request){
   $brokerAptSlug=$request->param('ID');
   $isLoggedin=GlobalHelper::isloggedin();
- 
+ $memberLogin = GlobalHelper::getLoggedInUser();
   $MemberId=explode("-",$brokerAptSlug)[2];
   $apartments=Apartment::get()->filter('Status', 'published')->filter('MemberID',$MemberId);
-  
-
+  $showEdit='No';
+  if($isLoggedin){
+    if(in_array(GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType'),['broker','owner','seller']) && $memberLogin->ID == $MemberId){
+      $showEdit='Yes';
+    }
+  }
   $contactIds=$apartments->column('ContactId');
    $contacts=RentalWorkerInformation::get()->filter('ID',$contactIds);
   $memberBasicData=MemberBasicData::get()->filter(['MemberID' => $MemberId])->first();
@@ -380,6 +384,7 @@ public function list(HTTPRequest $request){
     'Company'=>$memberCompanyData,
     'Contacts'=>$contacts,
     'isLoggedin'=>$isLoggedin,
+    'showEdit'=>$showEdit,
     'userType'=>GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType'),
     'listusertype'=>$memberBasicData->InseriereAls
   ])->renderWith('Layout/FrontApartmentListByBroker');

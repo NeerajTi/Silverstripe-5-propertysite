@@ -52,7 +52,7 @@ class DashboardController extends ContentController
     protected function init()
     {
         parent::init();
-
+        GlobalHelper::setSubscriptionExpired();
         // Check login status
         if (!Security::getCurrentUser()) {
             return $this->redirect('/login');
@@ -1019,6 +1019,7 @@ public function subscription(HTTPRequest $request){
         'Title' => 'Mietenprofi',
         'Name' => $member->FirstName.' '.$member->LastName,
         'MemberBasicData' => $memberBasicData,
+        'SubscriptionStatus'=>GlobalHelper::getSubscriptionStatus(),
         'plans'=>$plans
     ])->renderWith(['Layout/Broker/Subscription', 'Page']);
 }

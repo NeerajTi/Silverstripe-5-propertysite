@@ -55,8 +55,8 @@
 											</div>
 										</div>
 										<div class="view_appartment">
-										
-										<% if $Top.isLoggedIn %>
+									
+										<% if $Top.isLoggedIn && $Top.userType == 'renter' %>
 											  <a href='javascript:void(0)' class="add-to-wishlist" data-objectID="$ID">
 											  <% if $IsWishlist %>
 											  <i class="fa-solid fa-heart wishlist hide-on-mobile"></i>
@@ -65,7 +65,7 @@
 											  <% end_if %>
 											  </a>
 										<% else %>
-										<a href='/login' data-bs-toggle="tooltip" data-bs-placement="top" title="Please login to add to wishlist"><i class="fa-regular fa-heart wishlist hide-on-mobile"></i></a>
+										
 										<% end_if %>
 											<a class="btn" href="/$Up.CurrentUrl/view/$ID">Wohnung ansehen</a>
 										</div>

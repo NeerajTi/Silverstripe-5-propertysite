@@ -140,7 +140,11 @@
 										</div>
 										<div class="view_appartment">
 											<div class="view_icon"><i class="fa-solid fa-eye"></i> <span>$ViewCount</span></div> <div class="view_icon"><i class="fa-solid fa-arrow-pointer"></i> <span>145</span></div>
-											<a class="btn" href="/stadtteile-berlins/view/$ID">Wohnung bearbeiten</a>
+											<% if $Top.isLoggedin && $Top.showEdit == 'Yes' %>
+											<a class="btn" href="/apartment/step10/?apartmentID=$ID">Wohnung bearbeiten</a>
+											<% else %>
+											<a class="btn" href="/stadtteile-berlins/view/$ID">Zu Verarbeiten</a>
+											<% end_if %>
 										</div>
 									</div>
 									</div>

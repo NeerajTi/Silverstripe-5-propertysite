@@ -161,7 +161,7 @@ html.is-busy, body.is-busy { overflow: hidden; }
 							<li><label><input type="checkbox" data-name="Rooms" data-role="any" value="" class="checkboxfilter" checked=""> Egal <span>$TotalRooms</span></label></li>
 							<% if $RoomCounts %>
 								<%loop $RoomCounts %>
-								<li><label><input type="checkbox" data-name="Rooms" value="$Key" class="checkboxfilter"> 
+								<li><label><input type="checkbox" data-name="Rooms" value="$Key" checked class="checkboxfilter"> 
                 <% if $Key==5 %>
                 5 und mehr 
                 <% else %>
@@ -180,7 +180,7 @@ html.is-busy, body.is-busy { overflow: hidden; }
 								<li class="city-part-item all-option"><label><input type="checkbox" data-name='Location' data-role="any" value="" class="checkboxfilter" checked=""> Alle <span>$TotalCityParts</span></label></li>
 								<% if $CityPartCounts %>
 								<%loop $CityPartCounts %>
-								<li class="city-part-item"><label><input type="checkbox" data-name='Location' <% if $Up.state==$Key %>checked="checked"<% end_if %> value="$Key" class="checkboxfilter"> $Key <span>$Value</span></label></li>
+								<li class="city-part-item"><label><input type="checkbox" data-name='Location' <% if $Up.state==$Key %>checked="checked"<% end_if %> value="$Key" checked class="checkboxfilter"> $Key <span>$Value</span></label></li>
 								<% end_loop %>
 								<% end_if %>
 								
@@ -194,9 +194,10 @@ html.is-busy, body.is-busy { overflow: hidden; }
 							<div class="filter-group filter-group-hidden hidden">
 								<label class="filter-label">Ausstattung</label>
 								<ul class="checkbox-list managed-list equipment-list" data-target="equipment-list">
+                	<li class="equipment-item all-option"><label><input type="checkbox" data-name='equipment' data-role="any" value="" class="checkboxfilter" checked=""> Alle</label></li>
 								<% if $OptionCounts %>
 									<%loop $OptionCounts %>
-									<li class="equipment-item"><label><input data-name='equipment' value="$Key" class="checkboxfilter" type="checkbox"> $Key <span>$Value</span></label></li>
+									<li class="equipment-item"><label><input data-name='equipment' value="$Key" class="checkboxfilter" type="checkbox" checked> $Key <span>$Value</span></label></li>
 									<% end_loop %>
 									<% end_if %>
 
@@ -430,14 +431,15 @@ document.addEventListener('change', (e) => {
   if (cb.dataset.role === 'any') {
     // If "Egal" is toggled on, uncheck all specifics
     if (cb.checked) {
-      boxes.forEach(b => { if (b !== cb) b.checked = false; });
+      boxes.forEach(b => { if (b !== cb) b.checked = true; });
     } else {
       // keep at least one checked; if user unchecks "any" and none others checked, re-check it
       if (!boxes.some(b => b !== cb && b.checked)) cb.checked = true;
     }
   } else {
+   
     // If a specific is checked, uncheck "Egal"
-    if (cb.checked && anyBox) anyBox.checked = false;
+    if (anyBox) anyBox.checked = false;
 
     // If all specifics are off, ensure "Egal" goes back on
     const anySpecificOn = boxes.some(b => b.dataset.role !== 'any' && b.checked);

@@ -80,14 +80,18 @@
 											</div>
 										</div>
 										<div class="view_appartment">
-											<div class="view_icon"><i class="fa-solid fa-eye"></i> <span>$ViewCount</span></div> <div class="view_icon"><i class="fa-solid fa-arrow-pointer"></i> <span>145</span></div>
-											<a class="btn" href="/apartment/step1/?apartmentID=$ID">Wohnung bearbeiten</a>&nbsp;
-											<a class="btn remove-apartment" style="background-color: #dc3545;" href="javascript:void(0);" data-apartment-id="$ID"><i class="fa-solid fa-trash"></i></a>
-											<select class="sort-dropdown change-apartment-status" data-apartment-id="$ID">
-							<option value="">Change Status</option>
-							<option value="draft" <% if $Status== 'draft' %>selected<% end_if %>>Draft</option>
-							<option value="Published" <% if $Status== 'Published' %>selected<% end_if %>>Live</option>
-						</select>
+											<div class="paction">
+												<div class="view_icon"><i class="fa-solid fa-eye"></i> <span>$ViewCount</span></div> <div class="view_icon"><i class="fa-solid fa-arrow-pointer"></i> <span>145</span></div>
+												<a class="btn" href="/apartment/step1/?apartmentID=$ID">zu verarbeiten</a>
+											</div>
+											<div class="pro_action">
+												<a class="remove-apartment" href="javascript:void(0);" data-apartment-id="$ID"><i class="fa-solid fa-trash"></i></a>
+												<select class="sort-dropdown change-apartment-status" data-apartment-id="$ID">
+													<option value="">Change Status</option>
+													<option value="draft" <% if $Status== 'draft' %>selected<% end_if %>>Draft</option>
+													<option value="Published" <% if $Status== 'Published' %>selected<% end_if %>>Live</option>
+												</select>
+											</div>
 										</div>
 									</div>
 									</div>

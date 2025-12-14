@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const progressOuter = document.createElement('div');
     progressOuter.className = 'progress mt-2';
-    progressOuter.style.height = '6px';
+    progressOuter.style.height = '20px';
 
     const bar = document.createElement('div');
     bar.className = 'progress-bar';
@@ -344,7 +344,12 @@ function uploadOneMultiple({
       } else {
         // Single-file: your existing single preview UI
         const uiWrap = document.querySelector(`.upload-ui[data-for="${inputId}"]`);
+        const progressmaindiv = uiWrap?.querySelector('.progress') || null;
         const bar    = uiWrap?.querySelector('.progress-bar') || null;
+      if (progressmaindiv) {
+       
+    progressmaindiv.style.display = "block";  // show the progress bar
+}
         let preview  = uiWrap?.querySelector('.upload-preview') || null;
         await uploadOne({ file: files[0], endpoint, fieldName, securityID, table, objectID, bar, preview,uiWrap,inputId,label,labelValue });
       }

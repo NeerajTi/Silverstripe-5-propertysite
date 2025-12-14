@@ -516,11 +516,13 @@ function initMapInPanel() {
       const url = el.dataset.url || '#';
       if (!isFinite(lat) || !isFinite(lng)) return;
       const m = L.marker([lat, lng]).addTo(map);
-      var datamap=`<div><img src="${image}" alt="${title}">
-      <a href="${url}">${title}, ${space} m²</a>
+      var datamap=`<div class="location_pop"><div class="pop_img"><img src="${image}" alt="${title}"></div>
+      <div class="pop_text">
+        <a href="${url}">${title}</a>
+        <div class="pop_space">${space} m²</div>
       <div class="aanbod-prijs">
 											€ ${price}
-										</div>
+										</div></div>
       </div>`;
       m.bindPopup(datamap,{maxWidth: 300,   // width in px
   Height: 300  });

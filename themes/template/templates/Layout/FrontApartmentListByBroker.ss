@@ -32,9 +32,9 @@
 				<div class="mid_section gap-3">
 					<div class="row">
 					<% if $isLoggedin %>
-						<div class="col-xl-4 col-md-6">
+						<div class="col-xl-12 col-md-12">
 						<% else %>
-						<div class="col-xl-4 col-md-6 blurdiv">
+						<div class="col-xl-12 col-md-12 blurdiv">
 						<% end_if %>
 							<div class="wrap">
 								<div class="title">Kontaktdaten</div>
@@ -47,12 +47,6 @@
 
 						</div>
 
-						<div class="col-xl-8 col-md-6">
-							<div class="wrap content">
-								<h4>Persönliche Angaben</h4>
-								<p>$Company.Description</p>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class="last_section">
@@ -143,7 +137,7 @@
 											<% if $Top.isLoggedin && $Top.showEdit == 'Yes' %>
 											<a class="btn" href="/apartment/step10/?apartmentID=$ID">Wohnung bearbeiten</a>
 											<% else %>
-											<a class="btn" href="/stadtteile-berlins/view/$ID">Zu Verarbeiten</a>
+											<a class="btn" href="/stadtteile-berlins/view/$ID">Wohnung ansehen</a>
 											<% end_if %>
 										</div>
 									</div>

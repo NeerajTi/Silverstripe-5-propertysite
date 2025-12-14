@@ -15,8 +15,9 @@
 }
 .nav-tabs .nav-link{
   margin-right:5px;
-  background-color:#000;
-  color:white;
+  background-color:#fff;
+  border-color:#dee2e6;
+  color:#D98209;
 }
 </style>
 <input type="hidden" name="SecurityID" value="$SecurityID">
@@ -57,7 +58,7 @@
             <div class="col">
               <div class="file-slot">
               <div class="upload-ui" data-for="BilderIDInput">
-                <div class="progress" style="height:10px;">
+                <div class="progress" style="height:20px;">
                   <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
                 </div>
 
@@ -95,9 +96,7 @@
               <div class="col">
                <div class="file-slot">
               <div class="upload-ui" data-for="VideoIDInput">
-                <div class="progress" style="height:10px;">
-                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
-                </div>
+               
 
                 <% if $apartment.Video %>
                   <div class="image-box image-preview" style="display:block">
@@ -109,6 +108,9 @@
                   <a href="#;" class="upload-preview" style="display:none" target="_blank">Video</a>
                   </div>
                 <% end_if %>
+                  <div class="progress" style="height:20px;margin-top:5px">
+                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+                </div>
               </div>
             </div>
         </div>
@@ -122,9 +124,7 @@
    <div class="col">
              <div class="file-slot">
               <div class="upload-ui" data-for="DocumentIDInput">
-                <div class="progress" style="height:10px;">
-                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
-                </div>
+             
 
                 <% if $apartment.Document %>
                   <div class="image-box image-preview" style="display:block">
@@ -136,6 +136,9 @@
                   <a href="#;" class="upload-preview" style="display:none" target="_blank">Pdf</a>
                   </div>
                 <% end_if %>
+                   <div class="progress" style="height:20px;margin-top:5px">
+                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+                </div>
               </div>
             </div>
         </div>
@@ -149,9 +152,7 @@
           <div class="col">
             <div class="file-slot">
               <div class="upload-ui" data-for="GrundIDInput">
-                <div class="progress" style="height:10px;">
-                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
-                </div>
+             
 
                 <% if $apartment.Grund %>
                   <div class="image-box image-preview" style="display:block">
@@ -168,6 +169,9 @@
                   <img src="" style="display:none" class="upload-preview" alt="">
                   </div>
                 <% end_if %>
+                <div class="progress" style="height:20px;margin-top:5px">
+                  <div class="progress-bar" role="progressbar" style="width:0%;">0%</div>
+                </div>
               </div>
             </div>
         </div>

@@ -23,6 +23,17 @@ class Subscription extends DataObject
     private static $has_one = [
         'Member' => Member::class,
     ];
+
+       public function getFromDate(): string
+    {
+       return date('d M Y', strtotime($this->Created));
+    }
+    public function getToDate(): string
+    {
+       return date('d M Y', strtotime($this->ValidUntil));
+    }
+
+
 }
 
 

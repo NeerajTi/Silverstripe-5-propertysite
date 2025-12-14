@@ -22,6 +22,7 @@ SilverStripe\Control\Director:
     'save-search-action//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
     'payment//$Action/$ID/$OtherID': 'App\Controller\PaymentController'
     'view-on-map//$Action/$ID/$OtherID': 'App\Controller\FrontApartmentController'
+    'invoices//$Action/$ID/$OtherID': App\Controller\InvoiceController
     #'registration/checkemail/$Hash': 'App\Controller\RegistrationPageController'
     #'registration/validateuser/$Hash': 'App\Controller\RegistrationPageController'
     #'registration/resendemail/$Hash': 'App\Controller\RegistrationPageController'

@@ -42,7 +42,7 @@
 	<div class="plan-box hide-on-mobile">
 							<div class="plan-header month" style="color:black">Lade hier deine Abrechnung herunter</div>
 							<div class="default_btn">
-							<a href="#;" class="action btn btn-primary btn-filled">Übersicht</a>
+							<a href="/invoices" class="action btn btn-primary btn-filled">Übersicht</a>
 							</div>
 							<div class="default_btn">
 							<a href="/" class="action btn btn-primary btn-filled">Continue without a subscription</a>

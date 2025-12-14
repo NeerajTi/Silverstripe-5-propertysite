@@ -9,6 +9,7 @@ use App\Model\Apartment;
 use App\Model\ApartmentDetail;
 use App\Model\ApartmentAddress;
 use App\Model\ApartmentImage;
+use SilverStripe\Assets\File;
 use App\Model\MemberBasicData;
 use App\Model\MemberCompanyData;
 use SilverStripe\Forms\Form;
@@ -31,15 +32,17 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Security\Security;
 use App\Helper\GlobalHelper;
 use App\Helper\RestApiHelper;
+use App\Helper\FileHelper;
 use App\Model\PersonalInformation;
 use App\Model\ApartmentWishlist;
 use App\Model\ApartmentApplication;
 use App\Model\MemberSearchSetting;
+use SilverStripe\Forms\FileField;
 class FrontApartmentController extends ContentController
 {
     protected bool $leafletEnabled = false;
     private static $allowed_actions = [
-        'index','frontapartmentlist','maplocations','view','ajaxview','list','contact_apartment','addtowishlist','doContactProperty','previewapplicant','storesearch'
+        'index','frontapartmentlist','uploadFile','deleteFile','maplocations','view','ajaxview','list','contact_apartment','addtowishlist','doContactProperty','previewapplicant','storesearch'
     ];
     protected function init()
     {
@@ -445,6 +448,7 @@ public function contact_apartment(HTTPRequest $request){
         'CreditCheck' => $form->Fields()->dataFieldByName('CreditCheck'),
         'Preis' => $form->Fields()->dataFieldByName('Preis'),
         'Wohnungflache' => $form->Fields()->dataFieldByName('Wohnungflache'),
+        'Anhange'=>$form->Fields()->dataFieldByName('Anhange'),
         'lookingfor' => $form->Fields()->dataFieldByName('lookingfor'),
         'Wohnberechtigungsschein' => $form->Fields()->dataFieldByName('Wohnberechtigungsschein'),
         'Heizungsart' => $form->Fields()->dataFieldByName('Heizungsart'),
@@ -498,6 +502,7 @@ public function profileForm($request,$apartment){
             'Ja' => 'Ja',
             'Nein' => 'Nein',
         ])->addExtraClass('radio_group'),
+        FileField::create('Anhange', 'Anhange')->setTitle('Anhange')->setAllowedExtensions(['gif', 'jpeg', 'png','pdf'])->setAttribute('id', 'AnhangeInput')->setAttribute('class', 'inputFileHidden')->setAttribute('multiple', 'multiple'),
         TextField::create('Preis', 'Preis')->setValue($apartment->Details->Kaltmiete ?? '')->setTitle('Preis'),
         TextField::create('Wohnungflache', 'Wohnungfläche')->setValue($apartment->Details->Wohnflache ?? '')->setTitle('Wohnungfläche'),
         TextField::create('lookingfor', 'Was suchen sie?')->setTitle('Was suchen sie?'),
@@ -509,7 +514,7 @@ public function profileForm($request,$apartment){
         DropdownField::create('Zimmer', 'Zimmer',[1,2,3,4,'5 und mehr'])->setValue($apartment->Details->Zimmer ?? '')->setTitle('Zimmer')->setEmptyString('Zimmer auswählen'),
     );
     $actions = FieldList::create(
-        FormAction::create('doContactProperty', 'Steuern')
+        FormAction::create('doContactProperty', 'Absenden')
     );
     $validator = RequiredFields::create(['FirstName', 'LastName', 'CountryCode', 'Telefon', 'Email','Description','HouseholdIncome','Stadtteil']);
     $form = Form::create($this, 'ContactPropertyForm', $fields, $actions, $validator);
@@ -523,7 +528,7 @@ public function doContactProperty(HTTPRequest $request){
         return $this->redirect('/login');
     }
     $session = $request->getSession();
-    $session->set('PropertyApplication', $data);
+    
     $apartment = Apartment::get()->byID($data['ApartmentID']);
     $application = ApartmentApplication::create();
    
@@ -543,7 +548,25 @@ public function doContactProperty(HTTPRequest $request){
     $application->Kinder = $data['Kinder'];
     $application->HouseholdIncome = $data['HouseholdIncome'];
     $application->write();
-    return $this->redirect('/front-apartment/previewapplicant');
+    $attachmentIDs = $request->postVar('Attachment') ?? [];
+ if (is_array($attachmentIDs) && count($attachmentIDs) > 0) {
+    foreach ($attachmentIDs as $fileID) {
+        $file = File::get()->byID((int)$fileID);
+        if ($file) {
+            $application->Attachment()->add($file);
+
+            // optional: unmark temporary
+            if ($file->hasField('IsTemporary')) {
+                $file->IsTemporary = false;
+                $file->write();
+            }
+        }
+
+    }
+}
+$data['applicationID']=$application->ID;
+$session->set('PropertyApplication', $data);
+return $this->redirect('/front-apartment/previewapplicant');
 }
 
 public function addtowishlist(HTTPRequest $request){
@@ -586,14 +609,21 @@ public function previewapplicant(){
     if(!$session->get('PropertyApplication')){
         return $this->redirect('/stadtteile-berlins');
     }
+    
     $data = $session->get('PropertyApplication');
+    $application=[];
+    if(isset($data['applicationID']) && is_numeric($data['applicationID']))
+    {
+        $application=ApartmentApplication::get()->byID($data['applicationID']);
+        
+    }
     $dataObject = ArrayData::create($data);
     $dashboard='/dashboard';
     if(GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType') == 'renter'){
         $dashboard='/renter-dashboard';
     }
     $session->clear('PropertyApplication');
-    return $this->renderWith('Layout/Broker/Apartment/PreviewApplicant', ['data' => $dataObject,'dashboardurl'=>$dashboard]);
+    return $this->renderWith('Layout/Broker/Apartment/PreviewApplicant', ['data' => $dataObject,'dashboardurl'=>$dashboard,'application'=>$application]);
 }
 
 public function storesearch(HTTPRequest $request){
@@ -635,5 +665,18 @@ public function storesearch(HTTPRequest $request){
         'message' => 'Search saved',
     ]);
 }
+
+public function uploadFile(HTTPRequest $request): HTTPResponse
+{
+      $fileHelper = new FileHelper();
+    return $fileHelper->uploadPreview($request);
+    
+}
+public function deleteFile(HTTPRequest $request): HTTPResponse
+{
+    $fileHelper = new FileHelper();
+    return $fileHelper->deleteFilePreview($request);
+}
+
 
 }

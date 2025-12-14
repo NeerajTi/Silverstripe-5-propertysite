@@ -7,6 +7,7 @@ use SilverStripe\Assets\File;
 use SilverStripe\Assets\Upload;
 use App\Helper\RestApiHelper;
 use SilverStripe\Security\Security;
+use SilverStripe\Security\SecurityToken;
 use App\Model\MemberCompanyData;
 use App\Model\RentalWorkerInformation;
 use App\Model\PersonalInformation;
@@ -15,7 +16,73 @@ class FileHelper {
     public function __construct()
     {
        
-    }    
+    }  
+    
+ 
+    public function uploadPreview($request): HTTPResponse
+{
+    if (!$request->isPOST() || !SecurityToken::inst()->checkRequest($request)) {
+        return RestApiHelper::jsonError('Invalid request', 400);
+    }
+
+    $member = Security::getCurrentUser();
+    if (!$member) {
+        return RestApiHelper::jsonError('Unauthorized', 401);
+    }
+
+    // ✅ Only one field: Bilder
+    if (empty($_FILES['Attachment'])) {
+        return RestApiHelper::jsonError('No file uploaded', 400);
+    }
+
+    // Upload image (NOT attached to Apartment yet)
+    $img = $this->attachImageFromFilesObjectPreview($_FILES['Attachment']);
+
+    if (!$img) {
+        return RestApiHelper::jsonError('File upload failed', 500);  
+    }
+
+    // Publish so preview URL works
+    $img->publishSingle();
+
+    // Optional: mark as temporary
+    $img->IsTemporary = true;
+    $img->write();
+
+    return RestApiHelper::jsonOk([
+        'ok'  => true,
+        'id'  => (int) $img->ID,
+        'url' => $img->getURL()
+    ]);
+}
+public function attachImageFromFilesObjectPreview($files, string $folder = 'apartments')
+{
+    if (empty($files) || empty($files['tmp_name'])) {
+        return null;
+    }
+
+    $upload = Upload::create();
+    $upload->getValidator()->setAllowedExtensions([
+        'jpg','jpeg','png','gif',
+        'pdf','doc','docx',
+        'avi','mov','mpg','mp4','mkv'
+    ]);
+    
+    // Use generic File instead of Image
+    if($files['type'] == 'image/jpeg' || $files['type'] == 'image/png' || $files['type'] == 'image/gif'){
+        $file = Image::create();
+    }else{
+        $file = File::create();
+    }
+   
+
+    if ($upload->loadIntoFile($files, $file, $folder)) {
+        return $file; // published later if you want
+    }
+
+    // Debug: $upload->getErrors()
+    return null;
+}
 public function uploadFile($request): HTTPResponse
 {
 
@@ -79,7 +146,27 @@ $file = Image::create();
     // Optional: inspect $upload->getErrors()
     return null;
 }
+public function deleteFilePreview($request): HTTPResponse
+{
 
+$fileID = $request->postVar('fileID');
+  $file = File::get()->byID($fileID);
+    if (!$file) {
+        return RestApiHelper::jsonError('File not found'.$fileID, 404);
+    }
+
+    // ✅ Safety: only delete temp / unowned files
+    if ($file->hasField('IsTemporary') && !$file->IsTemporary) {
+        return RestApiHelper::jsonError('File already attached', 403);
+    }
+
+    // delete DB record + physical file
+    $file->delete();
+
+    return RestApiHelper::jsonOk([
+        'message' => 'Deleted'
+    ]);
+}
 public function deleteFile($request): HTTPResponse
 {
     

@@ -82,9 +82,25 @@
 									</div>
 								</div>
 							</div>
+							<div class="row">
+							<div class="col-12">
+							<% if $application.Attachment.exists %>
+							<% loop $application.Attachment %>
+ <div class="image-box image-preview" style="display:block">
+                    <% if $Extension == 'pdf' %>
+                      <a href="$URL" class="upload-preview" target="_blank">View PDF</a>
+                     <% else %>
+                      <img src="$URL" class="upload-preview" alt="">
+                  
+                    <% end_if %>
+                  </div>
+							<% end_loop %>
+							<% end_if %>
+							</div>
+							</div>
 							<div class="action action-min-width justify-content-center justify-content-md-end mt-md-5">
-								<div class="default_btn"><a href="/stadtteile-berlins/view/$data.ApartmentID" class="btn-filled">Weiter zur wohnungsuche</a></div>
-								<div class="default_outline_btn"><a href="$dashboardurl" class="btn-outline">Dein dashboard</a></div>
+								<div class="default_btn"><a href="/stadtteile-berlins/view/$data.ApartmentID" class="btn-filled">Weiter zur Wohnungsuche</a></div>
+								<div class="default_outline_btn"><a href="$dashboardurl" class="btn-outline">Dein Dashboard</a></div>
 							</div>
 						</div>
 					</div>

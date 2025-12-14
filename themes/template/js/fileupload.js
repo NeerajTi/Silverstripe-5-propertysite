@@ -45,11 +45,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const wrap = document.createElement('div');
     wrap.className = 'apartment-image';
 
-    const img = document.createElement('img');
+    const img = document.createElement('div');
     img.className = 'upload-preview';
-    img.alt = filename || '';
     img.style.maxWidth = '140px';
     img.style.display = 'none';
+
+    const other=document.createElement('a');
+      other.className = 'upload-preview';
+    other.style.maxWidth = '140px';
+    other.style.display = 'none';
 
     const progressOuter = document.createElement('div');
     progressOuter.className = 'progress mt-2';
@@ -69,11 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
     delBtn.style.display = 'none';
 
     wrap.appendChild(img);
+    wrap.appendChild(other);
     wrap.appendChild(progressOuter);
     wrap.appendChild(delBtn);
     gallery.appendChild(wrap);
 
-    return { wrap, bar, img, delBtn };
+    return { wrap, bar, img, delBtn,other };
   }
 function uploadOneMultiple({
   file,
@@ -83,7 +88,9 @@ function uploadOneMultiple({
   table,
   objectID,
   bar = null,
-  preview = null
+  preview = null,
+  other=null,
+  wrap
 }) {
   return new Promise((resolve) => {
     const formData = new FormData();
@@ -127,11 +134,30 @@ function uploadOneMultiple({
       } catch (e) {}
 
       if (ok) {
+        console.log(file.type.startsWith('image/'));
+        if (file.type.startsWith('image/')) {
+         
         // Replace preview with server image URL
         if (preview && payload.url) {
-          preview.src = payload.url;
+          const imgtag=document.createElement('img');
+          imgtag.src = payload.url;
+          preview.appendChild(imgtag);
           preview.style.display = "block";
         }
+      }else{
+          const atag=document.createElement('a');
+          atag.href = payload.url;
+          atag.target = '_blank';
+    atag.textContent = 'View pdf';
+          preview.appendChild(atag);
+          preview.style.display = "block";
+      }
+      const form = document.querySelector('form');
+      const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'Attachment[]';
+  input.value = payload.id;
+  form.appendChild(input);
           $("#nav-bilder-tab").addClass("filesfilled");
         resolve({ ok: true, payload });
       } else {
@@ -311,7 +337,7 @@ function uploadOneMultiple({
 
         // sequential uploads
         for (const f of files) {
-          const { wrap, bar, img, delBtn } = createGalleryItem({ gallery, filename: f.name });
+          const { wrap, bar, img, delBtn,other } = createGalleryItem({ gallery, filename: f.name });
           const result = await uploadOneMultiple({
             file: f,
             endpoint,
@@ -320,7 +346,9 @@ function uploadOneMultiple({
             table: galleryTable,
             objectID: galleryObjId,
             bar,
-            preview: img
+            preview: img,
+            otherpreview: other,
+            wrap
           });
 
           if (result.ok) {
@@ -439,7 +467,7 @@ jQuery(document).ready(function($) {
       e.preventDefault();
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to delete this!",
+        text: "You won't be able to restore this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -463,12 +491,17 @@ jQuery(document).ready(function($) {
             data: { field, objectId: objectID, fileID: fileID, SecurityID: securityID },
             success: function (res) {
               if (res && res.ok) {
+                document
+        .querySelectorAll(`input[name="Attachment[]"][value="${fileID}"]`)
+        .forEach(el => el.remove());
                 $imageWrap.remove();
+
                 if ($gallery.find('.apartment-image').length === 0) {
                   $gallery.replaceWith('<img src="" class="upload-preview" style="display:none" alt="">');
                 }
                 if($(".delete-btn-multiple").length==0)
                 $("#nav-bilder-tab").removeClass("filesfilled");
+              
               } else {
                 Swal.fire({
                   title: '',

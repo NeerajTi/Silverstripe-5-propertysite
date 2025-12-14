@@ -14,7 +14,7 @@ textarea#Form_ContactPropertyForm_Description::placeholder {
   opacity: 1 !important;
 }
 </style>
-
+<input type="hidden" name="SecurityID" value="$SecurityID">
 		<!--Nachrichten Start-->
 		<div class="mydata white_bg" style="display:block;">
 			<div class="container">
@@ -196,15 +196,28 @@ textarea#Form_ContactPropertyForm_Description::placeholder {
 									<div class="col-md-4">
 									<label>Netto Haushaltseinkommen</label>
 										$HouseholdIncome
+										
 									</div>
 								</div>
 							</div>
-								<div class="side_bottom">
-					<div class="default_btn text-right">
+							$Anhange
+							<div class="form_control">
+							<div class="row">
+							<div class="col-12 col-md-8">
+							   <div class="upload-card col align-items-center uploadtrigger" data-table='ApartmentApplication' data-action='/wohnungsuche/uploadFile' data-delete-action='/wohnungsuche/deleteFile' data-field='Attachment' data-target="AnhangeInput">
+            <i class="fa-regular fa-file"></i>
+            <div class="title">Anhange</div>
+            <small>GIF, JPEG, PNG,PDF</small>
+          </div>
+		  </div>
+		 
+		  </div>
+		  </div>
+		   <div class="side_bottom">
+		  <div class="default_btn text-right">
 						$Form.Actions
 					</div>
-				</div>
-				</div>
+					</div>
                             </form>
 						</div>
 					</div>

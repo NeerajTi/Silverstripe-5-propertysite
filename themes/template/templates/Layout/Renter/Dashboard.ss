@@ -29,7 +29,7 @@
 						<a href="/renter-dashboard/applications">
 							<div class="icon"><i class="fa-solid fa-message-dots"></i></div>
 							<div class="text">
-								<h3>Nachrichten</h3>
+								<h3>Deine Anfragen</h3>
 								<p>Alle nachrichten von vermieter</p>
 							</div>
 						</a>
@@ -38,7 +38,7 @@
 						<a href="/renter-dashboard/saved-search">
 							<div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 							<div class="text">
-								<h3>Suche Speichern</h3>
+								<h3>Gespeicherte Suchen</h3>
 								<p>Neue Immobiliën direkt im Postfach</p>
 							</div>
 						</a>

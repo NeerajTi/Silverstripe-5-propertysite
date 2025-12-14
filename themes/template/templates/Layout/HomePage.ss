@@ -1,5 +1,3 @@
-
-
 <section class="banner-home front_banner" style="background:url('<% if $Afbeelding %>$Afbeelding.LazyLoad(true).URL<% else %>/stock-image.webp<% end_if %>'); background-size:cover; background-position:center;">
 	<div class="container">
 		<div class="row justify-content-center">

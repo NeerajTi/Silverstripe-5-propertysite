@@ -8,6 +8,11 @@
 .contact-steps.active {
     display: block;
 }
+
+textarea#Form_ContactPropertyForm_Description::placeholder {
+  color: #ccc !important; /* light grey */
+  opacity: 1 !important;
+}
 </style>
 
 		<!--Nachrichten Start-->
@@ -23,14 +28,15 @@
                         <img src="/themes/template/images/user_thumb.png" alt="User Thumb">
                     <% end_if %>
 						<div class="content">
-							<h3>$MemberBasicData.FirstName $MemberBasicData.LastName</h3>
-							<span>Broker</span>
+                     <% if $aptUserType=='broker'%>
+						<h3>$MemberBasicData.Firmaname</h3>
+						<% else %>
+						<h3>$MemberBasicData.FirstName $MemberBasicData.LastName</h3>
+						<% end_if %>
+							<span style='text-transform:capitalize'>$aptUserType</span>
 						</div>
 					</div>
-					<div class="close_profile gap-4">
-						<span><i class="fa-solid fa-envelope"></i> E-mail: $Company.Email</span>
-						<span><i class="fa-solid fa-phone"></i> Tel: $Company.CountryCode $Company.Telefon</span>
-                    </div>
+				
 				</div>
 					<div class="row">
 						<div class="col-xl-4 col-md-12">

@@ -432,6 +432,7 @@ public function contact_apartment(HTTPRequest $request){
         'Contacts'=>$contacts,
         'Company'=>$company,
         'MemberBasicData'=>$memberBasicData,
+        'aptUserType'=>$memberBasicData->InseriereAls,
         'MemberID'=>$form->Fields()->dataFieldByName('MemberID'),
         'ApartmentID'=>$form->Fields()->dataFieldByName('ApartmentID'),
         'FirstName' => $form->Fields()->dataFieldByName('FirstName'),
@@ -473,14 +474,10 @@ public function profileForm($request,$apartment){
         HiddenField::create('ApartmentID', 'ApartmentID')->setValue($request->param('ID')),
         TextField::create('FirstName', 'Name*')->setValue($profileData['FirstName'] ?? '')->setAttribute('readonly', 'readonly'),
         TextField::create('LastName', 'Nachname*')->setValue($profileData['LastName'] ?? '')->setAttribute('readonly', 'readonly'),
-        DropdownField::create('CountryCode', 'Country Code', [
-            '+49' => 'Deutschland (+49)',
-            '+43' => 'Österreich (+43)',
-            '+41' => 'Schweiz (+41)'
-        ])->setValue('+49')->setEmptyString('Ländervorwahl auswählen*')->setValue($profileData['CountryCode'])->setAttribute('disabled', 'disabled'),
+        DropdownField::create('CountryCode', 'Country Code',GlobalHelper::getPhoneCodeCountry())->setValue('+49')->setEmptyString('Ländervorwahl auswählen*')->setValue($profileData['CountryCode'])->setAttribute('disabled', 'disabled'),
         TextField::create('Telefon', 'Telefon')->setAttribute('placeholder', 'Telefon*')->setValue($profileData['Telefon'])->setAttribute('readonly', 'readonly'),
         EmailField::create('Email', 'Emailadresse')->setAttribute('placeholder', 'Emailadresse*')->setValue($profileData['Email'])->setAttribute('readonly', 'readonly'),
-        TextareaField::create('Description', 'Company Description')->setAttribute('placeholder', '')->setAttribute('class', 'char-count')->setAttribute('maxlength', 2000)->setAttribute('data-maxlength', 2000),
+        TextareaField::create('Description', 'Company Description')->setAttribute('placeholder', 'Deine Nachricht an den Anbieter')->setAttribute('class', 'char-count')->setAttribute('maxlength', 2000)->setAttribute('data-maxlength', 2000),
         DropdownField::create('Stadtteil', 'Stadtteil',[
             'Spandau' => 'Spandau',
             'Neukölln' => 'Neukölln',

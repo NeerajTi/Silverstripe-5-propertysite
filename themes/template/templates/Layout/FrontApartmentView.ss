@@ -193,6 +193,7 @@
 					<% end_if %>
 				</div>
 				<div class="user_details">
+                
                  <% if $isLoggedIn %>
 					<h4>
                   

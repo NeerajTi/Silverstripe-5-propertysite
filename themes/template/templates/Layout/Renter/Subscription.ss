@@ -15,7 +15,7 @@
 						<div class="plan-box <% if $Duration == $Up.MemberBasicData.PlanId %>active<% end_if %>">
                         <label>
 							<div class="plan-header">
-                            <input type="radio" name="PaymentType" value="$Duration" <% if $Duration == $Up.MemberBasicData.PlanId %>checked<% end_if %> id="Form_step1Form_PaymentType_1Monate" required="required">
+                            <input type="radio" name="PaymentType" value="$Duration" checked id="Form_step1Form_PaymentType_1Monate" required="required">
 								<div class="icon_wrap">
 									
 									<div class="month">Dein Mietprofi Abo</div>

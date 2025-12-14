@@ -11,12 +11,15 @@ use App\Model\ApartmentAddress;
 use App\Model\ApartmentImage;
 use SilverStripe\Assets\File;
 use App\Model\MemberBasicData;
+use SilverStripe\Security\Member;
 use App\Model\MemberCompanyData;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Subsites\Model\Subsite;
+use SilverStripe\Control\Email\Email;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\TextareaField;
@@ -528,10 +531,15 @@ public function doContactProperty(HTTPRequest $request){
         return $this->redirect('/login');
     }
     $session = $request->getSession();
-    
+    $userMember=Member::get()->byID($member->ID);
+    $userMemberBasic=MemberBasicData::get()->filter(['MemberID' => $member->ID])->first();
     $apartment = Apartment::get()->byID($data['ApartmentID']);
     $application = ApartmentApplication::create();
-   
+   $memberBasicData=MemberBasicData::get()->filter(['MemberID' => $apartment->MemberID])->first();
+      if($memberBasicData->InseriereAls=='broker')
+    $Company=MemberCompanyData::get()->filter(['MemberID' => $apartment->MemberID])->first();
+    else
+    $Company=PersonalInformation::get()->filter(['MemberID' => $apartment->MemberID])->first();
     $application->MemberID = $member->ID;
     $application->ListerID = $apartment->MemberID;
     $application->ApartmentID = $data['ApartmentID'];
@@ -566,6 +574,218 @@ public function doContactProperty(HTTPRequest $request){
 }
 $data['applicationID']=$application->ID;
 $session->set('PropertyApplication', $data);
+
+ $domain = Subsite::currentSubsite()->Domain();
+        $emaildomain = str_replace('www.', '', $domain);
+
+        $email = new Email(); 
+
+        $email->setTo($userMember->Email); 
+
+        $email->setFrom('no-reply@'. $emaildomain); 
+        $email->setReplyTo('no-reply@vdkwohnungmieten.de');             
+
+        $email->setSubject("vielen Dank für Ihre Anfrage"); 
+$emailTemplate='<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Anfrage bestätigt</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; color:#333; line-height:1.5;">
+  <p>Hallo '.$data['FirstName'].' '.$data['LastName'].',</p>
+  <h2>Vielen Dank für Ihre Anfrage</h2>
+
+  <p>
+    Wir bestätigen Ihnen, dass Ihre Nachricht erfolgreich an den Anbieter
+    der Wohnung übermittelt wurde.
+  </p>
+
+  <hr>
+
+  <h3>Daten zur Immobilie</h3>
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td><strong>Titel / Referenznummer</strong></td>
+      <td>'.$apartment->ObjectNumber.'</td>
+    </tr>
+    <tr>
+      <td><strong>Zimmer</strong></td>
+      <td>'.$data['Zimmer'].'</td>
+    </tr>
+    <tr>
+      <td><strong>Wohnfläche</strong></td>
+      <td>'.$data['Wohnungflache'].'</td>
+    </tr>
+    <tr>
+      <td><strong>Preis</strong></td>
+      <td>'.$data['Preis'].' &euro;</td>
+    </tr>
+    <tr>
+      <td><strong>Adresse</strong></td>
+      <td>'.$apartment->Address->FullAddress.'</td>
+    </tr>
+    <tr>
+      <td><strong>Link zum Exposé</strong></td>
+      <td><a href="//'.$domain.'/wohnungsuche/view/'.$apartment->ID.'">Detail</a></td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Kontaktdaten des Anbieters</h3>
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>'.$memberBasicData->FirstName.' '.$memberBasicData->LastName.'</td>
+    </tr>
+    <tr>
+      <td><strong>Betrieb</strong></td>
+      <td>'.$memberBasicData->Firmaname.'</td>
+    </tr>
+    <tr>
+      <td><strong>Adresse</strong></td>
+      <td>'.$Company->Strabe.','.$Company->Nr.','.$Company->Plz.','.$Company->Ort.','.$Company->Land.'</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Ihre Kontaktdaten</h3>
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>'.$data['FirstName'].' '.$data['LastName'].'</td>
+    </tr>
+    <tr>
+      <td><strong>E-Mail</strong></td>
+      <td>'.$userMember->Email.'</td>
+    </tr>
+    <tr>
+      <td><strong>Telefonnummer</strong></td>
+      <td>'.$userMemberBasic->CountryCode.' '.$userMemberBasic->Telefon.'</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Wie geht es jetzt weiter?</h3>
+  <p>
+    Der Anbieter prüft Ihre Anfrage und wird sich direkt mit Ihnen
+    in Verbindung setzen.<br>
+    Bitte beachten Sie, dass die Antwortzeit je nach Anbieter
+    variieren kann.
+  </p>
+
+  <p style="font-size: 13px; color:#666;">
+    <strong>Hinweis:</strong><br>
+    Diese E-Mail dient nur zur Bestätigung der Übermittlung.
+    Wir können nicht garantieren, dass der Anbieter auf jede
+    Anfrage reagiert.
+  </p>
+
+  <p>
+    Viele Grüße<br>
+    <strong>Ihr Team</strong>
+  </p>
+
+</body>
+</html>
+';
+ $email->setBody($emailTemplate); 
+        $email->send();
+ $email->setTo($memberBasicData->Email); 
+
+        $email->setFrom('no-reply@'. $emaildomain); 
+        $email->setReplyTo('no-reply@vdkwohnungmieten.de');             
+
+        $email->setSubject("You have received a new apartment request via ".$emaildomain."."); 
+$ownerHtml='<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Neue Wohnungsanfrage</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; color:#333; line-height:1.5;">
+
+  <h2>Neue Wohnungsanfrage</h2>
+
+  <p>
+    Hallo <strong>'.$memberBasicData->FirstName.' '.$memberBasicData->LastName.'</strong>,<br><br>
+    Sie haben eine neue Wohnungsanfrage über
+    <strong>'.$emaildomain.'</strong> erhalten.
+  </p>
+
+  <hr>
+
+  <h3>Details zum Interessenten</h3>
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>'.$data['FirstName'].' '.$data['LastName'].'</td>
+    </tr>
+    <tr>
+      <td><strong>E-Mail</strong></td>
+      <td><a href="mailto:'.$userMember->Email.'">'.$userMember->Email.'</a></td>
+    </tr>
+    <tr>
+      <td><strong>Telefon</strong></td>
+      <td>'.$userMemberBasic->CountryCode.' '.$userMemberBasic->Telefon.'</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>Nachricht</strong></td>
+      <td>
+        '.$data['Description'].'
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Anfrage erhalten am</strong></td>
+      <td>'.date('Y-m-d h:ia').'</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Ihr Inserat</h3>
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td><strong>Wohnung</strong></td>
+      <td>'.$apartment->Address->Street.', '.$apartment->Address->Stadt.'</td>
+    </tr>
+    <tr>
+      <td><strong>Adresse</strong></td>
+      <td>'.$apartment->Address->FullAddress.'</td>
+    </tr>
+    <tr>
+      <td><strong>Exposé</strong></td>
+      <td>
+        <a href="//'.$domain.'/wohnungsuche/view/'.$apartment->ID.'">Detail</a>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Anfrage-ID</strong></td>
+      <td>'.$apartment->ObjectNumber.'</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Bitte kontaktieren Sie den Interessenten direkt</h3>
+  <p>
+    <strong>E-Mail:</strong> <a href="mailto:'.$userMember->Email.'">'.$userMember->Email.'</a><br>
+    <strong>Telefon:</strong> '.$userMemberBasic->CountryCode.' '.$userMemberBasic->Telefon.'
+  </p>
+
+  <p>
+    Viele Grüße<br>
+    <strong>Ihr wohnungmietenduesseldorf.de Team</strong>
+  </p>
+
+</body>
+</html>
+';
+ $email->setBody($ownerHtml); 
+        $email->send();
 return $this->redirect('/front-apartment/previewapplicant');
 }
 

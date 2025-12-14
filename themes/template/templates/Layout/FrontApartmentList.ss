@@ -104,32 +104,54 @@ html.is-busy, body.is-busy { overflow: hidden; }
 									<option>Warmmiete</option>
 								</select>
 							</div>
-							<div class="range-wrapper" data-name="price" data-min="$MinPrice" data-max="$MaxPrice"  data-default="$MaxPrice" data-prefix="€ " data-suffix="">
-								<div class="custom-range-track" id="customTrack" >
-									<div class="custom-range-fill" id="customFill"></div>
-									<div class="custom-range-thumb" id="customThumb"></div>
-								</div>
-								<div class="range-labels">
-									<span>€ $MinPrice</span>
-									<span class="valueDisplay">€ $MaxPrice</span>
-								</div>
-							</div>
+						<div class="range-wrapper"
+     data-name="price"
+     data-min="$MinPrice"
+     data-max="$MaxPrice"
+     data-min-default="$MinPrice"
+     data-max-default="$MaxPrice"
+     data-prefix="€ "
+     data-suffix="">
+     
+  <div class="custom-range-track">
+    <div class="custom-range-fill"></div>
+    <div class="custom-range-thumb thumb-min"></div>
+    <div class="custom-range-thumb thumb-max"></div>
+  </div>
+
+  <div class="range-labels">
+    <span class="minDisplay">€ $MinPrice</span>
+    <span class="maxDisplay">€ $MaxPrice</span>
+  </div>
+</div>
+
 						
 						</div>
 
 						<!-- Space Filter -->
 						<div class="filter-group">
 							<label class="filter-label">Wohnungfläche</label>
-							<div class="range-wrapper" data-name="space" data-min="$MinRoomspace" data-max="$MaxRoomspace" data-default="$MaxRoomspace" data-prefix="" data-suffix=" m²">
-								<div class="custom-range-track" id="customTrack">
-									<div class="custom-range-fill" id="customFill" style="width: 332px;"></div>
-									<div class="custom-range-thumb" id="customThumb" style="left: 332px;"></div>
-								</div>
-								<div class="range-labels">
-									<span>$MinRoomspace m²</span>
-									<span class="valueDisplay">$MaxRoomspace m²</span>
-								</div>
-							</div>
+						<div class="range-wrapper"
+     data-name="space"
+     data-min="$MinRoomspace"
+     data-max="$MaxRoomspace"
+     data-min-default="$MinRoomspace"
+     data-max-default="$MaxRoomspace"
+     data-prefix=""
+     data-suffix=" m²">
+
+  <div class="custom-range-track">
+    <div class="custom-range-fill"></div>
+    <div class="custom-range-thumb thumb-min"></div>
+    <div class="custom-range-thumb thumb-max"></div>
+  </div>
+
+  <div class="range-labels">
+    <span class="minDisplay">$MinRoomspace m²</span>
+    <span class="maxDisplay">$MaxRoomspace m²</span>
+  </div>
+</div>
+
 						</div>
 
 						<!-- Zimmer Filter -->
@@ -270,19 +292,28 @@ const debounce = (fn, wait = 250) => {
  
 
   // Collect current values from all sliders
-  function collectFilters() {
-    const data = {};
-    document.querySelectorAll('.range-wrapper').forEach(w => {
-      const name = w.dataset.name || w.id || 'slider';
-      const min = parseInt(w.dataset.min);
-      const max = parseInt(w.dataset.max);
-      const val = parseInt(w.dataset.value || w.dataset.default);
-      data[name] = isNaN(val) ? '' : val;
-      // You can also send min/max if your filter logic needs them
-      // data[`${name}_min`] = min; data[`${name}_max`] = max;
-    });
-    return data;
-  }
+function collectFilters() {
+  const data = {};
+
+  document.querySelectorAll('.range-wrapper').forEach(w => {
+    const name = w.dataset.name || w.id || 'slider';
+
+    const minVal = parseInt(w.dataset.minValue);
+    const maxVal = parseInt(w.dataset.maxValue);
+
+    // Send both values
+    if (!isNaN(minVal)) {
+      data[`${name}_min`] = minVal;
+    }
+
+    if (!isNaN(maxVal)) {
+      data[`${name}_max`] = maxVal;
+    }
+  });
+
+  return data;
+}
+
 
 
   async function fetchList() {
@@ -314,57 +345,78 @@ const debounce = (fn, wait = 250) => {
   resetLazyLoad(); // Reset lazy load state when filters change
   fetchList();
 }, 250);
-  document.querySelectorAll('.range-wrapper').forEach(wrapper => {
-    const track = wrapper.querySelector('.custom-range-track');
-    const thumb = wrapper.querySelector('.custom-range-thumb');
-    const fill = wrapper.querySelector('.custom-range-fill');
-    const display = wrapper.querySelector('.valueDisplay');
+document.querySelectorAll('.range-wrapper').forEach(wrapper => {
+  const track = wrapper.querySelector('.custom-range-track');
+  const fill = wrapper.querySelector('.custom-range-fill');
+  const thumbMin = wrapper.querySelector('.thumb-min');
+  const thumbMax = wrapper.querySelector('.thumb-max');
+  const minDisplay = wrapper.querySelector('.minDisplay');
+  const maxDisplay = wrapper.querySelector('.maxDisplay');
 
-    const min = parseInt(wrapper.dataset.min);
-    const max = parseInt(wrapper.dataset.max);
-    const prefix = wrapper.dataset.prefix || '';
-    const suffix = wrapper.dataset.suffix || '';
-    let value = parseInt(wrapper.dataset.default);
+  const min = parseInt(wrapper.dataset.min);
+  const max = parseInt(wrapper.dataset.max);
+  const prefix = wrapper.dataset.prefix || '';
+  const suffix = wrapper.dataset.suffix || '';
 
-    function updateUI(val) {
-		wrapper.dataset.value = String(val);
-      const percent = (val - min) / (max - min);
-      const trackWidth = track.offsetWidth;
-      const pos = percent * trackWidth;
-      thumb.style.left = `${pos}px`;
-      fill.style.width = `${pos}px`;
-      display.textContent = `${prefix}${val}${suffix}`;
-    }
+  let minVal = parseInt(wrapper.dataset.minDefault);
+  let maxVal = parseInt(wrapper.dataset.maxDefault);
 
-    function getValueFromPosition(x) {
-      const rect = track.getBoundingClientRect();
-      let pos = x - rect.left;
-      pos = Math.max(0, Math.min(pos, rect.width));
-      const percent = pos / rect.width;
-      return Math.round(min + percent * (max - min));
-    }
+  function valueToPos(val) {
+    return ((val - min) / (max - min)) * track.offsetWidth;
+  }
 
-    function handleMove(e) {
-      value = getValueFromPosition(e.clientX);
-      updateUI(value);
-	  fetchListDebounced();
-    }
+  function posToValue(x) {
+    const rect = track.getBoundingClientRect();
+    let pos = Math.max(0, Math.min(x - rect.left, rect.width));
+    return Math.round(min + (pos / rect.width) * (max - min));
+  }
 
-    track.addEventListener('click', handleMove);
+  function updateUI() {
+    const minPos = valueToPos(minVal);
+    const maxPos = valueToPos(maxVal);
 
-    thumb.addEventListener('mousedown', () => {
-      const onMouseMove = e => handleMove(e);
-      const onMouseUp = () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-		fetchListDebounced();
-      };
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    });
+    thumbMin.style.left = `${minPos}px`;
+    thumbMax.style.left = `${maxPos}px`;
 
-    updateUI(value);
-  });
+    fill.style.left = `${minPos}px`;
+    fill.style.width = `${maxPos - minPos}px`;
+
+    minDisplay.textContent = `${prefix}${minVal}${suffix}`;
+    maxDisplay.textContent = `${prefix}${maxVal}${suffix}`;
+     // 👇 IMPORTANT for AJAX
+  wrapper.dataset.minValue = minVal;
+  wrapper.dataset.maxValue = maxVal;
+  }
+
+  function startDrag(type) {
+    const move = e => {
+      const val = posToValue(e.clientX);
+
+      if (type === 'min') {
+        minVal = Math.min(val, maxVal - 1);
+      } else {
+        maxVal = Math.max(val, minVal + 1);
+      }
+
+      updateUI();
+      fetchListDebounced();
+    };
+
+    const stop = () => {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('mouseup', stop);
+    };
+
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', stop);
+  }
+
+  thumbMin.addEventListener('mousedown', () => startDrag('min'));
+  thumbMax.addEventListener('mousedown', () => startDrag('max'));
+
+  updateUI();
+});
+
 
   // --- Checkbox group behavior (Any vs specific) + trigger AJAX ---
 document.addEventListener('change', (e) => {

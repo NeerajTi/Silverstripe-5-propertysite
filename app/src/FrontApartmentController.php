@@ -280,8 +280,10 @@ $optionCounts = array_count_values($allOptions);
     public function ajaxview(HTTPRequest $request)
     {
         // read filters (use your keys from data-name)
-        $price = (int) $request->postVar('price');     // example
-        $space = (int) $request->postVar('space');     // example
+        $price_min = (int) $request->postVar('price_min');     // example
+        $price_max = (int) $request->postVar('price_max');     // example
+        $space_min = (int) $request->postVar('space_min');     // example
+        $space_max = (int) $request->postVar('space_max');  
         $view = $request->postVar('view') ?: 'list'; // default
        // Checkbox array (Rooms[])
          $rooms = $request->postVar('Rooms');
@@ -292,14 +294,19 @@ $currentPage = max(1, (int) $request->postVar('page'));
         /** @var DataList $list */
         $list = Apartment::get()->filter('Status', 'published')->orderBy('Created', 'DESC');
 
-        if ($price) {
-            $priceInt = (int) $price;
+        if ($price_min && $price_max) {
+            $priceInt = (int) $price_max;
+            $lower=$price_min;
         $upper    = number_format($priceInt + 0.99, 2, '.', ''); // "1847.99"
             // adapt to your schema (Price, Rent, etc.)
-            $list = $list->filter('Details.Kaltmiete:LessThanOrEqual', $upper);
+           $list = $list
+    ->filter('Details.Kaltmiete:GreaterThanOrEqual', $lower)
+    ->filter('Details.Kaltmiete:LessThanOrEqual', $upper);
         }
-        if ($space) {
-            $list = $list->filter('Details.Wohnflache:LessThanOrEqual', $space);
+        if ($space_min && $space_max) {
+            $list = $list
+    ->filter('Details.Wohnflache:GreaterThanOrEqual', $space_min)
+    ->filter('Details.Wohnflache:LessThanOrEqual', $space_max);
         }
             // Rooms — when user picked specifics: IN (...) ; when "Egal": skip (no restriction)
     if (is_array($rooms) && !empty($rooms)) {

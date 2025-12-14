@@ -324,8 +324,8 @@ background-size: clamp(40px, 3.5vw, 56px); position: relative; }
 .filter-group .range-input { width: 100%; accent-color: #e5830a; }
 .filter-group .range-labels { display: flex; justify-content: space-between; font-size: 14px; color: #000; font-weight: 600; margin-top: 15px; }
 .custom-range-track { position: relative; height: 1px; background: #000; border-radius: 2px; cursor: pointer; }
-.custom-range-track:before { content:''; background: #FFFFFF; border: 1px solid #D98209; width: 11px; height: 11px; border-radius: 50%; position: absolute; top: -5px; left: 0; z-index: 1; }
-.custom-range-track:before { content:''; background: #FFFFFF; border: 1px solid #D98209; width: 11px; height: 11px; border-radius: 50%; position: absolute; top: -5px; right: 0; z-index: 1; }
+/* .custom-range-track:before { content:''; background: #FFFFFF; border: 1px solid #D98209; width: 11px; height: 11px; border-radius: 50%; position: absolute; top: -5px; left: 0; z-index: 1; }
+.custom-range-track:before { content:''; background: #FFFFFF; border: 1px solid #D98209; width: 11px; height: 11px; border-radius: 50%; position: absolute; top: -5px; right: 0; z-index: 1; } */
 .custom-range-fill { position: absolute; height: 100%; background: #e98100; border-radius: 2px 0 0 2px; left: 0; top: -2px; width: 0; height: 4px; pointer-events: none; }
 .custom-range-thumb { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: #e98100; border-radius: 50%; cursor: pointer; z-index: 2; margin-left: -5px !important; }
 .range-labels { display: flex; justify-content: space-between; font-size: 14px; margin-top: 8px; }

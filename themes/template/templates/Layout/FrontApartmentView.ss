@@ -297,11 +297,18 @@
                       <% end_if %>
                       	<div class="information">
                         <div class="name">
-                        <b>$membershipData.FirstName $membershipData.LastName</b>
+                        <% if $aptUserType == 'broker' %>
+                  
+                    <b>$membershipData.Firmaname</b>
+                    <% else %>
+                    <b>$Apartment.Member.FirstName $Apartment.Member.LastName</b>
+                    <% end_if %>
                         </div>
 									<div class="address">Adresse: $company.Strabe,$company.Nr,$company.Plz,$company.Ort,$company.Land</div>
-									<div class="email">Email: $company.Email</div>
+								 <% if $isLoggedIn && $userType !='renter' %>
+                                    <div class="email">Email: $company.Email</div>
 									<div class="phone">Telefon: $company.CountryCode $company.Telefon</div>
+                                    <% end_if %>
 								</div>
                       </div>
                     </div>

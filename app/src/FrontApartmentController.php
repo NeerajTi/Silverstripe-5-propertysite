@@ -255,6 +255,7 @@ $optionCounts = array_count_values($allOptions);
             'aptUserType'=>$memberBasicData->InseriereAls,
             'membershipData'=>$memberBasicData,
             'LoggedINSubscrptionStatus'=>GlobalHelper::getSubscriptionStatus(),
+            'userType'=>GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType'),
             'company'=>$company
         ])->renderWith(['Layout/FrontApartmentView', 'Page']);
     }

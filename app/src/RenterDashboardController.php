@@ -409,6 +409,7 @@ $searchApartmentsPaginated = PaginatedList::create(
 }
 
 public function subscription(HTTPRequest $request){
+ 
     $member = GlobalHelper::getLoggedInUser();
     $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();
     $plans=GlobalHelper::getSubscriptionPlans('renter',10);
@@ -416,6 +417,7 @@ public function subscription(HTTPRequest $request){
         'Title' => 'Mietenprofi',
         'Name' => $member->FirstName.' '.$member->LastName,
         'MemberBasicData' => $memberBasicData,
+        'SubscriptionStatus'=>GlobalHelper::getSubscriptionStatus(),
         'plans'=>$plans
     ])->renderWith(['Layout/Renter/Subscription', 'Page']);
 }

@@ -32,7 +32,7 @@
 							</ul>
                             </label>
 								<div class="default_btn">
-							<% if $SubscriptionStatus == 'Active' %>
+							<% if $Up.SubscriptionStatus == 'Active' %>
                             <% else %>
                             <input type="submit" name="action_doPaymentDiscount" value="Upgrade" class="action btn btn-primary btn-filled" id="Form_paymentForm_action_doPayment">
                             <% end_if %>

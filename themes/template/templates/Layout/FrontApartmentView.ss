@@ -184,17 +184,18 @@
 				<div class="user_pic">
 					<% if $aptUserType == 'broker' %>
 						<% if $company.Image %>
-							<img src="$company.Image.URL" alt="">
+							<img src="$company.Image.URL" class="rounded-circle" alt="">
 						<% end_if %>
 					<% else %>
 						<% if $company.Bilder %>
-							<img src="$company.Bilder.URL" alt="">
+							<img src="$company.Bilder.URL" class="rounded-circle" alt="">
 						<% end_if %>
 					<% end_if %>
 				</div>
 				<div class="user_details">
+                 <% if $isLoggedIn %>
 					<h4>
-                   
+                  
                     <% if $aptUserType == 'broker' %>
                   
                     $membershipData.Firmaname
@@ -202,6 +203,7 @@
                     $Apartment.Member.FirstName $Apartment.Member.LastName
                     <% end_if %>
                     </h4>
+                     <% end_if %>
 					<div class="more_appartment">
 						<a href="/stadtteile-berlins/list/$BrokerAptSlug">Weitere Wohnungen</a>
 					</div>

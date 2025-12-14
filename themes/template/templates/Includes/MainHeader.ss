@@ -32,7 +32,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      
-        <link rel="stylesheet" href="themes/template/css/custom.css?ver=1.0.3">
+        <link rel="stylesheet" href="themes/template/css/custom.css?ver=1.0.6">
         <link rel="stylesheet" href="themes/template/css/owl.carousel.min.css">
         <link rel="stylesheet" href="themes/template/css/easy-responsive-tabs.css">
         <link rel="stylesheet" href="themes/template/css/all.min.css">

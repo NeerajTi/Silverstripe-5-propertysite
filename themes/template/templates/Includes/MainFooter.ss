@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="themes/template/js/owl.carousel.min.js"></script>
 <script src="themes/template/js/easy-responsive-tabs.js"></script>
-<script src="themes/template/js/global.js?ver=1.011"></script>
+<script src="themes/template/js/global.js?ver=1.0.2"></script>
 <script src="themes/template/js/fileupload.js?ver=1.0.12"></script>
 <script>
 $(document).ready(function() {

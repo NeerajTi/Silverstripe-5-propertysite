@@ -410,9 +410,15 @@ jQuery(document).ready(function($) {
 	});
 	$(".delete-account-btn").click(function (e) {
          var actionUrl=$(this).data('action-url');
+		 var alertmsg=$(this).data('alert-msg');
+		 var redirectUrl=$(this).data('redirect-url');
+		 var msg="This action will remove your account from our site. Are you sure?";
+		 if(alertmsg){
+         msg=alertmsg;
+		 }
 		 Swal.fire({
-              title: 'delete-account-btn',
-              text: 'This action will remove your account from our site. Are you sure?',
+              title: 'Delete',
+              text: msg,
               icon: 'warning',
               confirmButtonText: 'Proceed',
               cancelButtonText: 'Cancel',
@@ -450,6 +456,9 @@ if (result.isConfirmed) {
 						icon: 'success',
 						confirmButtonText: 'OK'
 					});
+					if(redirectUrl)
+						window.location.href = redirectUrl;
+					else
 					window.location.href = '/login';
 				} else {
 					Swal.fire({

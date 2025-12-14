@@ -10,8 +10,10 @@ class MemberSearchSetting extends DataObject
 
 
     private static $db = [
-        'Price' => 'Varchar(40)',
-        'Space' => 'Varchar(40)',
+        'Price_Min' => 'Varchar(40)',
+        'Space_Min' => 'Varchar(40)',
+        'Price_Max' => 'Varchar(40)',
+        'Space_Max' => 'Varchar(40)',
         'Rooms' => 'Varchar(1000)',
         'Locations' => 'Varchar(1000)',
         'Equipment' => 'Varchar(1000)',

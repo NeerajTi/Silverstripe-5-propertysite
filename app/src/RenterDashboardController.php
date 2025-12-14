@@ -44,7 +44,7 @@ use App\Model\MemberSearchSetting;
 use SilverStripe\ORM\DB;
 class RenterDashboardController extends ContentController {
     private static $allowed_actions = [
-        'index','info','updateinfo','savenotificationalert','tips','remove_account','schufa','subscription','payment_method','payment_discount','doUpdateRenter','deleteFileImg','uploadFile','wishlist','applications','application_detail','saved_search','stop_subscription'
+        'index','info','updateinfo','savenotificationalert','remove_saved_search','tips','remove_account','schufa','subscription','payment_method','payment_discount','doUpdateRenter','deleteFileImg','uploadFile','wishlist','applications','application_detail','saved_search','stop_subscription'
     ];
     protected function init()
     {
@@ -314,10 +314,14 @@ public function saved_search(HTTPRequest $request){
     $member = Security::getCurrentUser();
     $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();
     $savedSearch = MemberSearchSetting::get()->filter('MemberID', $member->ID)->first();
+   
    if($savedSearch){
       // read filters (use your keys from data-name)
-      $price = (int) $savedSearch->Price;     // example
-      $space = (int) $savedSearch->Space ;     // example
+     $price_min = (int) $savedSearch->Price_Min;     // example
+      $space_min = (int) $savedSearch->Space_Min ;     // example
+
+        $price_max = (int) $savedSearch->Price_Max;     // example
+      $space_max = (int) $savedSearch->Space_Max ;     // example
      // Checkbox array (Rooms[])
        $rooms = json_decode($savedSearch->Rooms,true);
        $locations = json_decode($savedSearch->Locations,true); // array of selected labels
@@ -327,14 +331,19 @@ public function saved_search(HTTPRequest $request){
         if($savedSearch)
         $list = Apartment::get()->filter('Status', 'published')->orderBy('Created', 'DESC');
 
-        if ($savedSearch && $price) {
-            $priceInt = (int) $price;
+        if ($savedSearch && $price_min) {
+            $priceInt = (int) $price_max;
+            $lower=$price_min;
         $upper    = number_format($priceInt + 0.99, 2, '.', ''); // "1847.99"
             // adapt to your schema (Price, Rent, etc.)
-            $list = $list->filter('Details.Kaltmiete:LessThanOrEqual', $upper);
+            $list = $list
+    ->filter('Details.Kaltmiete:GreaterThanOrEqual', $lower)
+    ->filter('Details.Kaltmiete:LessThanOrEqual', $upper);
         }
-        if ($savedSearch && $space) {
-            $list = $list->filter('Details.Wohnflache:LessThanOrEqual', $space);
+        if ($savedSearch && $space_min) {
+            $list = $list
+    ->filter('Details.Wohnflache:GreaterThanOrEqual', $space_min)
+    ->filter('Details.Wohnflache:LessThanOrEqual', $space_max);
         }
             // Rooms — when user picked specifics: IN (...) ; when "Egal": skip (no restriction)
     if ($savedSearch && is_array($rooms) && !empty($rooms)) {
@@ -571,7 +580,28 @@ public function start_subscription(HTTPRequest $request){
         ]);
 }
 
-
+public function remove_saved_search()
+{
+     $member = Security::getCurrentUser();
+    $savedSearch = MemberSearchSetting::get()->filter('MemberID', $member->ID)->first();
+    if($savedSearch)
+    {
+        $savedSearch->delete();
+    $savedSearch->destroy();
+    return RestApiHelper::jsonOk([
+        'ok' => true,
+        'message' => 'Successfully deleted',
+        'action'=>'remove'
+        ]);
+    }else{
+     return RestApiHelper::jsonOk([
+        'ok' => true,
+        'message' => 'You have no saved search',
+        'action'=>'remove'
+        ]);   
+    }
+    
+}
 // public function payment_thankyou(HTTPRequest $request){
 //     $member = GlobalHelper::getLoggedInUser();
 //     $memberBasicData = MemberBasicData::get()->filter('MemberID', $member->ID)->first();

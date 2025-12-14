@@ -10,69 +10,58 @@
 				<h1 class="title">$Title</h1>
 				<div class="rental_professional">
 					<div class="plans-wrapper">
-						<div class="plan-box hide-on-mobile">
-							<div class="plan-header"></div>
-							<ul>
-								<li>Direct contact met verhuurder</li>
-								<li>Zoekopdrachten speigeren</li>
-								<li>Berichten nieuwe woningen</li>
-								<li>Lorem ipsum</li>
-								<li>Lorem ipsum</li>
-							</ul>
-						</div>
+					
 <% loop $plans %>
 						<div class="plan-box <% if $Duration == $Up.MemberBasicData.PlanId %>active<% end_if %>">
                         <label>
 							<div class="plan-header">
                             <input type="radio" name="PaymentType" value="$Duration" <% if $Duration == $Up.MemberBasicData.PlanId %>checked<% end_if %> id="Form_step1Form_PaymentType_1Monate" required="required">
 								<div class="icon_wrap">
+									
+									<div class="month">Dein Mietprofi Abo</div>
 									<div class="icon"><i class="fa-solid fa-building"></i></div>
-									<div class="month">$Duration</div>
 								</div>
-								<div class="price">$Price Euro/ Monat</div>
+								<div class="price">nur $Price € pro Monat</div>
                                 <% if $Discount > 0 %>
                                 <div class="discount">$DiscountPrice Euro/ Monat</div>
                                 <% end_if %>
 							</div>
 							<ul>
-                            <% if $Duration == '1 Monate' || $Duration == '3 Monate' || $Duration == '6 Monate' %>
-								<li><i class="fa-solid fa-check"></i> <span>Direct contact met verhuurder</span></li>
-								<li><i class="fa-solid fa-check"></i> <span>Zoekopdrachten speigeren</span></li>
-                                <% end_if %>
-                                <% if $Duration == '3 Monate' || $Duration == '6 Monate' %>
-								<li><i class="fa-solid fa-check"></i> <span>Berichten neue woningen</span></li>
-                                <% end_if %>
-                                <% if $Duration == '6 Monate' %>
-								<li><i class="fa-solid fa-check"></i> <span>Lorem ipsum</span></li>
-                                <li><i class="fa-solid fa-check"></i> <span>Lorem ipsum</span></li>
-                                <% end_if %>
+                         <li>Kontakt aufnehmen mit dem Anbieter</li>
+						 <li>Monatlich kündbar (bis zum 15.)</li>
 							</ul>
                             </label>
-						</div>
-<% end_loop %>
-				
-
-					<div class="plan-footer">
-						<div class="terms">
-							Mindestlaufzeit 6 Monate. Danach Verlängerung auf unbestimmte Zeit zum Monatspreis von 19,99 Euro und jederzeit mit maximal 1-Monatsfrist kündbar.<br>
-							Die <a href="#">AGB</a> und <a href="#">Widerrufsbelehrung</a> wurden zur Kenntnis genommen und durch Klick auf „Jetzt Kaufen“ akzeptiert. Alle Preise inkl. MwSt.
-						</div>
-						<div class="action">
-						<% if $MemberBasicData.AutoSubscription == 1 %>
-							<div class="default_outline_btn"><a href="javascript:void(0)" class="btn-outline start-subscription" data-action-url="/renter-dashboard/start-subscription">Starte</a>
-							</div>
-						<% else %>
-							<div class="default_outline_btn"><a href="javascript:void(0)" class="btn-outline stop-subscription" data-action-url="/renter-dashboard/stop-subscription">Anhalten</a>
-							</div>
-						<% end_if %>
-							<div class="default_btn">
-							<% if $SubscriptionStatus == 'Active' && $MemberBasicData.PlanId == '6 Monate' %>
+								<div class="default_btn">
+							<% if $SubscriptionStatus == 'Active' %>
                             <% else %>
-                            <input type="submit" disabled name="action_doPaymentDiscount" value="Upgrade" class="action btn btn-primary btn-filled" id="Form_paymentForm_action_doPayment">
+                            <input type="submit" name="action_doPaymentDiscount" value="Upgrade" class="action btn btn-primary btn-filled" id="Form_paymentForm_action_doPayment">
                             <% end_if %>
                             </div>
+						</div>
+<% end_loop %>
+	<div class="plan-box hide-on-mobile">
+							<div class="plan-header month" style="color:black">Lade hier deine Abrechnung herunter</div>
+							<div class="default_btn">
+							<a href="#;" class="action btn btn-primary btn-filled">Übersicht</a>
+							</div>
+						</div>
+				
+</div>
+					<div class="plan-footer">
+						<div class="terms">
+							Die <a href="#">AGB</a> und <a href="#">Widerrufsbelehrung</a> wurden zur Kenntnis genommen und durch Klick auf „Jetzt Kaufen“ akzeptiert. Alle Preise inkl. MwSt.
+							<div class="action">
+						<% if $MemberBasicData.AutoSubscription == 1 %>
+						
+						<% else %>
+							<div class="default_outline_btn"><a href="javascript:void(0)" class="btn-outline stop-subscription" data-action-url="/renter-dashboard/stop-subscription">Abo kündigen</a>
+							</div>
+						<% end_if %>
+							
                              
 						</div>
+						</div>
+					
 					</div>
 				</div>
                 </form>

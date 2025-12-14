@@ -636,16 +636,20 @@ public function storesearch(HTTPRequest $request){
         ]);
     }
    // read filters (use your keys from data-name)
-   $price = (int) $request->postVar('price');     // example
-   $space = (int) $request->postVar('space');     // example
+   $price = (int) $request->postVar('price_min');     // example
+   $space = (int) $request->postVar('space_min');     // example
+    $price_max = (int) $request->postVar('price_max');     // example
+   $space_max = (int) $request->postVar('space_max'); 
   // Checkbox array (Rooms[])
     $rooms = $request->postVar('Rooms');
     $locations = $request->postVar('Location'); // array of selected labels
     $equipment = $request->postVar('equipment'); // array of selected labels
     $memberSearchSettings=MemberSearchSetting::get()->filter('MemberID', GlobalHelper::getLoggedInUser()->ID)->first();
     if($memberSearchSettings){
-        $memberSearchSettings->Price=$price;
-        $memberSearchSettings->Space=$space;
+        $memberSearchSettings->Price_Min=$price;
+        $memberSearchSettings->Space_Min=$space;
+        $memberSearchSettings->Price_Max=$price_max;
+        $memberSearchSettings->Space_Max=$space_max;
         $memberSearchSettings->Rooms=json_encode($rooms);
         $memberSearchSettings->Locations=json_encode($locations);
         $memberSearchSettings->Equipment=json_encode($equipment);
@@ -653,8 +657,10 @@ public function storesearch(HTTPRequest $request){
     }else{
         $memberSearchSettings=MemberSearchSetting::create();
         $memberSearchSettings->MemberID=GlobalHelper::getLoggedInUser()->ID;
-        $memberSearchSettings->Price=$price;
-        $memberSearchSettings->Space=$space;
+         $memberSearchSettings->Price_Min=$price;
+        $memberSearchSettings->Space_Min=$space;
+        $memberSearchSettings->Price_Max=$price_max;
+        $memberSearchSettings->Space_Max=$space_max;
         $memberSearchSettings->Rooms=json_encode($rooms);
         $memberSearchSettings->Locations=json_encode($locations);
         $memberSearchSettings->Equipment=json_encode($equipment);

@@ -7,7 +7,16 @@
 			<div class="container">
 				<div class="back_btn"><a href="/renter-dashboard" class="back-link"><i class="fa-solid fa-arrow-left"></i> Zur Übersicht</a></div>
 				<h1 class="title">Deine gespeicherte suche</h1>
-				
+				<div class="saved_search_card">
+					
+					<div class="notification">
+						
+						<div class="actions">
+						
+							<div class="default_btn"><a href="javascript:void(0)" data-redirect-url="/renter-dashboard/saved-search" data-alert-msg="Are you sure want to delete saved search?" class="delete-account-btn" data-action-url="/renter-dashboard/remove_saved_search">Gespeicherte Suche löschen</a></div>
+						</div>
+					</div>
+				</div>
 				<div class="saved_search_card">
 					<div class="criteria">Preis max: 1400 euro, Kaltmiete, Wohnungflache min: 60m², Anzahl zimmer: Egal</div>
 					<div class="notification">

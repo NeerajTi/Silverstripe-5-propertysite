@@ -17,10 +17,11 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Faucibus nisl tincidunt eget nullam non nisi est sit. Pellentesque habitant morbi tristique senectus. Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Vulputate eu scelerisque felis imperdiet. Turpis egestas maecenas pharetra convallis. Eget egestas purus viverra accumsan in nisl nisi. Amet mauris commodo quis imperdiet massa tincidunt nunc. Sit amet porttitor eget dolor morbi non arcu risus. Lorem ipsum dolor sit amet consectetur adipiscing.</p>
                     
                     <form $Form.AttributesHTML>
+                    <input type='hidden' name='Backurl' value='$Backurl' />
                         <div class="form_card">
                             <div class="wrapper">
                                 <div class="tab-buttons">
-                                    <a href="/login/" class="tab-btn" data-tab="login">Einloggen</a>
+                                    <a href="/login/<% if $Backurl!='' %>?backurl=$Backurl<% end_if %>" class="tab-btn" data-tab="login">Einloggen</a>
                                     <a href="javascript:void(0);" class="tab-btn active" data-tab="register">Account erstellen</a>
                                 </div>
                                 

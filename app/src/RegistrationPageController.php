@@ -61,7 +61,7 @@ class RegistrationPageController extends ContentController {
         if ($member) {
             return $this->redirect('/dashboard');
         }
-
+      
         $form = $this->RegistrationForm();
 
         $session = $this->getRequest()->getSession();
@@ -78,6 +78,7 @@ class RegistrationPageController extends ContentController {
             'Email' => $form->Fields()->dataFieldByName('Email'),
             'Password' => $form->Fields()->dataFieldByName('Password'),
             'RePassword' => $form->Fields()->dataFieldByName('RePassword'),
+            'Backurl'=>$request->getVar('backurl') ?? ''
         ])->renderWith(['Layout/RegistrationForm', 'Page']);
     }
 
@@ -138,7 +139,7 @@ JS);
         $data = $request->postVars();
 
         $this->getRequest()->getSession()->set('emailAddress', $data['Email']);
-        
+        $this->getRequest()->getSession()->set('BackUrl',$data['Backurl']);
         // Validate passwords match
         if ($data['Password'] !== $data['RePassword']) {
             $this->getRequest()->getSession()->set('FormError', 'Die Passwörter stimmen nicht überein. Bitte gib dasselbe Passwort ein.');
@@ -170,7 +171,7 @@ JS);
         $request->getSession()->set('userType', $data['UserType']);
         $tempIDHash = $this->getMemberFieldValue($member->ID, 'TempIDHash');
 
-        $confirmationLink = Director::absoluteURL("/registration/validateuser/{$tempIDHash}");
+        $confirmationLink = Director::absoluteURL("/registration/validateuser/{$tempIDHash}/?backurl=".$data['Backurl']);
 
         $this->emailVerificationTemplate($confirmationLink, $data['Email']);
         
@@ -280,7 +281,7 @@ JS);
     public function validateuser(HTTPRequest $request) {
         $hash = $request->param('ID');
         $memberID = $this->getMemberIDByField('TempIDHash', $hash);
-        
+        $this->getRequest()->getSession()->set('BackUrl',$request->getVar('backurl'));
         if(!empty($memberID)){
             $validUser = $this->updateMemberFieldByID($memberID, 'EmailValidate', 1);
             if(!empty($validUser)){
@@ -1112,6 +1113,8 @@ if (method_exists($form, 'setEncType')) {
                 'InseriereAls' => $sessionData['InseriereAls']
             ])->renderWith(['Layout/ThankYouBrokerPage', 'Page']);
         }else{
+            $BackUrl=$session->get('BackUrl');
+            $session->clear('BackUrl');
             $session->clear('MBData');
             $session->clear('HashValue');
             $session->clear('emailAdrs');
@@ -1119,7 +1122,8 @@ if (method_exists($form, 'setEncType')) {
            
 
             return $this->customise([
-                'Title' => 'Thank You'
+                'Title' => 'Thank You',
+                'BackUrl'=>$BackUrl
             ])->renderWith(['Layout/ThankYouPage', 'Page']);
         }
     }

@@ -9,7 +9,7 @@
 				<div class="check_icon"><img src="/themes/template/images/check_icon.png" alt="Thanks"></div>
 				<div class="button_group">
 				<a class="outline_btn" href="/renter-dashboard">Dein dashboard</a>
-					<a class="outline_btn" href="/wohnungsuche/">Geh zurück in die Wohnung</a>
+					<a class="outline_btn" href="<% if $BackUrl==""%>/wohnungsuche/<% else %>$BackUrl<% end_if %>">Geh zurück in die Wohnung</a>
 				</div>
 			</div>
 		</div>

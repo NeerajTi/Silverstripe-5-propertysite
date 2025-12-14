@@ -325,8 +325,13 @@
 <!-- Login modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 100%; margin-top:12%;">
-        <div class="global_custom_form white_100 width_1360 pl_60 pr_60">
-            <div class="container">
+        <div class="modal-content global_custom_form white_100 width_1360 pl_60 pr_60">
+         <!-- Modal Header -->
+      <div class="modal-header">
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+            <div class="modal-body container">
                 <h1>Um diese Wohnung anzusehen, brauchen Sie einen Account</h1>
                 <div class="row">
                     <div class="col-md-6 order-2 order-sm-1">
@@ -344,9 +349,9 @@
                     <div class="col-md-6 order-1 order-sm-2">
                         <div class="create_account">
                             <h2>Neuen Account erstellen</h2>
-                            <div class="default_btn"><a href="/registration/">Jetzt registrieren</a></div>
+                            <div class="default_btn"><a href="/registration/?backurl=/wohnungsuche/view/$Apartment.ID">Jetzt registrieren</a></div>
                             <h3>Bereits registriert?</h3>
-                            <div class="default_outline_btn"><a href="/login/">Einloggen</a></div>
+                            <div class="default_outline_btn"><a href="/login/?backurl=/wohnungsuche/view/$Apartment.ID">Einloggen</a></div>
                         </div>
                     </div>
                 </div>

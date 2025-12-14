@@ -54,7 +54,8 @@ class UserAuthController extends ContentController {
             'FormError' => $errorMessage,
             'Form' => $form,
             'Email' => $form->Fields()->dataFieldByName('Email'),
-            'Password' => $form->Fields()->dataFieldByName('Password')
+            'Password' => $form->Fields()->dataFieldByName('Password'),
+            'Backurl'=>$this->getRequest()->getVar('backurl') ?? ''
         ])->renderWith(['Layout/Login', 'Page']);
     }
 
@@ -107,6 +108,10 @@ class UserAuthController extends ContentController {
                 }
                 
                 $request->getSession()->clear('loginEmail');
+                 $request->getSession()->clear('BackUrl');
+                if(!empty($data['Backurl']))
+                    return $this->redirect($data['Backurl']);
+                  else  
                 return $this->redirect('/dashboard');
             }else{
                 $this->getRequest()->getSession()->set('FormError', 'Deine E-Mail-Adresse ist nicht verifiziert. Bitte verifiziere deine E-Mail.');

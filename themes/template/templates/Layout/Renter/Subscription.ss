@@ -44,6 +44,9 @@
 							<div class="default_btn">
 							<a href="#;" class="action btn btn-primary btn-filled">Übersicht</a>
 							</div>
+							<div class="default_btn">
+							<a href="/" class="action btn btn-primary btn-filled">Continue without a subscription</a>
+							</div>
 						</div>
 				
 </div>

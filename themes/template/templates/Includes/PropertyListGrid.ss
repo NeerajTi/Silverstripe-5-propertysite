@@ -1,6 +1,6 @@
 	<% loop Apartments %>
 			<div class="project_card item">
-				<div class="caard">
+				<div class="card">
 
 					<div class="image">
 						<a href="/stadtteile-berlins/view/$ID">

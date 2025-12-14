@@ -579,14 +579,21 @@ function initMapInPanel() {
 										</div></div>
       </div>`;
       m.bindPopup(datamap,{maxWidth: 300,   // width in px
-  Height: 300  });
+  Height: 300,closeButton: false,
+  autoClose: false,
+  closeOnClick: false  });
       markers.push(m);
 
       // highlight list item on marker hover
-    m.on('mouseover', () => {
+
+m.on('mouseover', () => {
+  m.openPopup();
   el.classList.add('active');
 });
+
+
 m.on('mouseout', () => {
+  m.closePopup();
   el.classList.remove('active');
 });
 

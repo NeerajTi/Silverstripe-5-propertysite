@@ -429,12 +429,13 @@ document.addEventListener('change', (e) => {
   const anyBox = boxes.find(b => b.dataset.role === 'any');
 
   if (cb.dataset.role === 'any') {
+  
     // If "Egal" is toggled on, uncheck all specifics
     if (cb.checked) {
       boxes.forEach(b => { if (b !== cb) b.checked = true; });
     } else {
       // keep at least one checked; if user unchecks "any" and none others checked, re-check it
-      if (!boxes.some(b => b !== cb && b.checked)) cb.checked = true;
+     boxes.forEach(b => { if (b !== cb) b.checked = false; });
     }
   } else {
    

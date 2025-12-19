@@ -15,17 +15,24 @@
 						<span class="product_search"><i class="fa-light fa-magnifying-glass" onclick="this.form.submit();"></i> <input type="text" value="$Search" name="s" placeholder=""  class="search-input" /></span>
 						<select name="Sort" class="sort-dropdown" onchange="this.form.submit();">
 							<option value="">Relevanz</option>
+							<option value="Draft" <% if $Sort == 'Draft' %>selected<% end_if %>>Offline</option>
+							<option value="Published" <% if $Sort == 'Published' %>selected<% end_if %>>Online</option>
+							<option value="Stadt" <% if $Sort == 'Stadt' %>selected<% end_if %>>Stadt</option>
+							<option value="Aufrufe" <% if $Sort == 'Aufrufe' %>selected<% end_if %>>Aufrufe</option>
+							<option value="Klicks" <% if $Sort == 'Klicks' %>selected<% end_if %>>Klicks</option>
+							<option value="Miete" <% if $Sort == 'Miete' %>selected<% end_if %>>Miete</option>
+							<option value="Kauf" <% if $Sort == 'Kauf' %>selected<% end_if %>>Kauf</option>
 							<option value="Popularity" <% if $Sort == 'Popularity' %>selected<% end_if %>>Popularität</option>
 							<option value="PriceLowToHigh" <% if $Sort == 'PriceLowToHigh' %>selected<% end_if %>>Preis niedrig - hoch</option>
 							<option value="PriceHighToLow" <% if $Sort == 'PriceHighToLow' %>selected<% end_if %>>Preis hoch - niedrig</option>
 							<option value="Date" <% if $Sort == 'Date' %>selected<% end_if %>>Datum</option>
-							<option value="Size" <% if $Sort == 'Size' %>selected<% end_if %>>groß</option>
+					
 						</select>
 					</div>
 				</form>
 				<% if $Apartments %>
 <%loop Apartments %>
-<div class="kamer asas" id='apartment-row-$ID'>
+<div class="kamer asas apartment-maindiv" id='apartment-row-$ID'>
 <div class="row no-gutters">
 							<div class="col-md-5 col-xs-12">
 								<div class="image">
@@ -81,16 +88,23 @@
 										</div>
 										<div class="view_appartment">
 											<div class="paction">
-												<div class="view_icon"><i class="fa-solid fa-eye"></i> <span>$ViewCount</span></div> <div class="view_icon"><i class="fa-solid fa-arrow-pointer"></i> <span>145</span></div>
+												<div class="view_icon"><i class="fa-solid fa-eye"></i> <span>$ViewCount</span></div> <div class="view_icon"><i class="fa-solid fa-arrow-pointer"></i> <span>$ViewCount</span></div>
 												<a class="btn" href="/apartment/step1/?apartmentID=$ID">zu verarbeiten</a>
 											</div>
 											<div class="pro_action">
 												<a class="remove-apartment" href="javascript:void(0);" data-apartment-id="$ID"><i class="fa-solid fa-trash"></i></a>
-												<select class="sort-dropdown change-apartment-status" data-apartment-id="$ID">
+												<a class="btn change-apartment-status" data-status-value="<% if $Status=='Published' %>draft<% else %>Published<% end_if %>" href="javascript:void(0)" data-text="<% if $Status=='Published' %>Go Online<% else %>Go Offline<% end_if %>" data-apartment-id="$ID">
+												<% if $Status=='Published' %>
+												Go Offline
+												<% else %>
+												Go Online
+												<% end_if %>
+												</a>
+												<!--<select class="sort-dropdown change-apartment-status" data-apartment-id="$ID">
 													<option value="">Change Status</option>
 													<option value="draft" <% if $Status== 'draft' %>selected<% end_if %>>Draft</option>
 													<option value="Published" <% if $Status== 'Published' %>selected<% end_if %>>Live</option>
-												</select>
+												</select>-->
 											</div>
 										</div>
 									</div>

@@ -90,6 +90,7 @@ class ApartmentController extends ContentController
         if ($member) {
             return $this->customise([
                 'Form' => $form,
+                'preview'=>$request->getVars()['preview'] ?? 0,
                 'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
                 'ObjectNumber'=>$form->Fields()->dataFieldByName('ObjectNumber'),
                 'GroupNumber'=>$form->Fields()->dataFieldByName('GroupNumber'),
@@ -131,6 +132,7 @@ class ApartmentController extends ContentController
 
     public function doStep1(HTTPRequest $request){
         $data = $request->postVars();
+       
         // $this->getRequest()->getSession()->set('ObjectNumber', $data['ObjectNumber']);
         // $this->getRequest()->getSession()->set('GroupNumber', $data['GroupNumber']);
         // $this->getRequest()->getSession()->set('WohnungType', $data['WohnungType']);
@@ -152,6 +154,9 @@ class ApartmentController extends ContentController
         $apartment->WohnungType  = $data['WohnungType']  ?? $apartment->WohnungType;
     
         $apartment->write();
+        if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else    
         return $this->redirect('/apartment/step2/?apartmentID='.$apartment->ID);
     }
     public function step2(HTTPRequest $request){
@@ -166,6 +171,7 @@ class ApartmentController extends ContentController
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
              'Street'=>$form->Fields()->dataFieldByName('Street'),
              'Nr'=>$form->Fields()->dataFieldByName('Nr'),
              'Plz'=>$form->Fields()->dataFieldByName('Plz'),
@@ -235,6 +241,9 @@ if ($member) {
     $apartment->AddressID = $addressID;
     $apartment->write();
 }
+ if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step3?apartmentID='.$apartment->ID);
     }
 
@@ -250,6 +259,7 @@ if ($member) {
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
             'Wohnflache'=>$form->Fields()->dataFieldByName('Wohnflache'),
             'Zimmer'=>$form->Fields()->dataFieldByName('Zimmer'),
             'Kaltmiete'=>$form->Fields()->dataFieldByName('Kaltmiete'),
@@ -306,6 +316,9 @@ if ($member) {
     $apartment->DetailsID = $detailID;
     $apartment->write();
 }
+ if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step4?apartmentID='.$apartment->ID);
     }
 
@@ -324,6 +337,7 @@ if ($member) {
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
             'DetailsOptions'=>$form->Fields()->dataFieldByName('DetailOptionsIDs'),
             'Services'=>$form->Fields()->dataFieldByName('Services'),
             'QualitatDerWohnung'=>$form->Fields()->dataFieldByName('QualitatDerWohnung'),
@@ -360,6 +374,9 @@ if ($member) {
     }
 
 }
+ if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step5?apartmentID='.$apartment->ID);
     }
     public function step4Form($apartment = null){
@@ -420,6 +437,7 @@ if ($member) {
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
             'Schlafzimmer'=>$form->Fields()->dataFieldByName('Schlafzimmer'),
             'Badezimmer'=>$form->Fields()->dataFieldByName('Badezimmer'),
             'Etage'=>$form->Fields()->dataFieldByName('Etage'),
@@ -480,8 +498,10 @@ if ($member) {
     }
 
 }
-
-        return $this->redirect('/apartment/step6?apartmentID='.$apartment->ID);
+ if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
+return $this->redirect('/apartment/step6?apartmentID='.$apartment->ID);
     }
 
     public function step7(HTTPRequest $request){
@@ -493,6 +513,7 @@ if ($member) {
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
              'Uberschrift'=>$form->Fields()->dataFieldByName('Uberschrift'),
         ])->renderWith(['Layout/Broker/Apartment/step7', 'Page']);
     }
@@ -520,6 +541,9 @@ if ($member) {
             $apartment->Uberschrift = $data['Uberschrift'];
             $apartment->write();
         }
+         if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step8?apartmentID='.$apartment->ID);
     }
 public function step6(HTTPRequest $request){
@@ -531,6 +555,7 @@ public function step6(HTTPRequest $request){
     return $this->customise([
         'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
         'Form'=>$form,
+        'preview'=>$request->getVars()['preview'] ?? 0,
          'Internetgeschwindigkeit'=>$form->Fields()->dataFieldByName('Internetgeschwindigkeit'),
          'Energieeffiziezklasse'=>$form->Fields()->dataFieldByName('Energieeffiziezklasse'),
     ])->renderWith(['Layout/Broker/Apartment/step6', 'Page']);
@@ -560,6 +585,9 @@ public function doStep6(HTTPRequest $request){
         $apartment->Energieeffiziezklasse = $data['Energieeffiziezklasse'];
         $apartment->write();
     }
+     if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
     return $this->redirect('/apartment/step7?apartmentID='.$apartment->ID);
 }
     public function step8(HTTPRequest $request){
@@ -571,6 +599,7 @@ public function doStep6(HTTPRequest $request){
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
              'Mietwohnung'=>$form->Fields()->dataFieldByName('Mietwohnung'),
         ])->renderWith(['Layout/Broker/Apartment/step8', 'Page']);
     }
@@ -598,6 +627,9 @@ public function doStep6(HTTPRequest $request){
             $apartment->Mietwohnung = $data['Mietwohnung'];
             $apartment->write();
         }
+         if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step9?apartmentID='.$apartment->ID);
     }
 
@@ -610,6 +642,7 @@ public function doStep6(HTTPRequest $request){
         return $this->customise([
             'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
             'Form'=>$form,
+            'preview'=>$request->getVars()['preview'] ?? 0,
              'Dieumgebung'=>$form->Fields()->dataFieldByName('Dieumgebung'),
         ])->renderWith(['Layout/Broker/Apartment/step9', 'Page']);
     }
@@ -637,6 +670,9 @@ public function doStep6(HTTPRequest $request){
             $apartment->Dieumgebung = $data['Dieumgebung'];
             $apartment->write();
         }
+         if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
         return $this->redirect('/apartment/step10?apartmentID='.$apartment->ID);
     }
 public function step10(HTTPRequest $request){
@@ -649,6 +685,7 @@ public function step10(HTTPRequest $request){
         'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
         'Form'=>$form,
         'apartment'=>$apartment,
+        'preview'=>$request->getVars()['preview'] ?? 0,
          'BilderID'=>$form->Fields()->dataFieldByName('BilderID'),
          'DocumentID'=>$form->Fields()->dataFieldByName('DocumentID'),
          'VideoID'=>$form->Fields()->dataFieldByName('VideoID'),
@@ -705,6 +742,9 @@ public function doStep10(HTTPRequest $request){
         }
         $apartment->write();
     }
+     if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
     return $this->redirect('/apartment/step11?apartmentID='.$apartment->ID);
 }
 
@@ -717,6 +757,7 @@ public function step11(HTTPRequest $request){
     return $this->customise([
         'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
         'Form'=>$form,
+        'preview'=>$request->getVars()['preview'] ?? 0,
         'Objektzustand'=>$form->Fields()->dataFieldByName('Objektzustand'),
         'LetzteModernisierung'=>$form->Fields()->dataFieldByName('LetzteModernisierung'),
         'WesentlichterEnergietrager'=>$form->Fields()->dataFieldByName('WesentlichterEnergietrager'),
@@ -727,10 +768,10 @@ public function step11(HTTPRequest $request){
 public function step11Form($apartment = null){
     $fields = FieldList::create(
         TextField::create('Objektzustand', 'Objektzustand')->setTitle('Objektzustand'),
-        DropdownField::create('LetzteModernisierung', 'Letzte Modernisierung',GlobalHelper::getYears())->setTitle('Letzte Modernisierung')->setEmptyString('LetzteModernisierung auswählen'),
+        TextField::create('LetzteModernisierung', 'Letzte Modernisierung',GlobalHelper::getYears())->setTitle('Letzte Modernisierung'),
         TextField::create('WesentlichterEnergietrager', 'Wesentlichter Energietrager')->setTitle('Wesentlichter Energietrager'),
         DropdownField::create('Heizungart', 'Heizungart',GlobalHelper::getHeizungsarten())->setTitle('Heizungart')->setEmptyString('Heizungart auswählen'),
-        DropdownField::create('BaujahrDesGebaudes', 'Baujahr des Gebäudes',GlobalHelper::getModernizationYears())->setTitle('Baujahr des Gebäudes')->setEmptyString('BaujahrdesGebäudes auswählen'),
+        TextField::create('BaujahrDesGebaudes', 'Baujahr des Gebäudes',GlobalHelper::getModernizationYears())->setTitle('Baujahr des Gebäudes')
     );
     $actions = FieldList::create(
         FormAction::create('doStep11', 'Weiter')->addExtraClass('btn btn-primary')
@@ -755,6 +796,9 @@ public function doStep11(HTTPRequest $request){
         $apartment->BaujahrDesGebaudes = $data['BaujahrDesGebaudes'];
         $apartment->write();
     }
+     if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
     return $this->redirect('/apartment/step12?apartmentID='.$apartment->ID);
 }
 
@@ -767,6 +811,7 @@ public function step12(HTTPRequest $request){
     return $this->customise([
         'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
         'Form'=>$form,
+        'preview'=>$request->getVars()['preview'] ?? 0,
         'Energieausweis'=>$form->Fields()->dataFieldByName('Energieausweis'),
         'Dieses'=>$form->Fields()->dataFieldByName('Dieses'),
         'EnergieausweisVor'=>$form->Fields()->dataFieldByName('EnergieausweisVor'),
@@ -803,7 +848,12 @@ public function doStep12(HTTPRequest $request){
     if(GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType') == 'owner' || GlobalHelper::getCurrentUserSession($this->getRequest())->get('UserType') == 'seller'){
         return $this->redirect('/apartment/preview?apartmentID='.$apartment->ID);
     }else
+    {
+         if(isset($data['preview']) && $data['preview']==1)
+        return $this->redirect('/apartment/preview/?apartmentID='.$apartment->ID);
+        else 
     return $this->redirect('/apartment/step13?apartmentID='.$apartment->ID);
+    }
 }
 
 public function step13(HTTPRequest $request){
@@ -821,6 +871,7 @@ public function step13(HTTPRequest $request){
     return $this->customise([
         'Title' => 'Inserat erstellen zu Vermietung einer Wohnung',
         'Form'=>$form,
+        'preview'=>$request->getVars()['preview'] ?? 0,
         'ContactId'=>$form->Fields()->dataFieldByName('ContactId'),
         'SelectedContact'=>$apartment->ContactId,
         'Contacts'=>$contacts,

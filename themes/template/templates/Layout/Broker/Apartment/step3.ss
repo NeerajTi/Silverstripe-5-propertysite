@@ -12,6 +12,7 @@
 					</div>
                     <h2 class="mb-3">Echdaten:</h2>
 <form $Form.AttributesHTML>
+<input type='hidden' name='preview' value='$preview' />
 <div class="row">
 <div class="col-md-6">
 	<div class="form_control">

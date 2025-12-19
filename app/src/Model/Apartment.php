@@ -50,7 +50,7 @@ class Apartment extends DataObject
         'Energieeffiziezklasse'=>'Varchar',
         'Status'=>'Varchar',
         'PaymentType'=>'Int',
-        'ViewCount'=>'Int',
+        'ViewCount'=>'Int'
     ];
 
     private static $has_one = [

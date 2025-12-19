@@ -25,7 +25,7 @@
 						<% end_if %>
 						</div>
 						<div class="profile_text">
-							<h2>$Name</h2>
+							<h2>$Name <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editProfile"><i class="fa-solid fa-pencil"></i></a></h2>
 							<p><% if $Company.Website %><a href="$Company.Website" target="_blank">$Company.Website</a><% end_if %></p>
 						</div>
 					</div>
@@ -51,18 +51,8 @@
 						</div>
 						<% end_if %>
 					
-						<div class="info-block add">
-							<a href="#">
-								<h3>Mietzahlungsnachweis <span><i class="fa-solid fa-plus"></i></span></h3>
-								<p>Erstellen</p>
-							</a>
-						</div>
-						<div class="info-block add">
-							<a href="#">
-								<h3>Identitätsnachweis <span><i class="fa-solid fa-plus"></i></span></h3>
-								<p>Erstellen</p>
-							</a>
-						</div>
+					
+					
 						<div class="info-block add">
 							<a href="javascript:void(0)" class="delete-account-btn" data-action-url="/dashboard/delete-account">
 								<h3>Konto löschen <span><i class="fa-solid fa-trash"></i></span></h3>
@@ -77,12 +67,44 @@
 					</div>
 
 					<div class="right-column hide-on-mobile">
-						<div class="font-opacity-70">RECLAME <br>BVB ABONOMENT</div>
+					
 					</div>
 				</div>
 			</div>
 		</div>
+<div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-content">
+<div class="modal-header">
 
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
+
+<div class="modal-body">
+	<div class="global_custom_form white_100 width_1360">
+    <h2>Profile</h2>
+	  <form $Form.AttributesHTML>
+	<div class="row mb-3">
+					<div class="col-md-6">
+						$FirstName
+					</div>
+					<div class="col-md-6">
+						$LastName
+					</div>
+				</div>
+				<div class="side_bottom align_right">
+					<div class="default_btn">
+						$Form.Actions
+					</div>
+				</div>
+				</form>
+	</div>
+</div>
+</div>
+</div>
+</div>
 	<% include Footer %>
 
 <% include MainFooter %>

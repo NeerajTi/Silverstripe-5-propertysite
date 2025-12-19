@@ -21,8 +21,12 @@
 						<p class="description">$SubDescription…</p>
 					</div>
 					<div class="abo-actions">
+					<a class="remove-global-any" style="color:#D98209;cursor:pointer" data-redirect-url="/dashboard/applications" data-alert-msg="Möchten Sie diese Anwendung wirklich löschen?" data-action-url="/dashboard/removeapplication" href="javascript:void(0);" data-object-id="$ID"><i class="fa-solid fa-trash"></i></a>
 						<div class="menu-dots hide-on-mobile"><a href="/dashboard/application-detail/$ID"><i class="fa-solid fa-ellipsis-vertical"></i></a></div>
-						<div class="default_btn"><a href="/dashboard/application-detail/$ID">
+						
+						<div class="default_btn">
+						
+						<a href="/dashboard/application-detail/$ID">
 						<% if $IsRead == 0 %>
 						<i class="fa-solid fa-envelope"></i>
 						<% end_if %>

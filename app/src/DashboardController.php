@@ -44,7 +44,7 @@ use SilverStripe\ORM\DB;
 class DashboardController extends ContentController
 {
     private static $allowed_actions = [
-        'index', 'info','deleteFileImg','guide','uploadFile','subscription','payment_discount','payment_method', 'updateinfo', 'brokercontacts', 'UpdateCompanyForm', 'doUpdateCompany', 'Addworker', 'AddWorkerForm', 'doAddWorker', 'Addworkerimage', 'AddWorkerImageForm', 'doAddWorkerImage', 'Editworker', 'doSaveWorker', 'Brokerdata', 'Brokerapartments', 'Tips','applications','application_detail','doUpdateOwner','remove_apartment','change_apartment_status','anhalten','delete_account','start_subscription','stop_subscription'
+        'index', 'info','deleteFileImg','removeapplication','doUpdateProfile','guide','uploadFile','subscription','payment_discount','payment_method', 'updateinfo', 'brokercontacts', 'UpdateCompanyForm', 'doUpdateCompany', 'Addworker', 'AddWorkerForm', 'doAddWorker', 'Addworkerimage', 'AddWorkerImageForm', 'doAddWorkerImage', 'Editworker', 'doSaveWorker', 'Brokerdata', 'Brokerapartments', 'Tips','applications','application_detail','doUpdateOwner','remove_apartment','change_apartment_status','anhalten','delete_account','start_subscription','stop_subscription'
     ];
 
     private static $url_segment = 'dashboard';
@@ -86,6 +86,7 @@ class DashboardController extends ContentController
 
     public function info(HTTPRequest $request){
         $member = Security::getCurrentUser();
+        $form = $this->UpdateProfileForm();
         $firstName = $request->getSession()->get('CUFirstName');
         $lastName = $request->getSession()->get('CULastName');
         $company=MemberCompanyData::get()->filter('MemberID', $member->ID)->first();
@@ -99,9 +100,12 @@ class DashboardController extends ContentController
             return $this->customise([
                 'Title' => 'Informationen',
                 'Name' => $firstName.' '.$lastName,
+                'Form' => $form,
                 'User' => $member,
                 'Company' => $company,
                 'BrokerAptSlug'=>$brokerAptSlug,
+                'FirstName' => $form->Fields()->dataFieldByName('FirstName'),
+                'LastName' => $form->Fields()->dataFieldByName('LastName'),
                 'userType'=>GlobalHelper::getCurrentUserSession($request)->get('UserType'),
                 'PersonalInformation'=>$personalInformation,
             ])->renderWith(['Layout/Broker/Info', 'Page']);
@@ -242,7 +246,31 @@ class DashboardController extends ContentController
         $form->setFormAction('/dashboard/doUpdateOwner');
         return $form;
     }
+   public function UpdateProfileForm()
+   {
+     $member = Security::getCurrentUser();
 
+        $records = MemberBasicData::get()
+            ->filter('MemberID', $member->ID)
+            ->first();
+
+        if ($records) {
+            $profileData = $records->toMap();
+        }
+        $fields = FieldList::create( 
+            TextField::create('FirstName', 'Vorname*')->setAttribute('placeholder', 'Vorname*')->setValue($profileData['FirstName'] ?? ''),
+            TextField::create('LastName', 'Nachname*')->setAttribute('placeholder', 'Nachname*')->setValue($profileData['LastName'] ?? '')
+        );
+        $actions = FieldList::create(
+            FormAction::create('doUpdateProfile', 'Update')
+        );
+
+        $validator = RequiredFields::create(['FirstName', 'LastName']);
+
+        $form = Form::create($this, 'UpdateProfileForm', $fields, $actions, $validator);
+        $form->setFormAction('/dashboard/doUpdateProfile');
+        return $form;
+   }
     public function UpdateCompanyForm(){
         
         $member = Security::getCurrentUser();
@@ -299,7 +327,24 @@ class DashboardController extends ContentController
         $form->setFormAction('/dashboard/doUpdateCompany');
         return $form;
     }
-
+     public function doUpdateProfile(HTTPRequest $request)
+{
+    $member = Security::getCurrentUser();
+$data = $request->postVars();
+$profileData = MemberBasicData::get()
+            ->filter('MemberID',$member->ID)
+            ->first();
+     $profileData->FirstName=$data['FirstName'];   
+     $profileData->LastName=$data['LastName'];   
+     $profileData->write();
+     $coreMember=Member::get()->byID($member->ID);
+     $coreMember->FirstName=$data['FirstName'];
+     $coreMember->write();
+     $request->getSession()->set('CUFirstName', $data['FirstName']);
+   $request->getSession()->set('CULastName', $data['LastName']);
+$this->getRequest()->getSession()->set('FormSuccess', 'Ihre Daten wurden erfolgreich aktualisiert.');
+        return $this->redirect('/dashboard/info');
+}
     public function doUpdateOwner(HTTPRequest $request){
         $data = $request->postVars();
 
@@ -730,7 +775,7 @@ class DashboardController extends ContentController
             $apartments = $apartments->filterAny($filters);
         }
         if($sort && !empty($sort)){
-            if($sort=='Popularity'){
+            if($sort=='Popularity' || $sort=='Aufrufe' || $sort=='Klicks'){
                 $apartments=$apartments->sort('ViewCount', 'DESC');
             }else if($sort=='PriceLowToHigh'){
                 $apartments=$apartments->sort('Details.Kaltmiete', 'ASC');
@@ -740,6 +785,9 @@ class DashboardController extends ContentController
                 $apartments=$apartments->sort('Created', 'DESC');
             }else if($sort=='Size'){
                 $apartments=$apartments->sort('Details.Wohnflache', 'DESC');
+            }else if($sort=='Draft' || $sort=='Published')
+            {
+               $apartments=$apartments->filter('Status', $sort);
             }
         }else{
             $apartments=$apartments->sort('Created', 'DESC');
@@ -1078,6 +1126,30 @@ public function anhalten(HTTPRequest $request){
         $memberBasicData->write();
         return $this->redirect('/payment/payment-thankyou');
         exit;
+}
+public function removeapplication(HTTPRequest $request)
+{
+    $data=$request->postVars();
+$member = GlobalHelper::getLoggedInUser();
+$application = ApartmentApplication::get()->filter('ListerID', $member->ID)->filter('ID',$data['objectID'])->count();
+if($application==0)
+{
+   return RestApiHelper::jsonOk([
+        'ok' => false,
+        'message' => 'Diese Anwendung gehört Ihnen nicht.',
+        'action'=>'remove'
+        ]);  
+}else
+{
+   $ApartmentApplication = ApartmentApplication::get()->filter('ID',$data['objectID'])->first();
+    $ApartmentApplication->delete(); 
+     return RestApiHelper::jsonOk([
+        'ok' => true,
+        'message' => 'Diese Anwendung wurde erfolgreich gelöscht.',
+        'action'=>'remove'
+        ]);  
+}
+exit;
 }
 public function remove_apartment(HTTPRequest $request){
     $member = GlobalHelper::getLoggedInUser();

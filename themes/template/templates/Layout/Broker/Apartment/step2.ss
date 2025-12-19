@@ -9,6 +9,7 @@
 		<div class="progress_bar" style="width: 15.38%;"></div>
 	</div>
 <form $Form.AttributesHTML>
+<input type='hidden' name='preview' value='$preview' />
 <div class="address_form">
 <h3>Adresse:</h3>
 <div class="form_control d-flex">

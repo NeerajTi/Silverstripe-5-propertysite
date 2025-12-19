@@ -10,6 +10,7 @@
 					</div>
 						<h2 class="mb-3">Beschreibungen:</h2>
 					<form $Form.AttributesHTML>
+					<input type='hidden' name='preview' value='$preview' />
 							<div class="area_label">$Dieumgebung.Title:</div>
 							<div class="row align-items-start">
 								<div class="col">

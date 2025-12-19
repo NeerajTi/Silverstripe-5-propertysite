@@ -30,6 +30,7 @@
 
   <h2 class="mb-3">Beschreibungen:</h2>
   <form $Form.AttributesHTML>
+  <input type='hidden' name='preview' value='$preview' />
     <input type="hidden" id="ObjectIDModal" value="$apartment.ID">
     $BilderID
     $DocumentID

@@ -4,11 +4,13 @@
 
 <% include DashboardHeader %>
 <h1>$Title</h1>
+$preview
 <div class="progress_form">
 	<div class="progress-container">
 		<div class="progress_bar" style="width: 0;"></div>
 	</div>
 <form $Form.AttributesHTML>
+<input type='hidden' name='preview' value='$preview' />
 	<div class="row">
 						<div class="col-12 col-lg-10 col-md-8">
                         <div class="form_control d-flex">

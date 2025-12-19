@@ -10,6 +10,7 @@
 						<div class="progress_bar" style="width:38.45%;"></div>
 					</div>
 <form $Form.AttributesHTML>
+<input type='hidden' name='preview' value='$preview' />
 <h2>Details:</h2>
 <div class="area_label" style='font-weight: bold'>Anzahl voorzieningen:</div>
 	<div class="row">
@@ -69,7 +70,7 @@
 							</div>
                             	<div class="row mt-3 radio_btn_list">
 								<div class="col-md-6">
-									<label class="area_label mb-3">Wohnberechtigungsscein:</label>
+									<label class="area_label mb-3">Wohnberechtigungsschein:</label>
                                     $Wohnberechtigungsschein
 								</div>
 								<div class="col-md-6">

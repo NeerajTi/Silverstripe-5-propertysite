@@ -9,7 +9,7 @@
 						<div class="progress_bar" style="width: 100%;"></div>
 					</div>
 <form $Form.AttributesHTML>
-
+<input type='hidden' name='preview' value='$preview' />
 <h2>Kontaktdaten diese wohung*:</h2>
 <!--$ContactId-->
 <% if $Contacts %>

@@ -20,7 +20,7 @@
       <div class="filled_input d-flex justify-content-between mt-2"><span>Projekt : </span><span>$Apartment.GroupNumber</span></div>
       <div class="filled_input d-flex justify-content-between mt-2 wohnung_type"><span>Wohnung Type : </span><span>$Apartment.WohnungType</span></div>
       <div class="default_btn text-right">
-     <a href="/apartment/step1/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step1/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
     </div>
   </div>
@@ -40,9 +40,7 @@
       <div class="col-12 col-xl-5 mt-2">
         <div class="filled_input d-flex justify-content-between"><span>PLZ : </span><span>$Apartment.Address.Plz</span></div>
       </div>
-      <div class="col-12 col-xl-5 offset-xl-1 mt-2">
-        <div class="filled_input d-flex justify-content-between"><span>Ort : </span><span>$Apartment.Address.Ort</span></div>
-      </div>
+    
       <div class="col-12 col-xl-5 mt-2">
         <div class="filled_input d-flex justify-content-between"><span>Strasse und Hausnummer anzeigen : </span><span>$Apartment.Address.StrasseundHausnummer</span></div>
       </div>
@@ -57,7 +55,7 @@
       </div>
     </div>
     <div class="default_btn text-right">
-     <a href="/apartment/step2/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step2/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
   </div>
   <!-- End Adresse Section -->
@@ -81,7 +79,7 @@
       <div class="col-12 col-xl-5"><div class="filled_input d-flex justify-content-between"><span>Gesamtmiete : </span><span>$Apartment.Details.Gesamtmiete Euro</span></div></div>
     </div>
      <div class="default_btn text-right">
-     <a href="/apartment/step3/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step3/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
   </div>
   <!-- End Echdaten Section -->
@@ -113,7 +111,7 @@
         </div>
       </div>
        <div class="default_btn text-right">
-     <a href="/apartment/step4/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step4/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
     </div>
 
@@ -128,14 +126,14 @@
       <div class="col-12 col-xl-5 mt-2"><div class="filled_input d-flex justify-content-between"><span><strong>Wohnberechtigungsscein:</strong> </span><span>$Apartment.Details.Wohnberechtigungsschein</span></div></div>
       <div class="col-12 col-xl-5 offset-xl-1 mt-2"><div class="filled_input d-flex justify-content-between"><span><strong>Heizungart:</strong> </span><span>$Apartment.Details.Heizungsart</span></div></div>
       <div class="col-12 col-xl-5 mt-2"><div class="filled_input d-flex justify-content-between"><span><strong>Internetgeschwindigkeit:</strong> </span><span>$Apartment.Internetgeschwindigkeit</span></div>  <div class="default_btn text-right">
-     <a href="/apartment/step6/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step6/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div></div>
       <div class="col-12 col-xl-5 offset-xl-1 mt-2"><div class="filled_input d-flex justify-content-between"><span><strong>Energieeffiziezklasse:</strong> </span><span>$Apartment.Energieeffiziezklasse</span></div>  <div class="default_btn text-right">
-     <a href="/apartment/step6/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step6/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div></div>
     </div>
      <div class="default_btn text-right">
-     <a href="/apartment/step5/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step5/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
   </div>
   <!-- End Anzahl voorzieningen Section -->
@@ -150,21 +148,21 @@
         <h4>Uberschrift*:</h4>
         <div class="filled_input">$Apartment.Uberschrift</div>
          <div class="default_btn text-right">
-     <a href="/apartment/step7/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step7/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
       </div>
       <div class="col-12">
         <h4>Mietwohnung*:</h4>
         <div class="filled_input">$Apartment.Mietwohnung</div>
          <div class="default_btn text-right">
-     <a href="/apartment/step8/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step8/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
       </div>
       <div class="col-12">
         <h4>Dieumgebung*:</h4>
         <div class="filled_input">$Apartment.Dieumgebung</span></div>
          <div class="default_btn text-right">
-     <a href="/apartment/step9/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step9/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
       </div>
     </div>
@@ -201,7 +199,7 @@
       </div>
     </div>
       <div class="default_btn text-right">
-     <a href="/apartment/step10/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step10/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
   </div>
   <!-- End Fotos und Dokumenten Section -->
@@ -253,7 +251,7 @@
 			</div>
 			</div>
        <div class="default_btn text-right">
-     <a href="/apartment/step13/?apartmentID=$Apartment.ID" class="action">Edit</a>
+     <a href="/apartment/step13/?apartmentID=$Apartment.ID&preview=1" class="action">Edit</a>
      </div>
 		</div>
 		</div>

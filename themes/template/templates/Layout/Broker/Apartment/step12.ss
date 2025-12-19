@@ -9,6 +9,7 @@
 						<div class="progress_bar" style="width: 92.28%;"></div>
 					</div>
 <form $Form.AttributesHTML>
+<input type='hidden' name='preview' value='$preview' />
 		<h2>Bausubstanz und Energieausweis:</h2>
 					<div class="row">
 						<div class="col">
